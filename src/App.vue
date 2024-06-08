@@ -1,11 +1,21 @@
-<template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+<template id="app">
+  <NavigationBar />
+  <div class="container pa-8">
+    <div class="row">
+      <div class="col-md-12">
+        <router-view/>
+      </div>
+    </div>
+  </div>
 </template>
-
+<script>
+import NavigationBar from './components/NavigationBar.vue';
+export default {
+  components: {
+    NavigationBar
+  }
+}
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -13,18 +23,5 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
 }
 </style>
