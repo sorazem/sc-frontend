@@ -7,7 +7,7 @@
         >
             <div class="text-subtitle-1 text-medium-emphasis text-left">Nome completo</div>
             <v-text-field
-                v-model="nome"
+                v-model="name"
                 :readonly="loading"
                 :rules="[required]"
                 class="mb-2"
@@ -129,14 +129,13 @@
     </v-sheet>
   </template>
 <script>
-const axios = require('axios');
 export default {
     data() {
         return {
             form: false,
             visible: false,
             loading: false,
-            nome: null,
+            name: null,
             password: null,
             email: null,
             cpf: null,
@@ -148,24 +147,48 @@ export default {
             instituicaoMedioItems: ['Pedro II', 'CEFET', 'CAp UFRJ', 'Outros']
         }
     },
+    computed: {
+        loggedIn() {
+            return this.$store.state.auth.status.loggedIn;
+        },
+    },
+    mounted() {
+        if (this.loggedIn) {
+            this.$router.push("/");
+        }
+    },
     methods:{
         onSubmit () {
         if (!this.form) return
 
         this.loading = true
-        
-        axios({
-            method: 'post',
-            url: 'http://localhost:3000/api/register',
-            data: {
-                name: this.nome,
-                email: this.email,
-                dre: this.dre,
-                password: this.password
-            }
-        })
 
-        setTimeout(() => (this.loading = false), 2000)
+        let user = {
+            name: this.name,
+            cpf: this.cpf,
+            email: this.email,
+            password: this.password,
+            dre: this.dre,
+            ocupation: this.ocupacao,
+            institution: this.instituicao
+        }
+        
+        this.$store.dispatch("auth/register", user).then(
+            (data) => {
+                this.message = data.message;
+                this.loading = false;
+                this.$router.push("/login");
+            },
+            (error) => {
+                this.message =
+                (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+                error.message ||
+                error.toString();
+                this.loading = false;
+        }
+        )
       },
       required (v) {
         return !!v || 'Este campo é obrigatório'

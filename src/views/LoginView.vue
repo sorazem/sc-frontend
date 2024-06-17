@@ -5,17 +5,17 @@
           v-model="form"
           @submit.prevent = "onSubmit()"
         >
-            <div class="text-subtitle-1 text-medium-emphasis text-left">Email</div>
+            <div class="text-subtitle-1 text-medium-emphasis text-left">CPF</div>
             <v-text-field
-                v-model="email"
+                v-model="cpf"
                 :readonly="loading"
                 :rules="[required]"
                 class="mb-2"
-                placeholder="Email"
+                placeholder="CPF"
                 clearable
                 variant="outlined"
                 density="compact"
-                prepend-inner-icon="mdi-email-outline"
+                prepend-inner-icon="mdi-card-account-details-outline"
             ></v-text-field>
 
             <div class="text-subtitle-1 text-medium-emphasis text-left">Senha</div>
@@ -46,6 +46,10 @@
                 Entrar
             </v-btn>
 
+            <div v-if="message" class="alert alert-danger" role="alert">
+              {{ message }}
+            </div>
+
             <span class="mt-8">
               Não possui uma conta? 
               <router-link class="mt-8" to="/signup">Cadastre-se!</router-link>
@@ -59,11 +63,22 @@ export default {
     data() {
         return {
             password: null,
-            email: null,
+            cpf: null,
             form: false,
             visible: false,
-            loading: false
+            loading: false,
+            message: null
         }
+    },
+    computed: {
+      loggedIn() {
+        return this.$store.state.auth.status.loggedIn;
+      },
+    },
+    created() {
+      if (this.loggedIn) {
+        this.$router.push("/");
+      }
     },
     methods:{
         onSubmit () {
@@ -71,7 +86,25 @@ export default {
 
         this.loading = true
 
-        setTimeout(() => (this.loading = false), 2000)
+        let user = {
+          cpf: this.cpf,
+          password: this.password
+        }
+
+        this.$store.dispatch("auth/login", user).then(
+          () => {
+            this.$router.push("/");
+          },
+          (error) => {
+            this.loading = false;
+            this.message =
+              (error.response &&
+                error.response.data &&
+                error.response.data.errors) ||
+              error.message ||
+              error.toString();
+          }
+        );
       },
       required (v) {
         return !!v || 'Este campo é obrigatório'
