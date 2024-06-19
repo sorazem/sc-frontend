@@ -17,10 +17,10 @@
                 </v-toolbar-side-icon>
             </span>
             <v-toolbar-title>
-                Venti
+                <router-link to="/">Venti</router-link>
             </v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-toolbar-items class="hidden-xs-only">
+            <v-toolbar-items v-if="showNavBar" class="hidden-xs-only">
                 <router-link
                     class="mr-4"
                     v-for="item in menuItems"
@@ -36,10 +36,19 @@
 export default {
     data(){
         return{
-            sidebar: false,
-            menuItems:[
-                { title: 'Login', path: '/login', icon: 'home'},
-                { title: 'Cadastro', path: '/signup', icon: 'home'}
+            sidebar: false
+        }
+    },
+    computed:{
+        showNavBar() {
+            if(this.$route.path == "/") return false
+            else return true
+        },
+        menuItems(){
+            return [
+                { title: 'Programação', path: '/' + this.$route.params.slug + '/programacao', icon: 'home'},
+                { title: 'Minha agenda', path: '/' + this.$route.params.slug + '/programacao', icon: 'home'},
+                { title: 'Inscrição', path: '/' + this.$route.params.slug + '/programacao', icon: 'home'},
             ]
         }
     }
