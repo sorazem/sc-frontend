@@ -1,6 +1,6 @@
 <template id="app">
   <NavigationBar />
-  <div class="container pa-8">
+  <div class="container pa-xs-4">
     <div class="row">
       <div class="col-md-12">
         <router-view/>

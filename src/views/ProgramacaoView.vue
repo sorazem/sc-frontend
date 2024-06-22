@@ -1,6 +1,6 @@
 <template>
   <v-select label="Dia" v-model="diaAtual" :items="dias" density="compact" variant="outlined"></v-select>
-    <div class="d-flex flex-column justify-space-between align-center pa-8">
+    <div class="d-flex flex-column justify-space-between align-center">
         <v-card 
             class="pa-4 mb-8" 
             v-for="palestra in palestras[diaAtual]" 
@@ -11,6 +11,10 @@
                     <v-chip density="compact" variant="tonal" v-if="palestra.type" :color="palestra.type.color">{{ palestra.type.name }}</v-chip>
                     <v-chip density="compact" variant="tonal" v-if="palestra.category" :color="palestra.category.color">{{ palestra.category.name }}</v-chip>
                     <h2 class="mt-2">{{ palestra.title }}</h2>
+                    <div class="text-left mt-4">
+                      <p>Palestrante: {{ palestra.speaker.name }}</p>
+                      <p>Local: {{ palestra.location.name }}</p>
+                    </div>
                 </v-card-item>
         </v-card>
     </div>
@@ -49,8 +53,11 @@ import EventService from '../services/event.service.js';
     }
   };
   </script>
-  <style>
+  <style scoped>
   .v-card{
     border-radius: 16px;
+  }
+  p{
+    font-size: 0.85rem;
   }
   </style>
