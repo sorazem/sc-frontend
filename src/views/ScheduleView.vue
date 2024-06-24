@@ -9,7 +9,7 @@
 import TalkCard from '@/components/TalkCard.vue';
 import EventService from '../services/event.service.js';
   export default {
-    name: 'ProgramacaoView',
+    name: 'ScheduleView',
     data(){
         return{
             palestras: [],
@@ -29,15 +29,13 @@ import EventService from '../services/event.service.js';
       }
     },
     created(){
-      this.$store.commit('changeCurrentEventSlug', this.$route.params.slug);
-      EventService.getEventSchedule(this.$store.state.eventSlug).then(
+      EventService.getEventSchedule(this.$route.params.slug).then(
           (response) =>{
               this.palestras = response.talks;
               this.dias = Object.keys(response.talks);
               this.diaAtual = this.dias[0];
           }
       );
-      
     }
   };
   </script>

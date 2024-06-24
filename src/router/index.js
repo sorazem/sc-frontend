@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import EventsView from '../views/EventsView.vue'
+import { DateTime } from 'luxon'
 
 const routes = [
   {
@@ -20,7 +21,7 @@ const routes = [
   {
     path: '/:slug/programacao',
     name: 'schedule',
-    component: () => import('../views/ProgramacaoView.vue')
+    component: () => import('../views/ScheduleView.vue')
   },
   {
     path: '/:slug:/inscricao',
@@ -31,6 +32,11 @@ const routes = [
     path: '/:slug/palestra/:talkid',
     name: 'talkDetails',
     component: () => import('../views/TalkView.vue')
+  },
+  {
+    path: '/:slug/agenda',
+    name: 'agenda',
+    component: () => import('../views/AgendaView.vue')
   }
 ]
 
@@ -42,11 +48,12 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const publicPages = ['/login', '/signup', '/', '/programacao', '/palestra'];
   const authRequired = !publicPages.includes(to.path);
-  const loggedIn = localStorage.getItem('user');
+  const loggedIn = JSON.parse(localStorage.getItem('user'))?.token;
+  const exp = JSON.parse(localStorage.getItem('user'))?.exp;
 
   // trying to access a restricted page + not logged in
   // redirect to login page
-  if (authRequired && !loggedIn) {
+  if ((authRequired && !loggedIn) || DateTime.now() >= DateTime.fromISO(exp)) {
     next('/login');
   } else {
     next();

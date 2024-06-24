@@ -42,6 +42,7 @@
             size="large"
             variant="flat"
             class="mt-4"
+            @click="$router.push('/' + $route.params.slug + '/agenda')"
         >
             Minha agenda
         </v-btn>

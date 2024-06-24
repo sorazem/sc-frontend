@@ -36,7 +36,7 @@
             </v-col>
         </v-row>
     </v-row>
-    <v-row v-if="rateAvailable" class="pa-4 text-left flex-column mb-8">
+    <v-row v-if="rateAvailable && participated" class="pa-4 text-left flex-column mb-8">
         <p class="purple mb-4">Avalie a palestra</p>
         <p>{{ message }}</p>
         <v-rating
@@ -58,7 +58,8 @@ export default {
         return{
             palestra: {},
             score: null,
-            message: ''
+            message: '',
+            participated: false
         }
     },
     computed:{
@@ -81,7 +82,7 @@ export default {
             (response) => this.palestra = response
         );
         TalkService.checkUserVacancy(this.$route.params.talkid).then(
-            (response) => console.log(response.data)
+            (response) => this.participated = response.data.participated.presence? true : false
         )
     }
 }

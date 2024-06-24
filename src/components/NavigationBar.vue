@@ -47,7 +47,7 @@ export default {
         menuItems(){
             return [
                 { title: 'Programação', path: '/' + this.$route.params.slug + '/programacao', icon: 'home'},
-                { title: 'Minha agenda', path: '/' + this.$route.params.slug + '/programacao', icon: 'home'},
+                { title: 'Minha agenda', path: '/' + this.$route.params.slug + '/agenda', icon: 'home'},
                 { title: 'Inscrição', path: '/' + this.$route.params.slug + '/inscricao', icon: 'home'},
             ]
         }

@@ -21,6 +21,12 @@ class EventService{
         return axios
         .post(API_URL + 'participate' , {talk_ids, event_slug}, { headers: authHeader() })
     }
+
+    getUserAgenda(event_slug){
+        return axios
+        .get(API_URL + 'vacancies/me', { headers: authHeader(), params: {event_slug} })
+        .then(response => response.data)
+    }
 }
 
 export default new EventService();
