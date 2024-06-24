@@ -26,6 +26,11 @@ const routes = [
     path: '/:slug:/inscricao',
     name: 'enrollment',
     component: () => import('../views/EnrollmentView.vue')
+  },
+  {
+    path: '/:slug/palestra/:talkid',
+    name: 'talkDetails',
+    component: () => import('../views/TalkView.vue')
   }
 ]
 
@@ -35,7 +40,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/signup', '/', '/programacao'];
+  const publicPages = ['/login', '/signup', '/', '/programacao', '/palestra'];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('user');
 

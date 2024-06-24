@@ -17,9 +17,9 @@ class EventService{
         .then(response => response.data);
     }
 
-    enroll(talk_ids){
+    enroll(talk_ids, event_slug){
         return axios
-        .post(API_URL + 'participate' , {talk_ids}, { headers: authHeader() })
+        .post(API_URL + 'participate' , {talk_ids, event_slug}, { headers: authHeader() })
     }
 }
 

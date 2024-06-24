@@ -1,27 +1,12 @@
 <template>
-  <v-select label="Dia" v-model="diaAtual" :items="dias" density="compact" variant="outlined"></v-select>
-    <div class="d-flex flex-column justify-space-between align-center">
-        <v-card 
-            class="pa-4 mb-8" 
-            v-for="palestra in palestras[diaAtual]" 
-            variant="outlined" 
-            :key="palestra.title" 
-            >
-                <v-card-item class="d-flex flex-column">
-                    <v-chip density="compact" variant="tonal" v-if="palestra.type" :color="palestra.type.color">{{ palestra.type.name }}</v-chip>
-                    <v-chip density="compact" variant="tonal" v-if="palestra.category" :color="palestra.category.color">{{ palestra.category.name }}</v-chip>
-                    <h2 class="mt-2">{{ palestra.title }}</h2>
-                    <div class="text-left mt-4">
-                      <p>Palestrante: {{ palestra.speaker.name }}</p>
-                      <p>Local: {{ palestra.location.name }}</p>
-                    </div>
-                </v-card-item>
-        </v-card>
-    </div>
-  </template>
+  <v-select label="Dia" v-model="diaAtual" :items="dias" density="compact" variant="outlined" class="mt-4"></v-select>
+  <div class="d-flex flex-column justify-space-between align-center">
+      <TalkCard v-for="palestra in palestras[diaAtual]" :palestra="palestra" :key="palestra.title" :href="'/' + this.$route.params.slug + '/palestra/' + palestra.id"/>
+  </div>
+</template>
   
-  <script>
-
+<script>
+import TalkCard from '@/components/TalkCard.vue';
 import EventService from '../services/event.service.js';
   export default {
     name: 'ProgramacaoView',
@@ -31,6 +16,9 @@ import EventService from '../services/event.service.js';
             dias: [],
             diaAtual: null
         }
+    },
+    components:{
+      TalkCard
     },
     computed: {
       currentUser() {

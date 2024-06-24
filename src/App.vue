@@ -1,7 +1,7 @@
 <template id="app">
   <NavigationBar />
-  <div class="container pa-xs-4">
-    <div class="row">
+  <div class="container pa-3">
+    <div class="row d-flex justify-center">
       <div class="col-md-12">
         <router-view/>
       </div>

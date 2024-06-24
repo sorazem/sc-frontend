@@ -17,13 +17,7 @@
 <script>
 export default {
     props: {
-        palestra: Object,
-        id: String
-    },
-    methods:{
-        emit(){
-            this.$emit('id', )
-        }
+        palestra: Object
     }
 
 }
@@ -31,5 +25,6 @@ export default {
 <style scoped>
     .v-card{
         width: 320px;
+        border-radius: 16px;
     }
 </style>
