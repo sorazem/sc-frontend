@@ -59,6 +59,7 @@
     </v-sheet>
   </template>
 <script>
+import { DateTime } from 'luxon';
 export default {
     data() {
         return {
@@ -70,13 +71,10 @@ export default {
             message: null
         }
     },
-    computed: {
-      loggedIn() {
-        return this.$store.state.auth.status.loggedIn;
-      },
-    },
     created() {
-      if (this.loggedIn) {
+      const loggedIn = JSON.parse(localStorage.getItem('user'))?.token;
+      const exp = JSON.parse(localStorage.getItem('user'))?.exp;
+      if (loggedIn && DateTime.now() < DateTime.fromISO(exp)) {
         this.$router.push("/");
       }
     },

@@ -41,7 +41,8 @@ export default {
     },
     computed:{
         showNavBar() {
-            if(this.$route.path == "/") return false
+            const paths = ['/', '/login', '/certificados']
+            if(paths.includes(this.$route.path)) return false
             else return true
         },
         menuItems(){
@@ -49,6 +50,7 @@ export default {
                 { title: 'Programação', path: '/' + this.$route.params.slug + '/programacao', icon: 'home'},
                 { title: 'Minha agenda', path: '/' + this.$route.params.slug + '/agenda', icon: 'home'},
                 { title: 'Inscrição', path: '/' + this.$route.params.slug + '/inscricao', icon: 'home'},
+                { title: 'Mercadorias', path: '/' + this.$route.params.slug + '/mercadorias', icon: 'home' }
             ]
         }
     }

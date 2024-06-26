@@ -37,6 +37,21 @@ const routes = [
     path: '/:slug/agenda',
     name: 'agenda',
     component: () => import('../views/AgendaView.vue')
+  },
+  {
+    path: '/:slug/mercadorias',
+    name: 'merchandise',
+    component: () => import('../views/MerchandiseView.vue')
+  },
+  {
+    path: '/certificados',
+    name: 'certifications',
+    component: () => import('../views/CertificationView.vue')
+  },
+  {
+    path: '/:slug/avisos',
+    name: 'notices',
+    component: () => import('../views/NoticesView.vue')
   }
 ]
 
@@ -46,14 +61,14 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/signup', '/', '/programacao', '/palestra'];
-  const authRequired = !publicPages.includes(to.path);
+  const publicPages = ['login', 'signup', 'events', 'schedule', 'talkDetails'];
+  const authRequired = !publicPages.includes(to.name);
   const loggedIn = JSON.parse(localStorage.getItem('user'))?.token;
   const exp = JSON.parse(localStorage.getItem('user'))?.exp;
 
   // trying to access a restricted page + not logged in
   // redirect to login page
-  if ((authRequired && !loggedIn) || DateTime.now() >= DateTime.fromISO(exp)) {
+  if ((authRequired && !loggedIn) || DateTime.now() >= DateTime.fromISO(exp) && to.name !== 'login') {
     next('/login');
   } else {
     next();

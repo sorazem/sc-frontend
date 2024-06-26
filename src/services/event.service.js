@@ -27,6 +27,12 @@ class EventService{
         .get(API_URL + 'vacancies/me', { headers: authHeader(), params: {event_slug} })
         .then(response => response.data)
     }
+
+    getEventMerchandise(event_slug){
+        return axios
+        .get(API_URL + 'events/' + event_slug + '/merches')
+        .then(response => response.data)
+    }
 }
 
 export default new EventService();
