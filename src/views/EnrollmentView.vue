@@ -41,7 +41,6 @@
             color="#9C66BD"
             size="large"
             variant="flat"
-            class="mt-4"
             @click="$router.push('/' + $route.params.slug + '/agenda')"
         >
             Minha agenda
@@ -51,6 +50,7 @@
 <script>
 import EventService from '../services/event.service.js';
 import TalkCard from '../components/TalkCard.vue';
+
 export default {
     data(){
         return{
@@ -63,7 +63,7 @@ export default {
         }
     },
     components:{
-      TalkCard  
+      TalkCard
     },
     methods:{
         enroll(){

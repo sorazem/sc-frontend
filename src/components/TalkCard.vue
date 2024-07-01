@@ -8,8 +8,8 @@
                 <v-chip density="compact" variant="tonal" v-if="palestra.category" :color="palestra.category.color">{{ palestra.category.name }}</v-chip>
                 <h2 class="mt-2">{{ palestra.title }}</h2>
                 <div class="text-left mt-4">
-                    <p>Palestrante: {{ palestra.speaker?.name }}</p>
-                    <p>Local: {{ palestra.location?.name }}</p>
+                    <p><span>Palestrante:</span> {{ palestra.speaker?.name }}</p>
+                    <p><span>Local:</span> {{ palestra.location?.name }}</p>
                 </div>
             </v-card-item>
     </v-card>
@@ -26,5 +26,9 @@ export default {
     .v-card{
         width: 320px;
         border-radius: 16px;
+    }
+
+    span{
+        font-weight: 600;
     }
 </style>

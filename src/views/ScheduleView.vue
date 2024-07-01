@@ -3,11 +3,13 @@
   <div class="d-flex flex-column justify-space-between align-center">
       <TalkCard v-for="palestra in palestras[diaAtual]" :palestra="palestra" :key="palestra.title" :href="'/' + this.$route.params.slug + '/palestra/' + palestra.id"/>
   </div>
+  <!-- <EventMenu /> -->
 </template>
   
 <script>
 import TalkCard from '@/components/TalkCard.vue';
 import EventService from '../services/event.service.js';
+
   export default {
     name: 'ScheduleView',
     data(){

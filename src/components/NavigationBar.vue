@@ -1,21 +1,7 @@
 <template>
     <v-layout>
-        <!-- <v-navigation-drawer v-model="sidebar">
-            <v-list>
-                <v-list-tile
-                v-for="item in menuItems"
-                :key="item.title"
-                :to="item.path">
-                <v-list-tile-content>{{ item.title }}</v-list-tile-content>
-                </v-list-tile>
-            </v-list>
-        </v-navigation-drawer> -->
-
         <v-toolbar class="pa-2">
-            <span class="hidden-sm-and-up">
-                <v-toolbar-side-icon @click="sidebar = !sidebar">
-                </v-toolbar-side-icon>
-            </span>
+            <v-spacer></v-spacer>
             <v-toolbar-title>
                 <router-link to="/">Venti</router-link>
             </v-toolbar-title>
@@ -46,12 +32,7 @@ export default {
             else return true
         },
         menuItems(){
-            return [
-                { title: 'Programação', path: '/' + this.$route.params.slug + '/programacao', icon: 'home'},
-                { title: 'Minha agenda', path: '/' + this.$route.params.slug + '/agenda', icon: 'home'},
-                { title: 'Inscrição', path: '/' + this.$route.params.slug + '/inscricao', icon: 'home'},
-                { title: 'Mercadorias', path: '/' + this.$route.params.slug + '/mercadorias', icon: 'home' }
-            ]
+            return []
         }
     }
 }
@@ -60,6 +41,9 @@ export default {
 .v-toolbar-title{
     flex: none;
     font-size: 20px;
+    margin: 0px;
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
 }
 
 .v-toolbar{

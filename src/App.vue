@@ -1,25 +1,33 @@
 <template id="app">
   <NavigationBar />
-  <div class="container pa-3">
+  <div class="container pa-3 mb-14">
     <div class="row d-flex justify-center">
       <div class="col-md-12">
         <router-view/>
       </div>
     </div>
+  <EventMenu v-if="showEventMenu" />
   </div>
+
 </template>
 <script>
-
+import EventMenu from '@/components/EventMenu.vue';
 import NavigationBar from './components/NavigationBar.vue';
 export default {
   components: {
-    NavigationBar
+    NavigationBar,
+    EventMenu
+  },
+  computed:{
+    showEventMenu(){
+      return this.$route.params.slug;
+    }
   }
 }
 </script>
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Dosis", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -30,52 +38,4 @@ export default {
   font-weight: 400;
   font-style: normal;
 }
-.ubuntu-light {
-  font-family: "Ubuntu", sans-serif;
-  font-weight: 300;
-  font-style: normal;
-}
-
-.ubuntu-regular, p {
-  font-family: "Ubuntu", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.ubuntu-medium {
-  font-family: "Ubuntu", sans-serif;
-  font-weight: 500;
-  font-style: normal;
-}
-
-.ubuntu-bold {
-  font-family: "Ubuntu", sans-serif;
-  font-weight: 700;
-  font-style: normal;
-}
-
-.ubuntu-light-italic {
-  font-family: "Ubuntu", sans-serif;
-  font-weight: 300;
-  font-style: italic;
-}
-
-.ubuntu-regular-italic {
-  font-family: "Ubuntu", sans-serif;
-  font-weight: 400;
-  font-style: italic;
-}
-
-.ubuntu-medium-italic {
-  font-family: "Ubuntu", sans-serif;
-  font-weight: 500;
-  font-style: italic;
-}
-
-.ubuntu-bold-italic {
-  font-family: "Ubuntu", sans-serif;
-  font-weight: 700;
-  font-style: italic;
-}
-
 </style>
