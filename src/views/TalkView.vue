@@ -78,12 +78,18 @@ export default {
         }
     },
     created(){
+        const loggedIn = JSON.parse(localStorage.getItem('user'))?.token;
+        const exp = JSON.parse(localStorage.getItem('user'))?.exp;
+
         TalkService.getTalk(this.$route.params.talkid).then(
             (response) => this.palestra = response
         );
-        TalkService.checkUserVacancy(this.$route.params.talkid).then(
-            (response) => this.participated = response.data.participated.presence? true : false
-        )
+
+        if(loggedIn && DateTime.now() < DateTime.fromISO(exp)){
+            TalkService.checkUserVacancy(this.$route.params.talkid).then(
+                (response) => this.participated = response.data.participated.presence? true : false
+            )
+        }
     }
 }
 </script>
