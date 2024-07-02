@@ -22,7 +22,8 @@ export default {
                 { title: 'Programação', path: '/' + this.$route.params.slug + '/programacao', icon: 'mdi-home'},
                 { title: 'Minha agenda', path: '/' + this.$route.params.slug + '/agenda', icon: 'home'},
                 { title: 'Inscrição', path: '/' + this.$route.params.slug + '/inscricao', icon: 'home'},
-                { title: 'Mercadorias', path: '/' + this.$route.params.slug + '/mercadorias', icon: 'home' }
+                { title: 'Loja', path: '/' + this.$route.params.slug + '/mercadorias', icon: 'home' },
+                { title: 'Avisos', path: '/' + this.$route.params.slug + '/avisos', icon: 'home' }
             ]
         }
     }
@@ -45,5 +46,9 @@ a.router-link-exact-active {
 
 .v-bottom-navigation{
     margin-top: 56px;
+}
+
+.v-btn{
+    height: 56px;
 }
 </style>

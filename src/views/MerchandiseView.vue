@@ -1,11 +1,12 @@
 <template>
     <div>
-        <h1 class="my-4">Mercadorias do evento</h1>
+        <h1 class="mt-4">Mercadorias do evento</h1>
+        <p class="mb-8 font-weight-light">Faça aqui a reserva, retire e pague presencialmente</p>
         <v-card class="mb-4" variant="outlined" v-for="merch in merchandise" :key="merch.id">
             <v-card-item class="text-left">
                 <!-- todo: imagem da mercadoria -->
                 <p class="font-weight-bold my-2">{{ merch.name }}</p>
-                <p class="mb-2">R$ {{ merch.price }}</p>
+                <p class="mb-2">R$ {{ merch.price / 100 }}</p>
                 <p class="mb-2"></p>
                 <v-select v-model="size" placeholder="Escolha o tamanho" variant="outlined" density="compact" :items="['P', 'M', 'G', 'GG']"></v-select>
                 <v-btn variant="flat" color="#9C66BD" block @click="saveMerch(merch.id)">Reservar</v-btn>
