@@ -39,6 +39,12 @@ class EventService{
         .get(API_URL + 'events/' + event_slug + '/notifications', { headers: authHeader() })
         .then(response => response.data)
     }
+
+    isEventStaff(event_slug){
+        return axios
+        .get(API_URL + 'events/' + event_slug + '/staff', { headers: authHeader() })
+        .then(response => response.data)
+    }
 }
 
 export default new EventService();
