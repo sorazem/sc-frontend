@@ -52,6 +52,11 @@ const routes = [
     path: '/:slug/avisos',
     name: 'notices',
     component: () => import('../views/NoticesView.vue')
+  },
+  {
+    path: '/:slug/menu-equipe',
+    name: 'teamMenu',
+    component: () => import('../views/TeamMenuView.vue')
   }
 ]
 

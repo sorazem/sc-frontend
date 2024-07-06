@@ -16,15 +16,25 @@
 </template>
 <script>
 export default {
+    data(){
+        return{}
+    },
     computed:{
         menuItems(){
-            return [
-                { title: 'Programação', path: '/' + this.$route.params.slug + '/programacao', icon: 'mdi-home'},
-                { title: 'Minha agenda', path: '/' + this.$route.params.slug + '/agenda', icon: 'home'},
-                { title: 'Inscrição', path: '/' + this.$route.params.slug + '/inscricao', icon: 'home'},
-                { title: 'Loja', path: '/' + this.$route.params.slug + '/mercadorias', icon: 'home' },
-                { title: 'Avisos', path: '/' + this.$route.params.slug + '/avisos', icon: 'home' }
-            ]
+                return [
+                    { title: 'Programação', path: '/' + this.$route.params.slug + '/programacao', icon: 'mdi-home'},
+                    { title: 'Minha agenda', path: '/' + this.$route.params.slug + '/agenda', icon: 'home'},
+                    { title: 'Inscrição', path: '/' + this.$route.params.slug + '/inscricao', icon: 'home'},
+                    { title: 'Loja', path: '/' + this.$route.params.slug + '/mercadorias', icon: 'home' },
+                    { title: 'Avisos', path: '/' + this.$route.params.slug + '/avisos', icon: 'home' }
+                ]
+            }
+    },
+    created(){
+        let perm = JSON.parse(localStorage.getItem('user'))?.user.permissions & 4;
+        console.log(perm)
+        if(perm){
+            this.menuItems.push({title: 'Equipe', path: '/' + this.$route.params.slug + '/menu-equipe'})
         }
     }
 }

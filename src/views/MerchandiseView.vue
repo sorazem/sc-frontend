@@ -31,7 +31,6 @@ export default {
     created(){
         eventService.getEventMerchandise(this.$route.params.slug).then(
             (response) =>{
-                console.log(response);
                 this.merchandise = response;
             }
         )

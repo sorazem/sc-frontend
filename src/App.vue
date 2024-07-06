@@ -39,7 +39,7 @@ export default {
   },
   computed:{
     showEventMenu(){
-      return this.$route.params.slug;
+      return this.$route.params.slug? true : false;
     },
     menuItems(){
             return [
