@@ -20,13 +20,13 @@ export default {
     data(){
         return{
             menuItems: [
-                    { title: 'Palestrantes', path: '/' + this.$route.params.slug + '/programacao', icon: 'mdi-account-voice'},
-                    { title: 'Palestras', path: '/' + this.$route.params.slug + '/agenda', icon: 'mdi-human-male-board'},
-                    { title: 'Mural de avisos', path: '/' + this.$route.params.slug + '/inscricao', icon: 'mdi-message-outline'},
-                    { title: 'Certificados', path: '/' + this.$route.params.slug + '/mercadorias', icon: 'mdi-file-certificate-outline' },
-                    { title: 'Mercadorias', path: '/' + this.$route.params.slug + '/avisos', icon: 'mdi-package-variant-closed' },
-                    { title: 'Reservas', path: '/' + this.$route.params.slug + '/avisos', icon: 'mdi-shopping-outline' },
-                    { title: 'Auditoria', path: '/' + this.$route.params.slug + '/avisos', icon: 'mdi-file-clock-outline' }
+                    { title: 'Palestrantes', path: '/' + this.$route.params.slug + '/menu-equipe/palestrantes', icon: 'mdi-account-voice'},
+                    { title: 'Palestras', path: '/' + this.$route.params.slug + '/menu-equipe/palestras', icon: 'mdi-human-male-board'},
+                    { title: 'Mural de avisos', path: '/' + this.$route.params.slug + '/menu-equipe/avisos', icon: 'mdi-message-outline'},
+                    { title: 'Certificados', path: '/' + this.$route.params.slug + '/menu-equipe/certificados', icon: 'mdi-file-certificate-outline' },
+                    { title: 'Mercadorias', path: '/' + this.$route.params.slug + '/menu-equipe/mercadorias', icon: 'mdi-package-variant-closed' },
+                    { title: 'Reservas', path: '/' + this.$route.params.slug + '/menu-equipe/reservas', icon: 'mdi-shopping-outline' },
+                    { title: 'Auditoria', path: '/' + this.$route.params.slug + '/menu-equipe/auditoria', icon: 'mdi-file-clock-outline' }
                 ]
         }
     }

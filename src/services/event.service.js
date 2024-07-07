@@ -45,6 +45,11 @@ class EventService{
         .get(API_URL + 'events/' + event_slug + '/staff', { headers: authHeader() })
         .then(response => response.data)
     }
+
+    emitEventCertifications(event_slug){
+        return axios
+        .post(API_URL + 'events/' + event_slug + '/certificates' , {}, { headers: authHeader() })
+    }
 }
 
 export default new EventService();

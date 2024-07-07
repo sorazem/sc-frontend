@@ -57,6 +57,41 @@ const routes = [
     path: '/:slug/menu-equipe',
     name: 'teamMenu',
     component: () => import('../views/TeamMenuView.vue')
+  },
+  {
+    path: '/:slug/menu-equipe/certificados',
+    name: 'teamCertifications',
+    component: () => import('../views/CertificationsTeamView.vue')
+  },
+  {
+    path: '/:slug/menu-equipe/palestrantes',
+    name: 'speakers',
+    component: () => import('../views/SpearkersTeamView.vue')
+  },
+  {
+    path: '/:slug/menu-equipe/palestras',
+    name: 'talks',
+    component: () => import('../views/TalksTeamView.vue')
+  },
+  {
+    path: '/:slug/menu-equipe/avisos',
+    name: 'teamNotices',
+    component: () => import('../views/NoticesTeamView.vue')
+  },
+  {
+    path: '/:slug/menu-equipe/mercadorias',
+    name: 'teamMerchandise',
+    component: () => import('../views/MerchandiseTeamView.vue')
+  },
+  {
+    path: '/:slug/menu-equipe/reservas',
+    name: 'teamReservations',
+    component: () => import('../views/ReservationsTeamView.vue')
+  },
+  {
+    path: '/:slug/menu-equipe/auditoria',
+    name: 'teamAudit',
+    component: () => import('../views/AuditTeamView.vue')
   }
 ]
 

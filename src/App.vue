@@ -20,6 +20,7 @@
 
 </template>
 <script>
+import EventService from './services/event.service';
 import EventMenu from '@/components/EventMenu.vue';
 import NavigationBar from './components/NavigationBar.vue';
 export default {
@@ -35,6 +36,26 @@ export default {
   methods: {
     toggleMenu(){
       this.drawer = !this.drawer;
+    },
+    getMenuItems(){
+      let menu = [
+                { title: 'Programação', path: '/' + this.$route.params.slug + '/programacao', icon: 'mdi-home'},
+                { title: 'Minha agenda', path: '/' + this.$route.params.slug + '/agenda', icon: 'home'},
+                { title: 'Inscrição', path: '/' + this.$route.params.slug + '/inscricao', icon: 'home'},
+                { title: 'Loja', path: '/' + this.$route.params.slug + '/mercadorias', icon: 'home' },
+                { title: 'Avisos', path: '/' + this.$route.params.slug + '/avisos', icon: 'home' }
+      ];
+      if(this.$route.params.slug){
+        EventService.isEventStaff(this.$route.params.slug).then(
+            (response)=>{
+                if(response){
+                    menu.push({title: 'Equipe', path: '/' + this.$route.params.slug + '/menu-equipe'})
+                }
+            },
+            (error)=>{console.log(error)}
+        );
+      }
+      return menu;
     }
   },
   computed:{
@@ -42,14 +63,8 @@ export default {
       return this.$route.params.slug? true : false;
     },
     menuItems(){
-            return [
-                { title: 'Programação', path: '/' + this.$route.params.slug + '/programacao', icon: 'mdi-home'},
-                { title: 'Minha agenda', path: '/' + this.$route.params.slug + '/agenda', icon: 'home'},
-                { title: 'Inscrição', path: '/' + this.$route.params.slug + '/inscricao', icon: 'home'},
-                { title: 'Loja', path: '/' + this.$route.params.slug + '/mercadorias', icon: 'home' },
-                { title: 'Avisos', path: '/' + this.$route.params.slug + '/avisos', icon: 'home' }
-            ]
-        }
+      return this.getMenuItems();
+    }
   }
 }
 </script>
