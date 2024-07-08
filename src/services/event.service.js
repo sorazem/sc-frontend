@@ -34,6 +34,12 @@ class EventService{
         .then(response => response.data)
     }
 
+    deleteMerch(event_slug, merch_id) {
+        return axios
+        .delete(API_URL + 'events/' + event_slug + '/merches/' + merch_id, { headers: authHeader() })
+        .then(response => response.data)
+    }
+
     getEventNotices(event_slug){
         return axios
         .get(API_URL + 'events/' + event_slug + '/notifications', { headers: authHeader() })
