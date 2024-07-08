@@ -29,13 +29,16 @@ export default {
         }
     },
     created(){
-        EventService.isEventStaff(this.$route.params.slug).then(
-            (response)=>{
-                if(response){
+        EventService.isEventStaff(this.$route.params.slug)
+            .then((response)=>{
+                if (response) {
                     this.menuItems.push({title: 'Equipe', path: '/' + this.$route.params.slug + '/menu-equipe'})
                 }
-            }
-        )        
+            }).catch((err) => {
+                if (err.response.status !== 401) {
+                    throw err;
+                }
+            });
     }
 }
 </script>
