@@ -50,6 +50,12 @@ class EventService{
         return axios
         .post(API_URL + 'events/' + event_slug + '/certificates' , {}, { headers: authHeader() })
     }
+
+    deleteEventNotice(event_slug, notification_id) {
+        return axios
+        .delete(API_URL + 'events/' + event_slug + '/notifications/' + notification_id, { headers: authHeader() })
+        .then((response) => response.data);
+    }
 }
 
 export default new EventService();
