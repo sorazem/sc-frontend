@@ -3,9 +3,9 @@
         <v-btn color="#FF7A00" size="large" variant="flat">
             Adicionar palestrante
         </v-btn>
-        <v-card variant="outlined" class="my-8 pa-2 text-left">
-            <v-card-title>Nome do palestrante</v-card-title>
-            <v-card-subtitle class="mb-4">Descrição/bio do palestrante</v-card-subtitle>
+        <v-card variant="outlined" class="my-8 pa-2 text-left" v-for="speaker in speakers" :key="speaker.id">
+            <v-card-title>{{ speaker.name }}</v-card-title>
+            <v-card-subtitle class="mb-4 text-wrap text-subtitle-2">{{ speaker.bio }}</v-card-subtitle>
             <v-card-actions class="d-flex justify-space-evenly">
                 <v-btn text="Editar" variant="flat"></v-btn>
                 <v-btn text="Excluir" variant="text"></v-btn>
@@ -14,8 +14,18 @@
     </div>
 </template>
 <script>
+import eventService from '@/services/event.service';
 export default {
-    
+    data(){
+        return{
+            speakers: []
+        }
+    },
+    mounted(){
+        eventService.getEventSpeakers(this.$route.params.slug).then(
+            (response)=>this.speakers = response
+        )
+    }
 }
 </script>
 <style scoped>

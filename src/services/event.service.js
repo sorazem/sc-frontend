@@ -50,6 +50,24 @@ class EventService{
         return axios
         .post(API_URL + 'events/' + event_slug + '/certificates' , {}, { headers: authHeader() })
     }
+
+    getEventTalks(event_slug){
+        return axios
+        .get(API_URL + 'events/' + event_slug + '/talks', { headers: authHeader() })
+        .then(response => response.data)
+    }
+
+    getEventSpeakers(event_slug){
+        return axios
+        .get(API_URL + 'events/' + event_slug + '/speakers', { headers: authHeader() })
+        .then(response => response.data)
+    }
+
+    deleteEventTalk(talk_id){
+        return axios
+        .delete(API_URL + 'talks/' + talk_id, { headers: authHeader() })
+        .then(response => response.data)
+    }
 }
 
 export default new EventService();
