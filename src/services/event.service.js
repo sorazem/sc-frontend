@@ -86,6 +86,12 @@ class EventService{
         .delete(API_URL + 'speakers/' + speaker_id, { headers: authHeader() })
         .then(response => response.data)
     }
+
+    getEventReservations(event_slug) {
+        return axios
+        .get(API_URL + 'events/' + event_slug + '/reservations', { headers: authHeader() })
+        .then(response => response.data)
+    }
 }
 
 export default new EventService();

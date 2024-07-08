@@ -9,9 +9,9 @@
                 variant="outlined"
                 density="compact"
             ></v-text-field>
-        <v-card variant="outlined" class="my-8 pa-2 text-left">
-            <v-card-title>Nome do usuário</v-card-title>
-            <v-card-subtitle class="mb-4">Nome da mercadoria e preço</v-card-subtitle>
+        <v-card v-for='reservation in filteredReservations' :key='reservation.id' variant="outlined" class="my-8 pa-2 text-left">
+            <v-card-title>{{ reservation.user.name }}</v-card-title>
+            <v-card-subtitle class="mb-4">Reservou {{ reservation.merch.name }} ({{formatPrice(reservation.merch.price)}})</v-card-subtitle>
             <v-card-actions>
                 <v-btn text="Marcar como entregue" variant="text" block></v-btn>
             </v-card-actions>
@@ -19,11 +19,34 @@
     </div>
 </template>
 <script>
+import EventService from '../services/event.service.js';
 export default {
     data(){
         return{
-            nome: null
+            nome: '',
+            reservations: [],
         }
+    },
+
+    methods: {
+        formatPrice(cents){
+            return `R$ ${(cents / 100).toFixed(2)}`;
+        },
+    },
+
+    computed: {
+        filteredReservations() {
+            let query = this.nome.toLowerCase();
+            return this.reservations.filter((reservation) => !query || 
+                reservation.user.name.toLowerCase().includes(query) || 
+                reservation.merch.name.toLowerCase().includes(query))
+        }
+    },
+
+    mounted(){
+        EventService.getEventReservations(this.$route.params.slug).then(
+            (response)=>this.reservations = response
+        )
     }
 }
 </script>
