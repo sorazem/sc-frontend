@@ -80,6 +80,12 @@ class EventService{
         .delete(API_URL + 'events/' + event_slug + '/notifications/' + notification_id, { headers: authHeader() })
         .then((response) => response.data);
     }
+
+    deleteEventSpeaker(speaker_id){
+        return axios
+        .delete(API_URL + 'speakers/' + speaker_id, { headers: authHeader() })
+        .then(response => response.data)
+    }
 }
 
 export default new EventService();

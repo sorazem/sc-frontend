@@ -1,7 +1,7 @@
 <template>
     <v-alert
         :title="message"
-        type="success"
+        :type="alertType"
         v-if="message"
         closable
         class="text-left"

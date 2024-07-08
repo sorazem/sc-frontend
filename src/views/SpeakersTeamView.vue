@@ -1,15 +1,14 @@
 <template>
     <div>
-        <v-snackbar v-model="snackbar" :timeout="2000">{{ message }}</v-snackbar>
         <v-btn color="#FF7A00" size="large" variant="flat">
-            Adicionar palestra
+            Adicionar palestrante
         </v-btn>
-        <v-card variant="outlined" class="my-8 pa-2 text-left" v-for="talk in talks" :key="talk.id">
-            <v-card-title class="text-wrap">{{ talk.title }}</v-card-title>
-            <v-card-subtitle class="mb-4  text-subtitle-2">Palestrante: {{ talk.speaker.name }}</v-card-subtitle>
+        <v-card variant="outlined" class="my-8 pa-2 text-left" v-for="speaker in speakers" :key="speaker.id">
+            <v-card-title>{{ speaker.name }}</v-card-title>
+            <v-card-subtitle class="mb-4 text-wrap text-subtitle-2">{{ speaker.bio }}</v-card-subtitle>
             <v-card-actions class="d-flex justify-space-evenly">
                 <v-btn text="Editar" variant="flat"></v-btn>
-                <v-btn text="Excluir" variant="text" @click="openDialog(talk.id)"></v-btn>
+                <v-btn text="Excluir" variant="text" @click="openDialog(speaker.id)"></v-btn>
             </v-card-actions>
         </v-card>
         <v-dialog
@@ -41,21 +40,20 @@ import eventService from '@/services/event.service';
 export default {
     data(){
         return{
-            talks: [],
+            speakers: [],
             message: '',
             snackbar: false,
-            selectedTalk: null,
+            selectedSpeaker: null,
             dialogDelete: false
         }
     },
     methods:{
         openDialog(id){
             this.dialogDelete = true;
-            this.selectedTalk = id;
+            this.selectedSpeaker = id;
         },
         deleteItem(){
-            console.log(this.selectedTalk);
-            eventService.deleteEventTalk(this.selectedTalk).then(
+            eventService.deleteEventSpeaker(this.selectedSpeaker).then(
                 (response)=>this.message = response.message,
                 (error)=>{
                     this.message = error.message;
@@ -66,8 +64,8 @@ export default {
         }
     },
     mounted(){
-        eventService.getEventTalks(this.$route.params.slug).then(
-            (response)=>this.talks = response
+        eventService.getEventSpeakers(this.$route.params.slug).then(
+            (response)=>this.speakers = response
         )
     }
 }

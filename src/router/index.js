@@ -66,7 +66,7 @@ const routes = [
   {
     path: '/:slug/menu-equipe/palestrantes',
     name: 'speakers',
-    component: () => import('../views/SpearkersTeamView.vue')
+    component: () => import('../views/SpeakersTeamView.vue')
   },
   {
     path: '/:slug/menu-equipe/palestras',
