@@ -13,7 +13,7 @@
             <v-card-title>{{ reservation.user.name }}</v-card-title>
             <v-card-subtitle class="mb-4">Reservou {{ reservation.merch.name }} ({{formatPrice(reservation.merch.price)}})</v-card-subtitle>
             <v-card-actions>
-                <v-btn text="Marcar como entregue" variant="text" block></v-btn>
+                <v-btn :text="reservation.delivered ? 'Entregue' : 'Marcar como entregue'" variant="text" :readonly='reservation.delivered' @click='deliverReservation(reservation)' block></v-btn>
             </v-card-actions>
         </v-card>
     </div>
@@ -32,6 +32,12 @@ export default {
         formatPrice(cents){
             return `R$ ${(cents / 100).toFixed(2)}`;
         },
+
+        deliverReservation(reservation) {
+            EventService.deliverReservation(this.$route.params.slug, reservation.id).then(() => {
+                reservation.delivered = true;
+            })
+        }
     },
 
     computed: {
