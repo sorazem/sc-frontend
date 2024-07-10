@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-snackbar v-model="snackbar" :timeout="2000">{{ message }}</v-snackbar>
-        <v-btn color="#FF7A00" size="large" variant="flat">
+        <v-btn color="#FF7A00" size="large" variant="flat" @click="dialogNew = true">
             Adicionar palestra
         </v-btn>
         <v-card variant="outlined" class="my-8 pa-2 text-left" v-for="talk in talks" :key="talk.id">
@@ -34,10 +34,12 @@
                 </template>
             </v-card>
         </v-dialog>
+        <NewItemDialog v-model="dialogNew" type="palestra" />
     </div>
 </template>
 <script>
 import eventService from '@/services/event.service';
+import NewItemDialog from '@/components/NewItemDialog.vue'
 export default {
     data(){
         return{
@@ -45,8 +47,12 @@ export default {
             message: '',
             snackbar: false,
             selectedTalk: null,
-            dialogDelete: false
+            dialogDelete: false,
+            dialogNew: false
         }
+    },
+    components:{
+        NewItemDialog
     },
     methods:{
         openDialog(id){

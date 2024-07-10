@@ -69,6 +69,24 @@ class EventService{
         .then(response => response.data)
     }
 
+    getTypes(){
+        return axios
+        .get(API_URL + 'type', { headers: authHeader() })
+        .then(response => response.data)
+    }
+
+    getCategories(){
+        return axios
+        .get(API_URL + 'category', { headers: authHeader() })
+        .then(response => response.data)
+    }
+
+    getLocations(){
+        return axios
+        .get(API_URL + 'location', { headers: authHeader() })
+        .then(response => response.data)
+    }
+
     deleteEventTalk(talk_id){
         return axios
         .delete(API_URL + 'talks/' + talk_id, { headers: authHeader() })
