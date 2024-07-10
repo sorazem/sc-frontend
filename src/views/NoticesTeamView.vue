@@ -1,5 +1,6 @@
 <template>
     <div>
+        <v-snackbar v-model="snackbar" :timeout="2000">{{ message }}</v-snackbar>
         <v-btn color="#FF7A00" size="large" variant="flat">
             Adicionar aviso
         </v-btn>
@@ -10,30 +11,50 @@
                 <p>{{ notice.description }}</p>
             </v-card-item>
             <v-card-actions class="float-right">
-                <v-btn text="Excluir" variant="text" @click='deleteNotice(notice)'></v-btn>
+                <v-btn text="Excluir" variant="text" @click='openDialog(notice)'></v-btn>
             </v-card-actions>
         </v-card>
+        <DeleteItemDialog  
+        :showDialog='dialogDelete'
+        @cancel-deletion='dialogDelete = false'
+        @delete-item='deleteNotice(selectedNotice)'
+        />
     </div>
 </template>
 <script>
+import DeleteItemDialog from '../components/DeleteItemDialog.vue'
 import EventService from '../services/event.service.js';
 import { DateTime } from 'luxon';
 export default {
+    components: {
+        DeleteItemDialog 
+    },
     data(){
         return{
-            notices: []
+            notices: [],
+            snackbar: false,
+            dialogDelete: false,
+            selectedNotice: null,
+            message: '',
         }
     },
     methods:{
         formatDate(date){
             return DateTime.fromISO(date).toFormat('dd/MM/yy hh:mm');
         },
+
         deleteNotice(notice) {
             EventService.deleteEventNotice(this.$route.params.slug, notice.id).then((response) => {
-                if (response.message) {
-                    this.notices.splice(this.notices.indexOf(notice), 1);
-                }
+                this.notices.splice(this.notices.indexOf(notice), 1);
+                this.message = response.message;
+                this.snackbar = true;
+                this.dialogDelete = false;
             })
+        },
+
+        openDialog(notice) {
+            this.selectedNotice = notice;
+            this.dialogDelete = true;
         }
     },
     mounted(){
