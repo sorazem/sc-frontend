@@ -1,6 +1,6 @@
 <template>
     <v-sheet class="pa-12" rounded>
-      <v-card class="mx-auto px-6 py-8" elevation="3" max-width="344">
+      <v-card class="mx-auto px-6 py-8" elevation="3">
         <v-form
           v-model="form"
           @submit.prevent = "onSubmit()"

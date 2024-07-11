@@ -116,6 +116,12 @@ class EventService{
         .put(API_URL + 'events/' + event_slug + '/reservations/' + reservation_id, { delivered: true }, { headers: authHeader() })
         .then(response => response.data)
     }
+
+    createTalk(talk_id){
+        return axios
+        .put(API_URL + 'talks/' + talk_id, {}, { headers: authHeader() })
+        .then(response => response.data)
+    }
 }
 
 export default new EventService();

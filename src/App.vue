@@ -89,4 +89,9 @@ a {
 a.router-link-exact-active {
   color: #9C66BD;
 }
+.v-card{
+  width: 320px;
+  border-radius: 16px;
+  border-color: lightgray;
+}
 </style>

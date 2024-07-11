@@ -6,16 +6,16 @@
     </v-row>
     <v-row class="pa-8 align-end">
         <v-col>
-            <p class="purple">{{ startDate }}</p>
-            <p>data</p>
+            <p class="purple">Data</p>
+            <p>{{ startDate }}</p>
         </v-col>
         <v-col>
-            <p class="purple">{{ palestra.location?.name }}</p>
-            <p>local</p>
+            <p class="purple">Local</p>
+            <p>{{ palestra.location?.name }}</p>
         </v-col>
         <v-col>
-            <p class="purple">{{ palestra.vacancy_limit }}</p>
-            <p>vagas</p>
+            <p class="purple">Vagas</p>
+            <p>{{ palestra.vacancy_limit }}</p>
         </v-col>
     </v-row>
     <v-row class="pa-4 text-left flex-column">

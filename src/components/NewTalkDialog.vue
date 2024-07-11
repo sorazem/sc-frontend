@@ -144,12 +144,14 @@ export default {
             return !!v || 'Este campo é obrigatório'
         },
         submit(){
-            console.log(this.start_date)
+            eventService.createTalk().then(
+                (response)=>console.log(response)
+            )
         }
     },
     mounted(){
         eventService.getEventSpeakers(this.$route.params.slug).then(
-            (response)=>this.speakers = response.map(item=>item.name)
+            (response)=>this.speakersList = response.map(item=>item.name)
         );
         eventService.getTypes().then(
             (response)=>this.typeList = response

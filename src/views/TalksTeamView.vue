@@ -34,12 +34,12 @@
                 </template>
             </v-card>
         </v-dialog>
-        <NewItemDialog v-model="dialogNew" type="palestra" />
+        <NewTalkDialog v-model="dialogNew" type="palestra" />
     </div>
 </template>
 <script>
 import eventService from '@/services/event.service';
-import NewItemDialog from '@/components/NewItemDialog.vue'
+import NewTalkDialog from '@/components/NewTalkDialog.vue'
 export default {
     data(){
         return{
@@ -52,7 +52,7 @@ export default {
         }
     },
     components:{
-        NewItemDialog
+        NewTalkDialog
     },
     methods:{
         openDialog(id){

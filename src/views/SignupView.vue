@@ -1,6 +1,6 @@
 <template>
     <v-sheet class="pa-12" rounded>
-      <v-card class="mx-auto px-6 py-8" elevation="3" max-width="344">
+      <v-card class="mx-auto px-6 py-8" elevation="3">
         <v-form
           v-model="form"
           @submit.prevent = "onSubmit()"
@@ -21,6 +21,10 @@
             <div class="text-subtitle-1 text-medium-emphasis text-left">CPF</div>
             <v-text-field
                 v-model="cpf"
+                type="number"
+                hide-spin-buttons
+                hint="Apenas números"
+                persistent-hint
                 :readonly="loading"
                 :rules="[required]"
                 class="mb-2"
@@ -70,9 +74,9 @@
                 prepend-inner-icon="mdi-office-building-outline"
             ></v-combobox>
 
-            <div class="text-subtitle-1 text-medium-emphasis text-left" v-if="instituicao == 'UFRJ'">DRE</div>
+            <div class="text-subtitle-1 text-medium-emphasis text-left" v-if="instituicao == 'UFRJ' && ocupacao == 'Estudante de ensino superior'">DRE</div>
             <v-text-field
-                v-if="instituicao == 'UFRJ'"
+                v-if="instituicao == 'UFRJ' && ocupacao == 'Estudante de ensino superior'"
                 v-model="dre"
                 :readonly="loading"
                 :rules="[required]"
@@ -101,7 +105,22 @@
             <v-text-field
                 v-model="password"
                 :readonly="loading"
-                :rules="[required]"
+                :rules="[required, min6]"
+                placeholder=""
+                variant="outlined"
+                density="compact"
+                prepend-inner-icon="mdi-lock-outline"
+                :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+                :type="visible ? 'text' : 'password'"
+                @click:append-inner="visible = !visible"
+                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            ></v-text-field>
+
+            <div class="text-subtitle-1 text-medium-emphasis text-left">Confirmar senha</div>
+            <v-text-field
+                v-model="confirmPassword"
+                :readonly="loading"
+                :rules="[required, matchingPassword]"
                 placeholder=""
                 variant="outlined"
                 density="compact"
@@ -138,6 +157,7 @@ export default {
             loading: false,
             name: null,
             password: null,
+            confirmPassword: null,
             email: null,
             cpf: null,
             ocupacao: null,
@@ -190,6 +210,12 @@ export default {
       },
       required (v) {
         return !!v || 'Este campo é obrigatório'
+      },
+      min6(v){
+        return v.length >= 6 || 'A senha precisa ter no mínimo 6 caracteres'
+      },
+      matchingPassword(){
+        return this.password == this.confirmPassword || 'As senhas não combinam'
       }
     }
 }
