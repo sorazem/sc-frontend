@@ -117,9 +117,9 @@ class EventService{
         .then(response => response.data)
     }
 
-    createTalk(talk_id){
+    createTalk(body){
         return axios
-        .put(API_URL + 'talks/' + talk_id, {}, { headers: authHeader() })
+        .post(API_URL + 'talks', body, { headers: authHeader() })
         .then(response => response.data)
     }
 }

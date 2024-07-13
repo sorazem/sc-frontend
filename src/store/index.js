@@ -13,7 +13,7 @@ export default createStore({
       state.eventSlug = payload
     },
     addEventToMap(state, payload){
-      state.eventMap.push(payload)
+      state.eventMap[payload.slug] =  payload.id
     }
   },
   actions: {

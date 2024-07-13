@@ -35,6 +35,8 @@
                     density="compact"
                     v-if="type == 'palestra'"
                     :items="speakersList"
+                    item-title="name"
+                    item-value="id"
                 ></v-select>
 
                 <div class="text-subtitle-1 text-medium-emphasis text-left" v-if="type == 'palestra'">Data de início</div>
@@ -70,6 +72,7 @@
                     v-if="type == 'palestra'"
                     :items="locationList"
                     item-title="name"
+                    item-value="id"
                 ></v-select>
 
                 <div class="text-subtitle-1 text-medium-emphasis text-left" v-if="type == 'palestra'">Tipo</div>
@@ -82,6 +85,7 @@
                     v-if="type == 'palestra'"
                     :items="typeList"
                     item-title="name"
+                    item-value="id"
                 >
                     <template v-slot:selection="{ item }">
                         <v-chip :color="item.raw.color">
@@ -100,6 +104,7 @@
                     v-if="type == 'palestra'"
                     :items="categoriesList"
                     item-title="name"
+                    item-value="id"
                     multiple
                 >
                     <template v-slot:selection="{ item }">
@@ -117,6 +122,7 @@
 <script>
 // import { DateTime } from 'luxon';
 import eventService from '@/services/event.service';
+import store from '@/store';
 export default {
     data(){
         return{
@@ -132,7 +138,8 @@ export default {
             typeList: [],
             talkType: null,
             locationList: [],
-            talkLocation: null
+            talkLocation: null,
+            eventId: null
 
         }
     },
@@ -144,14 +151,24 @@ export default {
             return !!v || 'Este campo é obrigatório'
         },
         submit(){
-            eventService.createTalk().then(
+            console.log(this.eventId)
+            eventService.createTalk({title: this.title, description: this.description, start_date: this.start_date, end_date: this.end_date, event_id: this.eventId, speaker_id: this.talkSpeaker, location_id: this.talkLocation, type_id: this.talkType, categories_id: this.talkCategories}).then(
                 (response)=>console.log(response)
             )
         }
     },
     mounted(){
+        if(Object.keys(store.state.eventMap).includes(this.$route.params.slug)){
+            this.eventId = store.state.eventMap[this.$route.params.slug]
+        }
+        else{
+            eventService.getEventSchedule(this.$route.params.slug).then(
+                (response)=>this.eventId = response.id
+            )
+            store.commit('addEventToMap', {slug: this.$route.params.slug, id: this.eventId});
+        }
         eventService.getEventSpeakers(this.$route.params.slug).then(
-            (response)=>this.speakersList = response.map(item=>item.name)
+            (response)=>this.speakersList = response
         );
         eventService.getTypes().then(
             (response)=>this.typeList = response
