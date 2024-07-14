@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-snackbar v-model="snackbar" :timeout="2000">{{ message }}</v-snackbar>
-        <v-btn color="#FF7A00" size="large" variant="flat">
+        <v-btn color="#FF7A00" size="large" variant="flat" @click='dialogNew = true'>
             Adicionar mercadoria
         </v-btn>
         <v-card v-for="merch in merches" :key='merch.id' variant="outlined" class="my-8 pa-2 text-left">
@@ -17,20 +17,24 @@
         @cancel-deletion='dialogDelete = false'
         @delete-item='deleteMerch(selectedMerch)'
         />
+        <NewMerchandiseDialog v-model='dialogNew' @closeDialog='closeDialog'/>
     </div>
 </template>
 <script>
 import DeleteItemDialog from '../components/DeleteItemDialog.vue'
 import EventService from '../services/event.service.js';
+import NewMerchandiseDialog from '../components/NewMerchandiseDialog.vue'
 export default {
     components: {
         DeleteItemDialog,
+        NewMerchandiseDialog,
     },
     data() {
         return {
             merches: [],
             selectedMerch: null,
             dialogDelete: false,
+            dialogNew: false,
             snackbar: false,
             message: '',
         }
@@ -52,6 +56,13 @@ export default {
         openDialog(merch) {
             this.selectedMerch = merch;
             this.dialogDelete = true;
+        },
+
+        closeDialog() {
+            this.dialogNew = false;
+            EventService.getEventMerchandise(this.$route.params.slug).then(
+                (response)=>this.merches = response
+            )
         }
     },
     mounted() {

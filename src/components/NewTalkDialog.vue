@@ -136,7 +136,6 @@ export default {
             locationList: [],
             talkLocation: null,
             event: null
-
         }
     },
     methods:{

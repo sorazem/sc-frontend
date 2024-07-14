@@ -128,6 +128,12 @@ class EventService{
         .post(API_URL + 'speaker', body, { headers: authHeader() })
         .then(response => response.data)
     }
+
+    createMerch(event_slug, body) {
+        return axios
+        .post(API_URL + 'events/' + event_slug + '/merches', body, { headers: authHeader() })
+        .then((response) => response.data);
+    }
 }
 
 export default new EventService();
