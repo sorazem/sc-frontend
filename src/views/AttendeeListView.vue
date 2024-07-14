@@ -23,7 +23,14 @@ export default {
     },
     methods:{
         confirmPresence(){
-            // todo: confirmar presença
+            let main = this.attendeeList.map((item)=>item.id); // array de ids do attendeeList
+            let absence = main.filter((item)=> !this.confirmed.includes(item)); // ids não inclusos em confirmed
+            TalkService.validatePresence(
+                {
+                    talk_id: this.$route.params.talkid, 
+                    presence: this.confirmed, 
+                    absence: absence}
+            )
         }
     },
     created(){

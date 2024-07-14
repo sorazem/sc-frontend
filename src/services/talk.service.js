@@ -25,6 +25,12 @@ class TalkService{
         .get(API_URL + 'talks/' + talk_id + '/staff', { headers: authHeader() })
         .then(response => response.data);
     }
+
+    validatePresence(params){
+        return axios
+        .post(API_URL + 'validate', {}, { headers: authHeader(), params})
+        .then(response => response.data)
+    }
 }
 
 export default new TalkService();
