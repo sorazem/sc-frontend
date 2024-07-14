@@ -34,7 +34,7 @@
                 </template>
             </v-card>
         </v-dialog>
-        <NewTalkDialog v-model="dialogNew" type="palestra" />
+        <NewTalkDialog v-model="dialogNew" @closeDialog="closeDialog" />
     </div>
 </template>
 <script>
@@ -69,6 +69,12 @@ export default {
             );
             this.snackbar = true;
             this.dialogDelete = false;
+        },
+        closeDialog(){
+            this.dialogNew = false;
+            eventService.getEventTalks(this.$route.params.slug).then(
+                (response)=>this.talks = response
+            )
         }
     },
     mounted(){

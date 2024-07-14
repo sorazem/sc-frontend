@@ -19,6 +19,12 @@ class TalkService{
         return axios
         .get(API_URL + 'talks/' + talk_id + '/status', { headers: authHeader() })
     }
+
+    getAttendeeList(talk_id){
+        return axios
+        .get(API_URL + 'talks/' + talk_id + '/staff', { headers: authHeader() })
+        .then(response => response.data);
+    }
 }
 
 export default new TalkService();

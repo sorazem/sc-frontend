@@ -54,7 +54,7 @@ class EventService{
 
     emitEventCertifications(event_slug){
         return axios
-        .post(API_URL + 'events/' + event_slug + '/certificates' , {}, { headers: authHeader() })
+        .post(API_URL + 'certificates' , {}, { headers: authHeader(), params: { emit_from: "event", event_slug } })
     }
 
     getEventTalks(event_slug){
@@ -120,6 +120,12 @@ class EventService{
     createTalk(body){
         return axios
         .post(API_URL + 'talks', body, { headers: authHeader() })
+        .then(response => response.data)
+    }
+
+    createSpeaker(body){
+        return axios
+        .post(API_URL + 'speaker', body, { headers: authHeader() })
         .then(response => response.data)
     }
 }

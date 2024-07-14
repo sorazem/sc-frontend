@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-btn color="#FF7A00" size="large" variant="flat">
+        <v-btn color="#FF7A00" size="large" variant="flat" @click="dialogNew = true">
             Adicionar palestrante
         </v-btn>
         <v-card variant="outlined" class="my-8 pa-2 text-left" v-for="speaker in speakers" :key="speaker.id">
@@ -33,10 +33,12 @@
                 </template>
             </v-card>
         </v-dialog>
+        <NewSpeakerDialog v-model="dialogNew" @closeDialog="closeDialog" />
     </div>
 </template>
 <script>
 import eventService from '@/services/event.service';
+import NewSpeakerDialog from '@/components/NewSpeakerDialog.vue'
 export default {
     data(){
         return{
@@ -44,7 +46,8 @@ export default {
             message: '',
             snackbar: false,
             selectedSpeaker: null,
-            dialogDelete: false
+            dialogDelete: false,
+            dialogNew: false
         }
     },
     methods:{
@@ -61,7 +64,13 @@ export default {
             );
             this.snackbar = true;
             this.dialogDelete = false;
+        },
+        closeDialog(){
+            this.dialogNew = false;
         }
+    },
+    components:{
+        NewSpeakerDialog
     },
     mounted(){
         eventService.getEventSpeakers(this.$route.params.slug).then(

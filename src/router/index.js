@@ -92,6 +92,11 @@ const routes = [
     path: '/:slug/menu-equipe/auditoria',
     name: 'teamAudit',
     component: () => import('../views/AuditTeamView.vue')
+  },
+  {
+    path: '/:slug/palestra/:talkid/lista',
+    name: 'talkAttendeeList',
+    component: () => import('../views/AttendeeListView.vue')
   }
 ]
 

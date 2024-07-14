@@ -18,6 +18,11 @@
             <p>{{ palestra.vacancy_limit }}</p>
         </v-col>
     </v-row>
+    <v-row justify="center" class="my-4">
+        <router-link :to="this.$route.path + '/lista'">
+            <v-btn color="#FF7A00" size="large" variant="flat">Lista de participantes</v-btn>
+        </router-link>
+    </v-row>
     <v-row class="pa-4 text-left flex-column">
         <p class="purple">Descrição</p>
         <p>{{ palestra.description }}</p>

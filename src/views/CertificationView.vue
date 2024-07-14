@@ -1,9 +1,9 @@
 <template>
     <div>
         <h1 class="mt-4">Certificados</h1>
-        <P>Os certificados são enviados após o fim do evento</p>
+        <p>Os certificados são enviados após o fim do evento</p>
         <p class="mb-8">Você participou dos seguintes eventos:</p>
-        <v-card v-for="certification in certifications" :key="certification.title" variant="outlined">
+        <v-card v-for="certification in certifications" :key="certification.title" variant="outlined" class="mb-4">
             <v-card-item>
                 <h3>{{ certification.reason }}</h3>
                 <p class="font-italic">{{ certificationType(certification.type) }}</p>
@@ -18,8 +18,8 @@ export default {
         return{
             certifications: [],
             certificationTypes: {
-                "attendee_participation":"Participante",
-                "staff_participation":"Membro da equipe de organização"
+                attendee_participation:"Participante",
+                staff_participation:"Membro da equipe de organização"
             }
         }
     },
@@ -30,7 +30,10 @@ export default {
     },
     mounted(){
         UserService.getUserCertifications().then(
-            (response)=>this.certifications = response.data
+            (response)=>{
+                this.certifications = response.filter((item) => item.type != 'talk_participation')
+                console.log(this.certifications)
+            }
         )
     }
 }

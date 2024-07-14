@@ -1,10 +1,10 @@
 <template>
     <v-dialog width="auto">
         <v-card
-            :text="'Nova ' + type"
+            :text="'Nova palestra'"
         >
             <v-form v-model="form" class="pa-4" @submit.prevent = "submit()">
-                <div class="text-subtitle-1 text-medium-emphasis text-left" v-if="type == 'palestra'">Título</div>
+                <div class="text-subtitle-1 text-medium-emphasis text-left">Título</div>
                 <v-text-field
                     v-model="title"
                     :rules="[required]"
@@ -12,10 +12,9 @@
                     clearable
                     variant="outlined"
                     density="compact"
-                    v-if="type == 'palestra'"
                 ></v-text-field>
 
-                <div class="text-subtitle-1 text-medium-emphasis text-left" v-if="type == 'palestra'">Descrição</div>
+                <div class="text-subtitle-1 text-medium-emphasis text-left">Descrição</div>
                 <v-text-field
                     v-model="description"
                     :rules="[required]"
@@ -23,23 +22,21 @@
                     clearable
                     variant="outlined"
                     density="compact"
-                    v-if="type == 'palestra'"
                 ></v-text-field>
 
-                <div class="text-subtitle-1 text-medium-emphasis text-left" v-if="type == 'palestra'">Palestrante</div>
+                <div class="text-subtitle-1 text-medium-emphasis text-left">Palestrante</div>
                 <v-select
                     v-model="talkSpeaker"
                     :rules="[required]"
                     class="mb-2"
                     variant="outlined"
                     density="compact"
-                    v-if="type == 'palestra'"
                     :items="speakersList"
                     item-title="name"
                     item-value="id"
                 ></v-select>
 
-                <div class="text-subtitle-1 text-medium-emphasis text-left" v-if="type == 'palestra'">Data de início</div>
+                <div class="text-subtitle-1 text-medium-emphasis text-left">Data de início</div>
                 <v-text-field
                     v-model="start_date"
                     type="datetime-local"
@@ -47,10 +44,11 @@
                     class="mb-2"
                     variant="outlined"
                     density="compact"
-                    v-if="type == 'palestra'"
+                    :min="event.start_date.substring(0, 19)"
+                    :max="event.end_date.substring(0, 19)"
                 ></v-text-field>
 
-                <div class="text-subtitle-1 text-medium-emphasis text-left" v-if="type == 'palestra'">Data de fim</div>
+                <div class="text-subtitle-1 text-medium-emphasis text-left">Data de fim</div>
                 <v-text-field
                     v-model="end_date"
                     type="datetime-local"
@@ -59,30 +57,29 @@
                     clearable
                     variant="outlined"
                     density="compact"
-                    v-if="type == 'palestra'"
+                    :min="event.start_date.substring(0, 19)"
+                    :max="event.end_date.substring(0, 19)"
                 ></v-text-field>
 
-                <div class="text-subtitle-1 text-medium-emphasis text-left" v-if="type == 'palestra'">Local</div>
+                <div class="text-subtitle-1 text-medium-emphasis text-left">Local</div>
                 <v-select
                     v-model="talkLocation"
                     :rules="[required]"
                     class="mb-2"
                     variant="outlined"
                     density="compact"
-                    v-if="type == 'palestra'"
                     :items="locationList"
                     item-title="name"
                     item-value="id"
                 ></v-select>
 
-                <div class="text-subtitle-1 text-medium-emphasis text-left" v-if="type == 'palestra'">Tipo</div>
+                <div class="text-subtitle-1 text-medium-emphasis text-left">Tipo</div>
                 <v-select
                     v-model="talkType"
                     :rules="[required]"
                     class="mb-2"
                     variant="outlined"
                     density="compact"
-                    v-if="type == 'palestra'"
                     :items="typeList"
                     item-title="name"
                     item-value="id"
@@ -94,14 +91,13 @@
                     </template>
                 </v-select>
 
-                <div class="text-subtitle-1 text-medium-emphasis text-left" v-if="type == 'palestra'">Categorias</div>
+                <div class="text-subtitle-1 text-medium-emphasis text-left">Categorias</div>
                 <v-select
                     v-model="talkCategories"
                     :rules="[required]"
                     class="mb-2"
                     variant="outlined"
                     density="compact"
-                    v-if="type == 'palestra'"
                     :items="categoriesList"
                     item-title="name"
                     item-value="id"
@@ -139,34 +135,33 @@ export default {
             talkType: null,
             locationList: [],
             talkLocation: null,
-            eventId: null
+            event: null
 
         }
-    },
-    props:{
-        type: String
     },
     methods:{
         required (v) {
             return !!v || 'Este campo é obrigatório'
         },
         submit(){
-            console.log(this.eventId)
-            eventService.createTalk({title: this.title, description: this.description, start_date: this.start_date, end_date: this.end_date, event_id: this.eventId, speaker_id: this.talkSpeaker, location_id: this.talkLocation, type_id: this.talkType, categories_id: this.talkCategories}).then(
-                (response)=>console.log(response)
+            eventService.createTalk({title: this.title, description: this.description, start_date: this.start_date, end_date: this.end_date, event_id: this.event.id, speaker_id: this.talkSpeaker, location_id: this.talkLocation, type_id: this.talkType, category_ids: this.talkCategories}).then(
+                this.$emit('closeDialog')
             )
         }
     },
     mounted(){
         if(Object.keys(store.state.eventMap).includes(this.$route.params.slug)){
-            this.eventId = store.state.eventMap[this.$route.params.slug]
+            this.event = store.state.eventMap[this.$route.params.slug]
         }
         else{
             eventService.getEventSchedule(this.$route.params.slug).then(
-                (response)=>this.eventId = response.id
+                (response)=>{
+                    store.commit('addEventToMap', {slug: this.$route.params.slug, event: response});
+                    this.event = response;
+                }
             )
-            store.commit('addEventToMap', {slug: this.$route.params.slug, id: this.eventId});
         }
+        console.log(store.state.eventMap);
         eventService.getEventSpeakers(this.$route.params.slug).then(
             (response)=>this.speakersList = response
         );
