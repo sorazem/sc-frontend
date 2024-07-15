@@ -152,6 +152,12 @@ class EventService{
         .post(API_URL + 'categories', body, { headers: authHeader() })
         .then((response) => response.data);
     }
+
+    updateCategory(category) {
+        return axios
+        .put(API_URL + 'categories/' + category.id, category, { headers: authHeader() })
+        .then((response) => response.data);
+    }
 }
 
 export default new EventService();

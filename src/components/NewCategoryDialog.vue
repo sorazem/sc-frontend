@@ -29,6 +29,16 @@
 import eventService from '@/services/event.service';
 import store from '@/store';
 export default {
+    props: ['willCreate', 'selectedCategory'],
+    watch: {
+        selectedCategory: function(newValue) {
+            if (newValue !== null) {
+                this.category = newValue;
+            } else {
+                this.category = { name: null, color: null, event_id: null }
+            }
+        }
+    },
     data() {
         return {
             form: false,
@@ -46,7 +56,11 @@ export default {
         },
         submit(){
             // this.category.event_id = this.event.id;
-            eventService.createCategory(this.$route.params.slug, this.category).then(() => { this.$emit('closeDialog')})
+            if (this.willCreate) {
+                eventService.createCategory(this.$route.params.slug, this.category).then(() => { this.$emit('closeDialog')})
+            } else {
+                eventService.updateCategory(this.$route.params.slug, this.category).then(() => { this.$emit('closeDialog')})
+            }
         }
     },
     mounted() {
