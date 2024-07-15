@@ -57,6 +57,11 @@ class EventService{
         .post(API_URL + 'certificates' , {}, { headers: authHeader(), params: { emit_from: "event", event_slug } })
     }
 
+    emitUserEventCertifications(event_slug, user_id){
+        return axios
+        .post(API_URL + 'certificates' , {}, { headers: authHeader(), params: { emit_from: "user", event_slug, user_id } })
+    }
+
     getEventTalks(event_slug){
         return axios
         .get(API_URL + 'events/' + event_slug + '/talks', { headers: authHeader() })
@@ -174,6 +179,12 @@ class EventService{
     updateCategory(category) {
         return axios
         .put(API_URL + 'categories/' + category.id, category, { headers: authHeader() })
+        .then((response) => response.data);
+    }
+
+    getEventUsers(event_slug) {
+        return axios
+        .get(API_URL + 'events/' + event_slug + '/users', {headers: authHeader()})
         .then((response) => response.data);
     }
 }
