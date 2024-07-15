@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-snackbar v-model="snackbar" :timeout="2000">{{ message }}</v-snackbar>
-        <v-btn color="#FF7A00" size="large" variant="flat">
+        <v-btn color="#FF7A00" size="large" variant="flat" @click='dialogNew = true'>
             Adicionar aviso
         </v-btn>
         <v-card v-for="notice in notices" :key="notice.title" variant="outlined" class="my-8 white-text pa-2 text-left">
@@ -14,26 +14,26 @@
                 <v-btn text="Excluir" variant="text" @click='openDialog(notice)'></v-btn>
             </v-card-actions>
         </v-card>
-        <DeleteItemDialog  
-        :showDialog='dialogDelete'
-        @cancel-deletion='dialogDelete = false'
-        @delete-item='deleteNotice(selectedNotice)'
-        />
+        <DeleteItemDialog :showDialog='dialogDelete' @cancel-deletion='dialogDelete = false' @delete-item='deleteNotice(selectedNotice)' />
+        <NewNoticeDialog v-model='dialogNew' @closeDialog='closeDialog' />
     </div>
 </template>
 <script>
 import DeleteItemDialog from '../components/DeleteItemDialog.vue'
+import NewNoticeDialog from '../components/NewNoticeDialog.vue'
 import EventService from '../services/event.service.js';
 import { DateTime } from 'luxon';
 export default {
     components: {
-        DeleteItemDialog 
+        DeleteItemDialog,
+        NewNoticeDialog,
     },
     data(){
         return{
             notices: [],
             snackbar: false,
             dialogDelete: false,
+            dialogNew: false,
             selectedNotice: null,
             message: '',
         }
@@ -55,6 +55,13 @@ export default {
         openDialog(notice) {
             this.selectedNotice = notice;
             this.dialogDelete = true;
+        },
+
+        closeDialog() {
+            this.dialogNew = false;
+            EventService.getEventNotices(this.$route.params.slug).then(
+                (response)=>this.notices = response
+            )
         }
     },
     mounted(){

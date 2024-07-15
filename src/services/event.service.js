@@ -134,6 +134,24 @@ class EventService{
         .post(API_URL + 'events/' + event_slug + '/merches', body, { headers: authHeader() })
         .then((response) => response.data);
     }
+
+    updateMerch(event_slug, merch) {
+        return axios
+        .put(API_URL + 'events/' + event_slug + '/merches/' + merch.id, merch, { headers: authHeader() })
+        .then((response) => response.data);
+    }
+
+    createNotice(event_slug, body) {
+        return axios
+        .post(API_URL + 'events/' + event_slug + '/notifications', body, { headers: authHeader() })
+        .then((response) => response.data);
+    }
+
+    createCategory(body) {
+        return axios
+        .post(API_URL + 'categories', body, { headers: authHeader() })
+        .then((response) => response.data);
+    }
 }
 
 export default new EventService();
