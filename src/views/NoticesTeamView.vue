@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-snackbar v-model="snackbar" :timeout="2000">{{ message }}</v-snackbar>
-        <v-btn color="#FF7A00" size="large" variant="flat" @click='dialogNew = true'>
+        <v-btn color="#FF7A00" size="large" variant="flat" @click='openNewDialog'>
             Adicionar aviso
         </v-btn>
         <v-card v-for="notice in notices" :key="notice.title" variant="outlined" class="my-8 white-text pa-2 text-left">
@@ -11,11 +11,12 @@
                 <p>{{ notice.description }}</p>
             </v-card-item>
             <v-card-actions class="float-right">
-                <v-btn text="Excluir" variant="text" @click='openDialog(notice)'></v-btn>
+                <v-btn text="Editar" variant="flat" @click='openUpdateDialog(notice)'></v-btn>
+                <v-btn text="Excluir" variant="text" @click='openDeleteDialog(notice)'></v-btn>
             </v-card-actions>
         </v-card>
         <DeleteItemDialog :showDialog='dialogDelete' @cancel-deletion='dialogDelete = false' @delete-item='deleteNotice(selectedNotice)' />
-        <NewNoticeDialog v-model='dialogNew' @closeDialog='closeDialog' />
+        <NewNoticeDialog v-model='dialogNew' @closeDialog='closeDialog' :willCreate='willCreate' :selectedNotice='selectedNotice'/>
     </div>
 </template>
 <script>
@@ -36,6 +37,7 @@ export default {
             dialogNew: false,
             selectedNotice: null,
             message: '',
+            willCreate: true,
         }
     },
     methods:{
@@ -52,9 +54,21 @@ export default {
             })
         },
 
-        openDialog(notice) {
+        openDeleteDialog(notice) {
             this.selectedNotice = notice;
             this.dialogDelete = true;
+        },
+
+        openNewDialog() {
+            this.selectedNotice = null;
+            this.willCreate = true;
+            this.dialogNew = true;
+        },
+
+        openUpdateDialog(notice) {
+            this.selectedNotice = notice;
+            this.willCreate = false;
+            this.dialogNew = true;
         },
 
         closeDialog() {

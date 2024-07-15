@@ -1,6 +1,7 @@
 <template>
     <v-dialog width='auto'>
         <v-card :text="'Novo anúncio'">
+            {{ this.notice }}
             <v-form v-model='form' class='pa-4' @submit.prevent='submit()'>
                 <div class="text-subtitle-1 text-medium-emphasis text-left">Título</div>
                 <v-text-field
@@ -46,6 +47,23 @@
 import eventService from '@/services/event.service';
 import store from '@/store';
 export default {
+    props: ['willCreate', 'selectedNotice'],
+    watch: {
+        selectedNotice: function(newValue) {
+            if (newValue !== null) {
+                this.notice = newValue;
+                if (newValue.talk) {
+                    this.isFromEvent = false
+                    this.notice.talk_id = newValue.talk.id
+                }
+                else {
+                    this.isFromEvent = true
+                } 
+            } else {
+                this.notice = { title: null, description: null, event_id: null, talk_id: null }
+            }
+        }
+    },
     data() {
         return {
             form: false,
@@ -71,7 +89,11 @@ export default {
             } else {
                 delete this.notice.event_id
             }
-            eventService.createNotice(this.$route.params.slug, this.notice).then(() => { this.$emit('closeDialog')})
+            if (this.willCreate) {
+                eventService.createNotice(this.$route.params.slug, this.notice).then(() => { this.$emit('closeDialog')})
+            } else {
+                eventService.updateNotice(this.$route.params.slug, this.notice).then(() => { this.$emit('closeDialog')})
+            }
         }
     },
     mounted() {

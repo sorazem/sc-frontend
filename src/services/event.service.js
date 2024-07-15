@@ -147,6 +147,12 @@ class EventService{
         .then((response) => response.data);
     }
 
+    updateNotice(event_slug, notification) {
+        return axios
+        .put(API_URL + 'events/' + event_slug + '/notifications/' + notification.id, notification, { headers: authHeader() })
+        .then((response) => response.data);
+    }
+
     createCategory(body) {
         return axios
         .post(API_URL + 'categories', body, { headers: authHeader() })
