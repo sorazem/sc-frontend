@@ -1,7 +1,6 @@
 <template>
     <v-dialog width='auto'>
         <v-card :text="'Novo anúncio'">
-            {{ this.notice }}
             <v-form v-model='form' class='pa-4' @submit.prevent='submit()'>
                 <div class="text-subtitle-1 text-medium-emphasis text-left">Título</div>
                 <v-text-field
@@ -51,7 +50,7 @@ export default {
     watch: {
         selectedNotice: function(newValue) {
             if (newValue !== null) {
-                this.notice = newValue;
+                this.notice = { id: newValue.id, title: newValue.title, description: newValue.description };
                 if (newValue.talk) {
                     this.isFromEvent = false
                     this.notice.talk_id = newValue.talk.id
