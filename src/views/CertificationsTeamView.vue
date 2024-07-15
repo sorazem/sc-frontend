@@ -65,7 +65,6 @@ export default {
         },
         emitForUser() {
             this.loading = true;
-            console.log(`passing ${this.$route.params.slug} and ${this.user_id}`)
             EventService.emitUserEventCertifications(this.$route.params.slug, this.user_id).then(
                 (response)=>{
                     this.message = response.data.message;
