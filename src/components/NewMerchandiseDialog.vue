@@ -38,6 +38,16 @@
 import eventService from '@/services/event.service';
 import store from '@/store';
 export default {
+    props: ['willCreate', 'selectedMerch'],
+    watch: {
+        selectedMerch: function (newValue) {
+            if (newValue !== null) {
+                this.merch = newValue;
+            } else {
+                this.merch = { name: null, stock: null, price: null }
+            }
+        },
+    },
     data() {
         return {
             form: false,
@@ -45,7 +55,7 @@ export default {
                 name: null,
                 price: null,
                 stock: null,
-                event_id: null,
+                event_id: null
             },
             event: null,
         }
@@ -56,10 +66,17 @@ export default {
         },
         submit(){
             this.merch.event_id = this.event.id;
-            eventService.createMerch(this.$route.params.slug, this.merch).then(() => { this.$emit('closeDialog')})
+            if (this.willCreate) {
+                eventService.createMerch(this.$route.params.slug, this.merch).then(() => { this.$emit('closeDialog')})
+            } else {
+                eventService.updateMerch(this.$route.params.slug, this.merch).then(() => { this.$emit('closeDialog')})
+            }
         }
     },
     mounted() {
+        if (this.selectedMerch) {
+            this.merch = this.selectedMerch;
+        }
         if(Object.keys(store.state.eventMap).includes(this.$route.params.slug)){
             this.event = store.state.eventMap[this.$route.params.slug]
         }

@@ -1,15 +1,15 @@
 <template>
     <div>
         <v-snackbar v-model="snackbar" :timeout="2000">{{ message }}</v-snackbar>
-        <v-btn color="#FF7A00" size="large" variant="flat" @click='dialogNew = true'>
+        <v-btn color="#FF7A00" size="large" variant="flat" @click='openNewDialog'>
             Adicionar mercadoria
         </v-btn>
         <v-card v-for="merch in merches" :key='merch.id' variant="outlined" class="my-8 pa-2 text-left">
             <v-card-title>{{merch.name}}</v-card-title>
             <v-card-subtitle class="mb-4">{{ formatPrice(merch.price)}}</v-card-subtitle>
             <v-card-actions class="d-flex justify-space-evenly">
-                <v-btn text="Editar" variant="flat"></v-btn>
-                <v-btn text="Excluir" variant="text" @click='openDialog(merch)'></v-btn>
+                <v-btn text="Editar" variant="flat" @click='openUpdateDialog(merch)'></v-btn>
+                <v-btn text="Excluir" variant="text" @click='openDeleteDialog(merch)'></v-btn>
             </v-card-actions>
         </v-card>
         <DeleteItemDialog 
@@ -17,7 +17,7 @@
         @cancel-deletion='dialogDelete = false'
         @delete-item='deleteMerch(selectedMerch)'
         />
-        <NewMerchandiseDialog v-model='dialogNew' @closeDialog='closeDialog'/>
+        <NewMerchandiseDialog v-model='dialogNew' :willCreate='willCreate' :selectedMerch='selectedMerch' @closeDialog='closeNewDialog'/>
     </div>
 </template>
 <script>
@@ -53,12 +53,24 @@ export default {
             return `R$ ${(cents / 100).toFixed(2)}`;
         },
 
-        openDialog(merch) {
+        openDeleteDialog(merch) {
             this.selectedMerch = merch;
             this.dialogDelete = true;
         },
 
-        closeDialog() {
+        openNewDialog() {
+            this.selectedMerch = null;
+            this.willCreate = true;
+            this.dialogNew = true;
+        },
+
+        openUpdateDialog(merch) {
+            this.selectedMerch = merch;
+            this.willCreate = false;
+            this.dialogNew = true;
+        },
+
+        closeNewDialog() {
             this.dialogNew = false;
             EventService.getEventMerchandise(this.$route.params.slug).then(
                 (response)=>this.merches = response
