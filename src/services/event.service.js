@@ -129,6 +129,12 @@ class EventService{
         .then(response => response.data)
     }
 
+    updateSpeaker(speaker){
+        return axios
+        .put(API_URL + 'speaker/' + speaker.id, speaker, { headers: authHeader() })
+        .then(response => response.data)
+    }
+
     createMerch(event_slug, body) {
         return axios
         .post(API_URL + 'events/' + event_slug + '/merches', body, { headers: authHeader() })

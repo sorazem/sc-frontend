@@ -1,14 +1,14 @@
 <template>
     <div>
-        <v-btn color="#FF7A00" size="large" variant="flat" @click="dialogNew = true">
+        <v-btn color="#FF7A00" size="large" variant="flat" @click="openNewDialog">
             Adicionar palestrante
         </v-btn>
         <v-card variant="outlined" class="my-8 pa-2 text-left" v-for="speaker in speakers" :key="speaker.id">
             <v-card-title>{{ speaker.name }}</v-card-title>
             <v-card-subtitle class="mb-4 text-wrap text-subtitle-2">{{ speaker.bio }}</v-card-subtitle>
             <v-card-actions class="d-flex justify-space-evenly">
-                <v-btn text="Editar" variant="flat"></v-btn>
-                <v-btn text="Excluir" variant="text" @click="openDialog(speaker.id)"></v-btn>
+                <v-btn text="Editar" variant="flat" @click="openUpdateDialog(speaker)"></v-btn>
+                <v-btn text="Excluir" variant="text" @click="openDeleteDialog(speaker.id)"></v-btn>
             </v-card-actions>
         </v-card>
         <v-dialog
@@ -33,7 +33,7 @@
                 </template>
             </v-card>
         </v-dialog>
-        <NewSpeakerDialog v-model="dialogNew" @closeDialog="closeDialog" />
+        <NewSpeakerDialog v-model="dialogNew" :willCreate='willCreate' :selectedSpeaker='selectedSpeaker' @closeDialog="closeDialog" />
     </div>
 </template>
 <script>
@@ -47,13 +47,24 @@ export default {
             snackbar: false,
             selectedSpeaker: null,
             dialogDelete: false,
-            dialogNew: false
+            dialogNew: false,
+            willCreate: true,
         }
     },
     methods:{
-        openDialog(id){
+        openDeleteDialog(id){
             this.dialogDelete = true;
             this.selectedSpeaker = id;
+        },
+        openNewDialog() {
+            this.selectedSpeaker = null;
+            this.willCreate = true;
+            this.dialogNew = true;
+        },
+        openUpdateDialog(speaker) {
+            this.selectedSpeaker = speaker;
+            this.willCreate = false;
+            this.dialogNew = true;
         },
         deleteItem(){
             eventService.deleteEventSpeaker(this.selectedSpeaker).then(

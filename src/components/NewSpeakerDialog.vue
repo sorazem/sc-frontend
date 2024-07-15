@@ -24,6 +24,16 @@
                     density="compact"
                 ></v-text-field>
 
+                <div class="text-subtitle-1 text-medium-emphasis text-left">Email</div>
+                <v-text-field
+                    v-model="speaker.email"
+                    :rules="[required]"
+                    class="mb-2"
+                    clearable
+                    variant="outlined"
+                    density="compact"
+                ></v-text-field>
+
                 <v-btn type="submit" :disabled="!form" color="#FF7A00">Enviar</v-btn>
             </v-form>
         </v-card>
@@ -33,6 +43,16 @@
 import eventService from '@/services/event.service';
 import store from '@/store';
 export default {
+    props: ['willCreate', 'selectedSpeaker'],
+    watch: {
+        selectedSpeaker: function(newValue) {
+            if (newValue !== null) {
+                this.speaker = newValue;
+            } else {
+                this.speaker = { name: null, bio: null, email: null } 
+            }
+        }
+    },
     data(){
         return{
             form: false,
@@ -49,9 +69,12 @@ export default {
         },
         submit(){
             this.speaker.event_id = this.event.id;
-            eventService.createSpeaker(this.speaker).then(
-                this.$emit('closeDialog')
-            )
+            delete this.speaker.image;
+            if (this.willCreate) {
+                eventService.createSpeaker(this.speaker).then(this.$emit('closeDialog'))
+            } else {
+                eventService.updateSpeaker(this.speaker).then(this.$emit('closeDialog'))
+            }
         }
     },
     mounted(){
