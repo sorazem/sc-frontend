@@ -101,7 +101,7 @@ class EventService{
 
     deleteEventSpeaker(speaker_id){
         return axios
-        .delete(API_URL + 'speakers/' + speaker_id, { headers: authHeader() })
+        .delete(API_URL + 'speaker/' + speaker_id, { headers: authHeader() })
         .then(response => response.data)
     }
 
