@@ -6,7 +6,7 @@
             <v-form v-model="form" class="pa-4" @submit.prevent = "submit()">
                 <div class="text-subtitle-1 text-medium-emphasis text-left">Título</div>
                 <v-text-field
-                    v-model="title"
+                    v-model="talk.title"
                     :rules="[required]"
                     class="mb-2"
                     clearable
@@ -16,7 +16,7 @@
 
                 <div class="text-subtitle-1 text-medium-emphasis text-left">Descrição</div>
                 <v-text-field
-                    v-model="description"
+                    v-model="talk.description"
                     :rules="[required]"
                     class="mb-2"
                     clearable
@@ -26,7 +26,7 @@
 
                 <div class="text-subtitle-1 text-medium-emphasis text-left">Palestrante</div>
                 <v-select
-                    v-model="talkSpeaker"
+                    v-model="talk.speaker_id"
                     :rules="[required]"
                     class="mb-2"
                     variant="outlined"
@@ -38,7 +38,7 @@
 
                 <div class="text-subtitle-1 text-medium-emphasis text-left">Data de início</div>
                 <v-text-field
-                    v-model="start_date"
+                    v-model="talk.start_date"
                     type="datetime-local"
                     :rules="[required]"
                     class="mb-2"
@@ -50,7 +50,7 @@
 
                 <div class="text-subtitle-1 text-medium-emphasis text-left">Data de fim</div>
                 <v-text-field
-                    v-model="end_date"
+                    v-model="talk.end_date"
                     type="datetime-local"
                     :rules="[required]"
                     class="mb-2"
@@ -63,7 +63,7 @@
 
                 <div class="text-subtitle-1 text-medium-emphasis text-left">Local</div>
                 <v-select
-                    v-model="talkLocation"
+                    v-model="talk.location_id"
                     :rules="[required]"
                     class="mb-2"
                     variant="outlined"
@@ -75,7 +75,7 @@
 
                 <div class="text-subtitle-1 text-medium-emphasis text-left">Tipo</div>
                 <v-select
-                    v-model="talkType"
+                    v-model="talk.type_id"
                     :rules="[required]"
                     class="mb-2"
                     variant="outlined"
@@ -93,7 +93,7 @@
 
                 <div class="text-subtitle-1 text-medium-emphasis text-left">Categorias</div>
                 <v-select
-                    v-model="talkCategories"
+                    v-model="talk.category_ids"
                     :rules="[required]"
                     class="mb-2"
                     variant="outlined"
@@ -120,21 +120,39 @@
 import eventService from '@/services/event.service';
 import store from '@/store';
 export default {
+    props: ['willCreate', 'selectedTalk'],
+    watch: {
+        selectedTalk: function (newValue) {
+            if (newValue !== null) {
+                this.talk = { id: newValue.id, title: newValue.title, description: newValue.description };
+                this.talk.start_date = newValue.start_date.substring(0, 19);
+                this.talk.end_date = newValue.end_date.substring(0, 19);
+                this.talk.speaker_id = newValue.speaker.id;
+                this.talk.type_id = newValue.type.id;
+                this.talk.location_id = newValue.location.id;
+                this.talk.category_ids = newValue.categories.map((category) => category.id);
+            } else {
+                this.talk = { title: null, description: null, start_date: null, end_date: null, speaker_id: null, category_ids: null, type_id: null, location_id: null }
+            }
+        },
+    },
     data(){
         return{
             form: false,
-            title: null,
-            description: null,
-            start_date: null,
-            end_date: null,
+            talk: {
+                title: null,
+                description: null,
+                start_date: null,
+                end_date: null,
+                speaker_id: null,
+                category_ids: null,
+                location_id: null,
+                type_id: null,
+            },
             speakersList: [],
-            talkSpeaker: null,
             categoriesList: [],
-            talkCategories: null,
             typeList: [],
-            talkType: null,
             locationList: [],
-            talkLocation: null,
             event: null
         }
     },
@@ -143,9 +161,11 @@ export default {
             return !!v || 'Este campo é obrigatório'
         },
         submit(){
-            eventService.createTalk({title: this.title, description: this.description, start_date: this.start_date, end_date: this.end_date, event_id: this.event.id, speaker_id: this.talkSpeaker, location_id: this.talkLocation, type_id: this.talkType, category_ids: this.talkCategories}).then(
-                this.$emit('closeDialog')
-            )
+            if (this.willCreate) {
+                eventService.createTalk(this.talk).then(this.$emit('closeDialog'))
+            } else {
+                eventService.updateTalk(this.talk).then(this.$emit('closeDialog'))
+            }
         }
     },
     mounted(){
