@@ -32,7 +32,7 @@
         <v-row class="py-4">
             <v-col cols="4">
                 <v-avatar size="x-large">
-                    <v-img src="../assets/logo.png"></v-img>
+                    <v-img :src="speakerImage"></v-img>
                 </v-avatar>
             </v-col>
             <v-col>
@@ -58,6 +58,7 @@
 <script>
 import { DateTime } from 'luxon';
 import TalkService from '../services/talk.service.js';
+const API_URL = 'http://localhost:3000'
 export default {
     data(){
         return{
@@ -73,6 +74,11 @@ export default {
         },
         rateAvailable(){
             return DateTime.fromISO(this.palestra.start_date) < DateTime.now();
+        },
+        speakerImage(){
+            if (this.palestra.speaker) 
+                return API_URL + this.palestra.speaker?.image_url;
+            else return '';
         }
     },
     methods:{

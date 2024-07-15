@@ -33,7 +33,14 @@
                     variant="outlined"
                     density="compact"
                 ></v-text-field>
-
+                <div class="text-subtitle-1 text-medium-emphasis text-left">Imagem</div>
+                <v-file-input 
+                    v-model="speaker.image"
+                    class="mb-2"
+                    clearable
+                    variant="outlined"
+                    density="compact"
+                ></v-file-input>
                 <v-btn type="submit" :disabled="!form" color="#FF7A00">Enviar</v-btn>
             </v-form>
         </v-card>
@@ -49,7 +56,7 @@ export default {
             if (newValue !== null) {
                 this.speaker = newValue;
             } else {
-                this.speaker = { name: null, bio: null, email: null } 
+                this.speaker = { name: null, bio: null, email: null, image: null } 
             }
         }
     },
@@ -59,6 +66,8 @@ export default {
             speaker: {
                 name: null,
                 bio: null,
+                email: null,
+                image: null,
             },
             event: null,
         }
@@ -69,7 +78,6 @@ export default {
         },
         submit(){
             this.speaker.event_id = this.event.id;
-            delete this.speaker.image;
             if (this.willCreate) {
                 eventService.createSpeaker(this.speaker).then(this.$emit('closeDialog'))
             } else {

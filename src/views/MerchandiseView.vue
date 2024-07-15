@@ -5,6 +5,7 @@
         <v-card class="mb-4" variant="outlined" v-for="merch in merchandise" :key="merch.id">
             <v-card-item class="text-left">
                 <!-- todo: imagem da mercadoria -->
+                <img :src="merchImage(merch)" alt="">
                 <p class="font-weight-bold my-2">{{ merch.name }}</p>
                 <p class="mb-2">R$ {{ merch.price / 100 }}</p>
                 <p class="mb-2"></p>
@@ -16,6 +17,7 @@
 </template>
 <script>
 import eventService from '@/services/event.service';
+const API_URL = 'http://localhost:3000'
 export default {
     data(){
         return{
@@ -26,6 +28,11 @@ export default {
     methods:{
         saveMerch(){
             // todo: send request to event service
+        },
+        merchImage(merch) {
+            if (merch.image_url) {
+                return API_URL + merch.image_url;
+            } else return '';
         }
     },
     created(){
@@ -40,5 +47,8 @@ export default {
 <style scoped>
 .v-card{
     width: 300px;
+}
+img {
+    width: 100%;
 }
 </style>

@@ -29,6 +29,14 @@
                     variant="outlined"
                     density="compact"
                 ></v-text-field>
+                <div class="text-subtitle-1 text-medium-emphasis text-left">Imagem</div>
+                <v-file-input 
+                    v-model="merch.image"
+                    class="mb-2"
+                    clearable
+                    variant="outlined"
+                    density="compact"
+                ></v-file-input>
                 <v-btn type="submit" :disabled="!form" color="#FF7A00">Enviar</v-btn>
             </v-form>
         </v-card>
@@ -44,7 +52,7 @@ export default {
             if (newValue !== null) {
                 this.merch = newValue;
             } else {
-                this.merch = { name: null, stock: null, price: null }
+                this.merch = { name: null, stock: null, price: null, image: null }
             }
         },
     },
@@ -55,7 +63,8 @@ export default {
                 name: null,
                 price: null,
                 stock: null,
-                event_id: null
+                event_id: null,
+                image: null,
             },
             event: null,
         }

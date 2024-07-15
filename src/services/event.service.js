@@ -136,25 +136,25 @@ class EventService{
 
     createSpeaker(body){
         return axios
-        .post(API_URL + 'speaker', body, { headers: authHeader() })
+        .post(API_URL + 'speaker', body, { headers: { ...authHeader(), 'Content-Type': 'multipart/form-data' } })
         .then(response => response.data)
     }
 
     updateSpeaker(speaker){
         return axios
-        .put(API_URL + 'speaker/' + speaker.id, speaker, { headers: authHeader() })
+        .put(API_URL + 'speaker/' + speaker.id, speaker, { headers: { ...authHeader(), 'Content-Type': 'multipart/form-data' } })
         .then(response => response.data)
     }
 
     createMerch(event_slug, body) {
         return axios
-        .post(API_URL + 'events/' + event_slug + '/merches', body, { headers: authHeader() })
+        .post(API_URL + 'events/' + event_slug + '/merches', body, { headers: { ...authHeader(), 'Content-Type': 'multipart/form-data' } })
         .then((response) => response.data);
     }
 
     updateMerch(event_slug, merch) {
         return axios
-        .put(API_URL + 'events/' + event_slug + '/merches/' + merch.id, merch, { headers: authHeader() })
+        .put(API_URL + 'events/' + event_slug + '/merches/' + merch.id, merch, { headers: { ...authHeader(), 'Content-Type': 'multipart/form-data' } })
         .then((response) => response.data);
     }
 
