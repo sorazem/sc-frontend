@@ -58,7 +58,6 @@
 <script>
 import { DateTime } from 'luxon';
 import TalkService from '../services/talk.service.js';
-const API_URL = 'http://localhost:3000'
 export default {
     data(){
         return{
@@ -77,7 +76,7 @@ export default {
         },
         speakerImage(){
             if (this.palestra.speaker) 
-                return API_URL + this.palestra.speaker?.image_url;
+                return `${process.env.VUE_APP_API_URL}${this.palestra.speaker?.image_url}`;
             else return '';
         }
     },

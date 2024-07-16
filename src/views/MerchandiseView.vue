@@ -17,7 +17,6 @@
 </template>
 <script>
 import eventService from '@/services/event.service';
-const API_URL = 'http://localhost:3000'
 export default {
     data(){
         return{
@@ -31,7 +30,7 @@ export default {
         },
         merchImage(merch) {
             if (merch.image_url) {
-                return API_URL + merch.image_url;
+                return `${process.env.VUE_APP_API_URL}${merch.image_url}`;
             } else return '';
         }
     },
