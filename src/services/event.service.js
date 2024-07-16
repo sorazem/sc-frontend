@@ -187,6 +187,12 @@ class EventService{
         .get(API_URL + 'events/' + event_slug + '/users', {headers: authHeader()})
         .then((response) => response.data);
     }
+
+    getAuditLogsFromDay(event_slug, day) {
+        return axios
+        .get(API_URL + 'events/' + event_slug + '/audit', {headers: authHeader(), params: { date: day }})
+        .then((response) => response.data)
+    }
 }
 
 export default new EventService();
