@@ -48,7 +48,6 @@ export default {
       if(this.$route.params.slug){
         EventService.isEventStaff(this.$route.params.slug).then(
             (response)=>{
-              console.log(response)
                 if(response){
                     menu.push({title: 'Equipe', path: '/' + this.$route.params.slug + '/menu-equipe'})
                 }

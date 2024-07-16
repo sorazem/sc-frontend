@@ -1,6 +1,6 @@
 <template>
     <v-layout>
-        <v-toolbar class="pa-2">
+        <v-toolbar class="pa-2" :color="toolbarColor">
             <v-app-bar-nav-icon v-if="showEventMenu" @click="toggleMenu" class="d-flex d-sm-none"></v-app-bar-nav-icon>
             <v-spacer></v-spacer>
             <v-toolbar-title class="mr-4">
@@ -25,6 +25,14 @@ export default {
         showEventMenu(){
             return this.$route.params.slug;
         },
+        toolbarColor(){
+            if(this.$route.path.includes('menu-equipe')){
+                return '#FF7A0022';
+            } 
+            else{
+                return '#9C66BD22';
+            }
+        }
     },
     methods: {
         toggleMenu(){
@@ -40,10 +48,6 @@ export default {
     margin: 0px;
     font-family: "Bebas Neue", sans-serif;
     font-weight: 400;
-}
-
-.v-toolbar{
-    background-color: #9C66BD22;
 }
 
 .v-toolbar-items{

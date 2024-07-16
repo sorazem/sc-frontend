@@ -36,6 +36,15 @@
                     item-value="id"
                 ></v-select>
 
+                <div class="text-subtitle-1 text-medium-emphasis text-left">Vagas</div>
+                <v-text-field
+                    v-model="talk.vacancy_limit"
+                    :rules="[required]"
+                    class="mb-2"
+                    variant="outlined"
+                    density="compact"
+                ></v-text-field>
+
                 <div class="text-subtitle-1 text-medium-emphasis text-left">Data de início</div>
                 <v-text-field
                     v-model="talk.start_date"
@@ -44,8 +53,8 @@
                     class="mb-2"
                     variant="outlined"
                     density="compact"
-                    :min="event.start_date.substring(0, 19)"
-                    :max="event.end_date.substring(0, 19)"
+                    :min="event.start_date.substring(0, 16)"
+                    :max="event.end_date.substring(0, 16)"
                 ></v-text-field>
 
                 <div class="text-subtitle-1 text-medium-emphasis text-left">Data de fim</div>
@@ -57,8 +66,8 @@
                     clearable
                     variant="outlined"
                     density="compact"
-                    :min="event.start_date.substring(0, 19)"
-                    :max="event.end_date.substring(0, 19)"
+                    :min="event.start_date.substring(0, 16)"
+                    :max="event.end_date.substring(0, 16)"
                 ></v-text-field>
 
                 <div class="text-subtitle-1 text-medium-emphasis text-left">Local</div>
@@ -116,7 +125,6 @@
     </v-dialog>
 </template>
 <script>
-// import { DateTime } from 'luxon';
 import eventService from '@/services/event.service';
 import store from '@/store';
 export default {
@@ -148,6 +156,7 @@ export default {
                 category_ids: null,
                 location_id: null,
                 type_id: null,
+                vacancy_limit: null
             },
             speakersList: [],
             categoriesList: [],
@@ -161,6 +170,7 @@ export default {
             return !!v || 'Este campo é obrigatório'
         },
         submit(){
+            this.talk.event_id = this.event.id;
             if (this.willCreate) {
                 eventService.createTalk(this.talk).then(this.$emit('closeDialog'))
             } else {

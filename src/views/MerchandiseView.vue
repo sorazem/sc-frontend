@@ -4,7 +4,6 @@
         <p class="mb-8 font-weight-light">Faça aqui a reserva, retire e pague presencialmente</p>
         <v-card class="mb-4" variant="outlined" v-for="merch in merchandise" :key="merch.id">
             <v-card-item class="text-left">
-                <!-- todo: imagem da mercadoria -->
                 <img :src="merchImage(merch)" alt="">
                 <p class="font-weight-bold my-2">{{ merch.name }}</p>
                 <p class="mb-2">R$ {{ merch.price / 100 }}</p>

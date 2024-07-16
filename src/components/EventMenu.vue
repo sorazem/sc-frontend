@@ -6,7 +6,7 @@
                 :key="item.title"
                 :to="item.path"
             >
-                <v-btn>
+                <v-btn :color="colorBtn">
                     <!-- <v-icon>{{ item.icon }}</v-icon> -->
                     <span>{{ item.title }}</span>
                 </v-btn>
@@ -26,6 +26,16 @@ export default {
                 { title: 'Loja', path: '/' + this.$route.params.slug + '/mercadorias', icon: 'home' },
                 { title: 'Avisos', path: '/' + this.$route.params.slug + '/avisos', icon: 'home' }
             ]
+        }
+    },
+    computed:{
+        colorBtn(){
+            if(this.$route.path.includes('menu-equipe')){
+                return '#FF7A00';
+            } 
+            else{
+                return '#9C66BD';
+            }
         }
     },
     created(){
@@ -51,10 +61,6 @@ a {
 
 span{
     font-size: 0.9em;
-}
-
-a.router-link-exact-active {
-  color: #9C66BD;
 }
 
 .v-bottom-navigation{

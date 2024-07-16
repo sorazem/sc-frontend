@@ -71,7 +71,6 @@ export default {
             this.dialogNew = true;
         },
         deleteItem(){
-            console.log(this.selectedTalk);
             eventService.deleteEventTalk(this.selectedTalk).then(
                 (response)=>this.message = response.message,
                 (error)=>{

@@ -29,16 +29,15 @@
     </v-row>
     <v-row class="pa-4 text-left flex-column">
         <p class="purple">Palestrante</p>
-        <v-row class="py-4">
-            <v-col cols="4">
-                <v-avatar size="x-large">
-                    <v-img :src="speakerImage"></v-img>
-                </v-avatar>
-            </v-col>
-            <v-col>
+        <v-row class="py-4 align-center">
+            <v-avatar v-if="speakerImage != ''">
+                <v-img :src="speakerImage"></v-img>
+            </v-avatar>
+            <v-avatar v-else icon="mdi-account"></v-avatar>
+            <div class="ml-4">
                 <p class="font-weight-bold">{{ palestra.speaker?.name }}</p>
                 <p>{{ palestra.speaker?.bio }}</p>
-            </v-col>
+            </div>
         </v-row>
     </v-row>
     <v-row v-if="rateAvailable && participated" class="pa-4 text-left flex-column mb-8">
@@ -59,7 +58,6 @@
 import { DateTime } from 'luxon';
 import TalkService from '@/services/talk.service.js';
 import EventService from '@/services/event.service.js';
-const API_URL = 'http://localhost:3000'
 export default {
     data(){
         return{
@@ -78,7 +76,7 @@ export default {
             return DateTime.fromISO(this.palestra.start_date) < DateTime.now();
         },
         speakerImage(){
-            if (this.palestra.speaker) 
+            if (this.palestra.speaker?.image_url) 
                 return `${process.env.VUE_APP_API_URL}${this.palestra.speaker?.image_url}`;
             else return '';
         }
@@ -127,9 +125,12 @@ export default {
 .purple{
     color: #9C66BD;
     font-weight: bold;
+    margin-bottom: 4px;
 }
 .v-avatar{
     border: 2px solid #9C66BD;
+    width: 112px;
+    height: 112px;
 }
 .v-row{
     width: 50vw;

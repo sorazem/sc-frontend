@@ -4,6 +4,11 @@
             Adicionar palestrante
         </v-btn>
         <v-card variant="outlined" class="my-8 pa-2 text-left" v-for="speaker in speakers" :key="speaker.id">
+            <div v-if="speaker?.image_url" class="pa-4 d-flex flex-column align-center">
+                <v-avatar>
+                    <v-img :src="speakerImage(speaker)"></v-img>
+                </v-avatar>
+            </div>
             <v-card-title>{{ speaker.name }}</v-card-title>
             <v-card-subtitle class="mb-4 text-wrap text-subtitle-2">{{ speaker.bio }}</v-card-subtitle>
             <v-card-actions class="d-flex justify-space-evenly">
@@ -78,6 +83,11 @@ export default {
         },
         closeDialog(){
             this.dialogNew = false;
+        },
+        speakerImage(speaker){
+            if (speaker?.image_url) 
+                return `${process.env.VUE_APP_API_URL}${speaker?.image_url}`;
+            else return '';
         }
     },
     components:{
@@ -99,5 +109,10 @@ export default {
         width: 320px;
         border-radius: 16px;
         border-color: lightgray;
+    }
+    .v-avatar{
+        width: 112px;
+        height: 112px;
+        display: flex;
     }
 </style>

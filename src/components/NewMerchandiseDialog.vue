@@ -75,6 +75,7 @@ export default {
         },
         submit(){
             this.merch.event_id = this.event.id;
+            this.merch.price = this.merch.price * 100;
             if (this.willCreate) {
                 eventService.createMerch(this.$route.params.slug, this.merch).then(() => { this.$emit('closeDialog')})
             } else {

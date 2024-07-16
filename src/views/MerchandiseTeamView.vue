@@ -5,6 +5,7 @@
             Adicionar mercadoria
         </v-btn>
         <v-card v-for="merch in merches" :key='merch.id' variant="outlined" class="my-8 pa-2 text-left">
+            <img :src="merchImage(merch)" alt="">
             <v-card-title>{{merch.name}}</v-card-title>
             <v-card-subtitle class="mb-4">{{ formatPrice(merch.price)}}</v-card-subtitle>
             <v-card-actions class="d-flex justify-space-evenly">
@@ -40,6 +41,12 @@ export default {
         }
     },
     methods: {
+        merchImage(merch) {
+            if (merch.image_url) {
+                return `${process.env.VUE_APP_API_URL}${merch.image_url}`;
+            } else return '';
+        },
+
         deleteMerch(merch) {
             EventService.deleteMerch(this.$route.params.slug, merch.id).then((response) => {
                 this.merches.splice(this.merches.indexOf(merch),1);
@@ -93,5 +100,8 @@ export default {
         width: 320px;
         border-radius: 16px;
         border-color: lightgray;
+    }
+    img {
+        width: 100%;
     }
 </style>

@@ -43,7 +43,7 @@ export default {
 
         if(loggedIn && DateTime.now() < DateTime.fromISO(exp)){
             TalkService.checkUserVacancy(this.$route.params.talkid).then(
-                (response) => this.participated = response.data.participated.presence? true : false
+                (response) => this.participated = response.data.participated?.presence
             )
 
             TalkService.getAttendeeList(this.$route.params.talkid).then(
