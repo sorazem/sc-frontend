@@ -79,7 +79,7 @@ export default {
         },
         speakerImage(){
             if (this.palestra.speaker) 
-                return API_URL + this.palestra.speaker?.image_url;
+                return `${process.env.VUE_APP_API_URL}${this.palestra.speaker?.image_url}`;
             else return '';
         }
     },

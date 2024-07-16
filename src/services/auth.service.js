@@ -1,11 +1,9 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/';
-
 class AuthService {
   login(user) {
     return axios
-      .post(API_URL + 'login', {
+      .post(process.env.VUE_APP_API_URL + '/login', {
         cpf: user.cpf,
         password: user.password
       })
@@ -23,7 +21,7 @@ class AuthService {
   }
 
   register(user) {
-    return axios.post(API_URL + 'register', {
+    return axios.post(process.env.VUE_APP_API_URL + '/register', {
       name: user.name,
       cpf: user.cpf,
       email: user.email,
