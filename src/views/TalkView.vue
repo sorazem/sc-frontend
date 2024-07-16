@@ -18,7 +18,7 @@
             <p>{{ palestra.vacancy_limit }}</p>
         </v-col>
     </v-row>
-    <v-row justify="center" class="my-4">
+    <v-row v-if="isStaff" justify="center" class="my-4">
         <router-link :to="this.$route.path + '/lista'">
             <v-btn color="#FF7A00" size="large" variant="flat">Lista de participantes</v-btn>
         </router-link>
@@ -57,7 +57,8 @@
 </template>
 <script>
 import { DateTime } from 'luxon';
-import TalkService from '../services/talk.service.js';
+import TalkService from '@/services/talk.service.js';
+import EventService from '@/services/event.service.js';
 const API_URL = 'http://localhost:3000'
 export default {
     data(){
@@ -65,7 +66,8 @@ export default {
             palestra: {},
             score: null,
             message: '',
-            participated: false
+            participated: false,
+            isStaff: false
         }
     },
     computed:{
@@ -103,6 +105,17 @@ export default {
                 }
             )
         }
+
+        EventService.isEventStaff(this.$route.params.slug)
+            .then((response)=>{
+                if (response) {
+                    this.isStaff = true;
+                }
+            }).catch((err) => {
+                if (err.response.status !== 401) {
+                    throw err;
+                }
+            });
     }
 }
 </script>

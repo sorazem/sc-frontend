@@ -31,7 +31,7 @@
                 <p v-for="palestra in confirmed" :key="palestra.id">{{ palestra.talk.title }}</p>
             </v-card-item>
         </v-card>
-        <v-card v-if="denied.length" class="mb-8" variant="tonal" color="error">
+        <v-card v-if="denied.length" variant="tonal" color="error">
             <v-card-title>Infelizmente você não conseguiu vaga nas seguintes palestras</v-card-title>
             <v-card-item>
                 <p v-for="palestra in denied" :key="palestra.id">{{ palestra.talk.title }}</p>
@@ -41,6 +41,7 @@
             color="#9C66BD"
             size="large"
             variant="flat"
+            class="mt-8"
             @click="$router.push('/' + $route.params.slug + '/agenda')"
         >
             Minha agenda
