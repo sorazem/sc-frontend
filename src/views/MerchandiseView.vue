@@ -24,8 +24,12 @@ export default {
         }
     },
     methods:{
-        saveMerch(){
-            // todo: send request to event service
+        saveMerch(merch_id){
+            let user = JSON.parse(localStorage.getItem('user')).user;
+            let payload = { merch_id, user_id: user.id }
+            eventService.createReservation(this.$route.params.slug, payload).then((response) => {
+                console.log(response);
+            })
         },
         merchImage(merch) {
             if (merch.image_url) {
