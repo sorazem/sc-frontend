@@ -191,6 +191,12 @@ class EventService{
         .get(process.env.VUE_APP_API_URL + '/events/' + event_slug + '/audit', {headers: authHeader(), params: { date: day }})
         .then((response) => response.data)
     }
+
+    createReservation(event_slug, body) {
+        return axios
+        .post(process.env.VUE_APP_API_URL + '/events/' + event_slug + '/reservations', body, { headers: authHeader()})
+        .then((response) => response.data);
+    }
 }
 
 export default new EventService();
