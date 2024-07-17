@@ -139,8 +139,9 @@ export default {
                 this.talk.type_id = newValue.type.id;
                 this.talk.location_id = newValue.location.id;
                 this.talk.category_ids = newValue.categories.map((category) => category.id);
+                this.talk.vacancy_limit = newValue.vacancy_limit;
             } else {
-                this.talk = { title: null, description: null, start_date: null, end_date: null, speaker_id: null, category_ids: null, type_id: null, location_id: null }
+                this.talk = { title: null, description: null, start_date: null, end_date: null, speaker_id: null, category_ids: null, type_id: null, location_id: null, vacancy_limit: null }
             }
         },
     },

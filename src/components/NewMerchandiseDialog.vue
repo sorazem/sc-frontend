@@ -11,7 +11,7 @@
                     variant="outlined"
                     density="compact"
                 ></v-text-field>
-                <div class="text-subtitle-1 text-medium-emphasis text-left">Preço</div>
+                <div class="text-subtitle-1 text-medium-emphasis text-left">Preço <span class="text-caption">(Use ponto como separador decimal)</span></div>
                 <v-text-field
                     v-model="merch.price"
                     :rules="[required]"
@@ -50,7 +50,8 @@ export default {
     watch: {
         selectedMerch: function (newValue) {
             if (newValue !== null) {
-                this.merch = newValue;
+                this.merch = {...newValue};
+                this.merch.price = (newValue.price / 100).toFixed(2);
             } else {
                 this.merch = { name: null, stock: null, price: null, image: null }
             }
@@ -105,9 +106,5 @@ export default {
 .v-card{
     width: 320px;
     border-radius: 16px;
-}
-
-span{
-    font-weight: 600;
 }
 </style>
