@@ -15,7 +15,7 @@
         </v-col>
         <v-col>
             <p class="purple">Vagas</p>
-            <p>{{ palestra.vacancy_limit }}</p>
+            <p>{{ freeVacancies }}</p>
         </v-col>
     </v-row>
     <v-row v-if="isStaff" justify="center" class="my-4">
@@ -79,6 +79,10 @@ export default {
             if (this.palestra.speaker?.image_url) 
                 return `${process.env.VUE_APP_API_URL}${this.palestra.speaker?.image_url}`;
             else return '';
+        },
+        freeVacancies() {
+            if (this.palestra.vacancy_limit) { return `${this.palestra.vacancy_limit - this.palestra.participants} / ${this.palestra.vacancy_limit}` }
+            return '';
         }
     },
     methods:{
