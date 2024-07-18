@@ -32,8 +32,7 @@ export default {
         colorBtn(){
             if(this.$route.path.includes('menu-equipe')){
                 return '#FF7A00';
-            } 
-            else{
+            } else {
                 return '#9C66BD';
             }
         }

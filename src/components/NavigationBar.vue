@@ -28,8 +28,9 @@ export default {
         toolbarColor(){
             if(this.$route.path.includes('menu-equipe')){
                 return '#FF7A0022';
-            } 
-            else{
+            } else if (this.$route.path.includes('admin')) {
+                return '#00FF1722';
+            } else {
                 return '#9C66BD22';
             }
         }
