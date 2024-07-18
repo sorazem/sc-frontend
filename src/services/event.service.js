@@ -215,6 +215,24 @@ class EventService{
         .delete(process.env.VUE_APP_API_URL + '/events/' + event.id, { headers: authHeader()})
         .then((response) => response.data);
     }
+
+    createType(type) {
+        return axios
+        .post(process.env.VUE_APP_API_URL + '/type', type, { headers: authHeader()})
+        .then((response) => response.data);
+    }
+
+    updateType(type) {
+        return axios
+        .put(process.env.VUE_APP_API_URL + '/type/' + type.id, type, { headers: authHeader()})
+        .then((response) => response.data);
+    }
+
+    deleteType(type) {
+        return axios
+        .delete(process.env.VUE_APP_API_URL + '/type/' + type.id, { headers: authHeader()})
+        .then((response) => response.data);
+    }
 }
 
 export default new EventService();

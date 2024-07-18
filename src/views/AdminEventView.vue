@@ -38,13 +38,19 @@ export default {
         }
     },
     methods: {
+        updateEvents() {
+            EventService.listEvents().then((events) => this.events = events);
+        },
+
         formatDate(date){
             return DateTime.fromISO(date).toFormat('dd/MM/yy');
         },
 
         deleteEvent(event) {
             EventService.deleteEvent(event).then(() => {
-                EventService.listEvents().then((events) => this.events = events)
+                this.dialogDelete = false;
+                this.selectedEvent = null;
+                this.updateEvents();
             })
         },
 
@@ -67,11 +73,11 @@ export default {
 
         closeNewDialog() {
             this.dialogNew = false;
-            EventService.listEvents().then((events) => this.events = events)
+            this.updateEvents();
         }
     },
     mounted() {
-        EventService.listEvents().then((events) => this.events = events)
+        this.updateEvents();
     }
 }
 </script>
