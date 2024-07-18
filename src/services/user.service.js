@@ -8,6 +8,12 @@ class UserService{
             emit_from: "myself"
         } }).then((response) => response.data)
     }
+
+    isAdmin() {
+        return axios
+        .get(process.env.VUE_APP_API_URL + '/admin', { headers: authHeader() })
+        .then((response) => response.data)
+    }
 }
 
 export default new UserService();

@@ -1,6 +1,27 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import EventsView from '../views/EventsView.vue'
 import { DateTime } from 'luxon'
+import EventService from '../services/event.service';
+import UserService from '../services/user.service';
+
+const loggedInGuard = (to, from, next) => {
+  const user = JSON.parse(localStorage.getItem('user'))
+  if (!user || DateTime.now() >= DateTime.fromISO(user.exp) && to.name !== 'login') {
+    next('/login');
+  } else { next(); }
+}
+
+const eventStaffGuard = async (to, from, next) => {
+  const isStaffFromEvent = await EventService.isEventStaff(to.params.slug)
+  if (isStaffFromEvent) { next(); }
+  else { next(`/${to.params.slug}/programacao`); }
+}
+
+const adminGuard = async (to, from, next) => {
+  const isAdmin = await UserService.isAdmin()
+  if (isAdmin) { next(); }
+  else { next(from); }
+}
 
 const routes = [
   {
@@ -24,100 +45,104 @@ const routes = [
     component: () => import('../views/ScheduleView.vue')
   },
   {
-    path: '/:slug:/inscricao',
-    name: 'enrollment',
-    component: () => import('../views/EnrollmentView.vue')
-  },
-  {
     path: '/:slug/palestra/:talkid',
     name: 'talkDetails',
     component: () => import('../views/TalkView.vue')
   },
   {
+    path: '/:slug:/inscricao',
+    name: 'enrollment',
+    component: () => import('../views/EnrollmentView.vue'),
+    beforeEnter: loggedInGuard,
+  },
+  {
     path: '/:slug/agenda',
     name: 'agenda',
-    component: () => import('../views/AgendaView.vue')
+    component: () => import('../views/AgendaView.vue'),
+    beforeEnter: loggedInGuard,
   },
   {
     path: '/:slug/mercadorias',
     name: 'merchandise',
-    component: () => import('../views/MerchandiseView.vue')
+    component: () => import('../views/MerchandiseView.vue'),
+    beforeEnter: loggedInGuard,
   },
   {
     path: '/certificados',
     name: 'certifications',
-    component: () => import('../views/CertificationView.vue')
+    component: () => import('../views/CertificationView.vue'),
+    beforeEnter: loggedInGuard,
   },
-  {
-    path: '/:slug/avisos',
+  { path: '/:slug/avisos',
     name: 'notices',
-    component: () => import('../views/NoticesView.vue')
+    component: () => import('../views/NoticesView.vue'),
+    beforeEnter: loggedInGuard,
   },
   {
     path: '/:slug/menu-equipe',
     name: 'teamMenu',
-    component: () => import('../views/TeamMenuView.vue')
+    component: () => import('../views/TeamMenuView.vue'),
+    beforeEnter: [loggedInGuard, eventStaffGuard]
   },
   {
     path: '/:slug/menu-equipe/certificados',
     name: 'teamCertifications',
-    component: () => import('../views/CertificationsTeamView.vue')
+    component: () => import('../views/CertificationsTeamView.vue'),
+    beforeEnter: [loggedInGuard, eventStaffGuard]
   },
   {
     path: '/:slug/menu-equipe/palestrantes',
     name: 'speakers',
-    component: () => import('../views/SpeakersTeamView.vue')
+    component: () => import('../views/SpeakersTeamView.vue'),
+    beforeEnter: [loggedInGuard, eventStaffGuard]
   },
   {
     path: '/:slug/menu-equipe/palestras',
     name: 'talks',
-    component: () => import('../views/TalksTeamView.vue')
+    component: () => import('../views/TalksTeamView.vue'),
+    beforeEnter: [loggedInGuard, eventStaffGuard]
   },
   {
     path: '/:slug/menu-equipe/avisos',
     name: 'teamNotices',
-    component: () => import('../views/NoticesTeamView.vue')
+    component: () => import('../views/NoticesTeamView.vue'),
+    beforeEnter: [loggedInGuard, eventStaffGuard]
   },
   {
     path: '/:slug/menu-equipe/mercadorias',
     name: 'teamMerchandise',
-    component: () => import('../views/MerchandiseTeamView.vue')
+    component: () => import('../views/MerchandiseTeamView.vue'),
+    beforeEnter: [loggedInGuard, eventStaffGuard]
   },
   {
     path: '/:slug/menu-equipe/reservas',
     name: 'teamReservations',
-    component: () => import('../views/ReservationsTeamView.vue')
+    component: () => import('../views/ReservationsTeamView.vue'),
+    beforeEnter: [loggedInGuard, eventStaffGuard]
   },
   {
     path: '/:slug/menu-equipe/auditoria',
     name: 'teamAudit',
-    component: () => import('../views/AuditTeamView.vue')
+    component: () => import('../views/AuditTeamView.vue'),
+    beforeEnter: [loggedInGuard, eventStaffGuard]
   },
   {
     path: '/:slug/palestra/:talkid/lista',
     name: 'talkAttendeeList',
-    component: () => import('../views/AttendeeListView.vue')
-  }
+    component: () => import('../views/AttendeeListView.vue'),
+    beforeEnter: [loggedInGuard, eventStaffGuard]
+  },
+  {
+    path: '/admin',
+    name: 'adminMenu',
+    component: () => import('../views/AdminMenuView.vue'),
+    beforeEnter: [loggedInGuard, adminGuard]
+  },
 ]
 
 const router = createRouter({
   history: createWebHistory(),
   routes
 })
-
-router.beforeEach((to, from, next) => {
-  const publicPages = ['login', 'signup', 'events', 'schedule', 'talkDetails'];
-  const authRequired = !publicPages.includes(to.name);
-  const loggedIn = JSON.parse(localStorage.getItem('user'))?.token;
-  const exp = JSON.parse(localStorage.getItem('user'))?.exp;
-
-  // trying to access a restricted page + not logged in
-  // redirect to login page
-  if ((authRequired && !loggedIn) || DateTime.now() >= DateTime.fromISO(exp) && to.name !== 'login') {
-    next('/login');
-  } else {
-    next();
-  }
-});
 
 export default router
