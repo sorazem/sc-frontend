@@ -54,6 +54,14 @@
                     variant="outlined"
                     density="compact"
                 ></v-text-field>
+                <div class="text-subtitle-1 text-medium-emphasis text-left">Imagem de Banner</div>
+                <v-file-input 
+                    v-model="event.banner"
+                    class="mb-2"
+                    clearable
+                    variant="outlined"
+                    density="compact"
+                ></v-file-input>
 
                 <v-btn type="submit" :disabled="!form" color="#00FF1722">Enviar</v-btn>
             </v-form>
@@ -78,6 +86,7 @@ export default {
                     end_date: null,
                     registration_start_date: null,
                     slug: null,
+                    banner: null,
                 }
             }
         },
@@ -100,6 +109,7 @@ export default {
         },
         submit(){
             if (this.willCreate) {
+                if (this.event.slug == null) { delete this.event.slug; }
                 eventService.createEvent(this.event).then(this.$emit('closeDialog'))
             } else {
                 eventService.updateEvent(this.event).then(this.$emit('closeDialog'))
