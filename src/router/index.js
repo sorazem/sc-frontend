@@ -138,6 +138,18 @@ const routes = [
     component: () => import('../views/AdminMenuView.vue'),
     beforeEnter: [loggedInGuard, adminGuard]
   },
+  {
+    path: '/admin/eventos',
+    name: 'adminEvents',
+    component: () => import('../views/AdminEventView.vue'),
+    beforeEnter: [loggedInGuard, adminGuard]
+  },
+  {
+    path: '/admin/tipos',
+    name: 'adminTypes',
+    component: () => import('../views/AdminTypeView.vue'),
+    beforeEnter: [loggedInGuard, adminGuard]
+  },
 ]
 
 const router = createRouter({

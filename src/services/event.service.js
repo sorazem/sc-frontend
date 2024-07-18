@@ -197,6 +197,24 @@ class EventService{
         .post(process.env.VUE_APP_API_URL + '/events/' + event_slug + '/reservations', body, { headers: authHeader()})
         .then((response) => response.data);
     }
+
+    createEvent(event) {
+        return axios
+        .post(process.env.VUE_APP_API_URL + '/events', event, { headers: authHeader()})
+        .then((response) => response.data);
+    }
+
+    updateEvent(event) {
+        return axios
+        .put(process.env.VUE_APP_API_URL + '/events/' + event.id, event, { headers: authHeader()})
+        .then((response) => response.data);
+    }
+
+    deleteEvent(event) {
+        return axios
+        .delete(process.env.VUE_APP_API_URL + '/events/' + event.id, { headers: authHeader()})
+        .then((response) => response.data);
+    }
 }
 
 export default new EventService();
