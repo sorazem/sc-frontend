@@ -233,6 +233,18 @@ class EventService{
         .delete(process.env.VUE_APP_API_URL + '/type/' + type.id, { headers: authHeader()})
         .then((response) => response.data);
     }
+
+    getTeamByEvent(event_slug) {
+        return axios
+        .get(process.env.VUE_APP_API_URL + "/teams/" + event_slug, {headers: authHeader()})
+        .then((response) => response.data);
+    }
+
+    updateTeam(id, user_ids) {
+        return axios
+        .put(process.env.VUE_APP_API_URL + '/teams/' + id, { user_ids}, { headers: authHeader()})
+        .then((response) => response.data);
+    }
 }
 
 export default new EventService();

@@ -13,7 +13,8 @@ const loggedInGuard = (to, from, next) => {
 
 const eventStaffGuard = async (to, from, next) => {
   const isStaffFromEvent = await EventService.isEventStaff(to.params.slug)
-  if (isStaffFromEvent) { next(); }
+  const isAdmin = await UserService.isAdmin()
+  if (isStaffFromEvent || isAdmin) { next(); }
   else { next(`/${to.params.slug}/programacao`); }
 }
 
@@ -124,6 +125,12 @@ const routes = [
     path: '/:slug/menu-equipe/auditoria',
     name: 'teamAudit',
     component: () => import('../views/AuditTeamView.vue'),
+    beforeEnter: [loggedInGuard, eventStaffGuard]
+  },
+  {
+    path: '/:slug/menu-equipe/equipe',
+    name: 'teamAudit',
+    component: () => import('../views/PeopleTeamView.vue'),
     beforeEnter: [loggedInGuard, eventStaffGuard]
   },
   {

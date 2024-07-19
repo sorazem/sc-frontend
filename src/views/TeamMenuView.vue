@@ -26,7 +26,8 @@ export default {
                     { title: 'Certificados', path: '/' + this.$route.params.slug + '/menu-equipe/certificados', icon: 'mdi-file-certificate-outline' },
                     { title: 'Mercadorias', path: '/' + this.$route.params.slug + '/menu-equipe/mercadorias', icon: 'mdi-package-variant-closed' },
                     { title: 'Reservas', path: '/' + this.$route.params.slug + '/menu-equipe/reservas', icon: 'mdi-shopping-outline' },
-                    { title: 'Auditoria', path: '/' + this.$route.params.slug + '/menu-equipe/auditoria', icon: 'mdi-file-clock-outline' }
+                    { title: 'Auditoria', path: '/' + this.$route.params.slug + '/menu-equipe/auditoria', icon: 'mdi-file-clock-outline' },
+                    { title: 'Equipe', path: '/' + this.$route.params.slug + '/menu-equipe/equipe', icon: 'mdi-account-group' }
                 ]
         }
     }
