@@ -55,7 +55,7 @@ export default {
             return !!v || 'Este campo é obrigatório'
         },
         submit(){
-            // this.category.event_id = this.event.id;
+            this.category.event_id = this.event.id;
             if (this.willCreate) {
                 eventService.createCategory(this.$route.params.slug, this.category).then(() => { this.$emit('closeDialog')})
             } else {

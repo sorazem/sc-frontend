@@ -38,6 +38,7 @@ export default {
             dialogNew: false,
             snackbar: false,
             message: '',
+            willCreate: true
         }
     },
     methods: {

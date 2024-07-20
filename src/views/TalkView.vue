@@ -1,6 +1,6 @@
 <template>
     <v-row id="header" class="d-flex flex-column align-end pa-4 text-right">
-        <v-chip density="compact" variant="tonal" v-if="palestra?.category" :color="palestra?.category?.color">{{ palestra?.category?.name }}</v-chip>
+        <v-chip density="compact" variant="tonal" v-for="category in palestra.categories" :key="category.id" :color="category.color">{{ category.name }}</v-chip>
         <h2>{{ palestra?.title }}</h2>
         <p>{{ palestra.type?.name }}</p>
     </v-row>

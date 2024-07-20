@@ -5,7 +5,7 @@
         >
             <v-card-item class="d-flex flex-column">
                 <v-chip density="compact" variant="tonal" v-if="palestra.type" :color="palestra.type.color">{{ palestra.type.name }}</v-chip>
-                <v-chip density="compact" variant="tonal" v-if="palestra.category" :color="palestra.category.color" class="ml-2">{{ palestra.category.name }}</v-chip>
+                <v-chip density="compact" variant="tonal" v-for="category in palestra.categories" :key="category.id" :color="category.color">{{ category.name }}</v-chip>
                 <h2 class="mt-2">{{ palestra.title }}</h2>
                 <div class="text-left mt-4">
                     <p><span>Palestrante:</span> {{ palestra.speaker?.name }}</p>

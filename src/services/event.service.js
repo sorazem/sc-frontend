@@ -78,9 +78,9 @@ class EventService{
         .then(response => response.data)
     }
 
-    getCategories(){
+    getCategories(event_slug){
         return axios
-        .get(process.env.VUE_APP_API_URL + '/category', { headers: authHeader() })
+        .get(process.env.VUE_APP_API_URL + '/events/' + event_slug + '/category', { headers: authHeader() })
         .then(response => response.data)
     }
 
@@ -105,6 +105,12 @@ class EventService{
     deleteEventSpeaker(speaker_id){
         return axios
         .delete(process.env.VUE_APP_API_URL + '/speaker/' + speaker_id, { headers: authHeader() })
+        .then(response => response.data)
+    }
+
+    deleteEventCategory(event_slug, category_id){
+        return axios
+        .delete(process.env.VUE_APP_API_URL + '/events/' + event_slug + '/category/' + category_id, { headers: authHeader() })
         .then(response => response.data)
     }
 
@@ -168,15 +174,15 @@ class EventService{
         .then((response) => response.data);
     }
 
-    createCategory(body) {
+    createCategory(event_slug, body) {
         return axios
-        .post(process.env.VUE_APP_API_URL + '/categories', body, { headers: authHeader() })
+        .post(process.env.VUE_APP_API_URL + '/events/' + event_slug + '/category', body, { headers: authHeader() })
         .then((response) => response.data);
     }
 
-    updateCategory(category) {
+    updateCategory(event_slug, category) {
         return axios
-        .put(process.env.VUE_APP_API_URL + '/categories/' + category.id, category, { headers: authHeader() })
+        .put(process.env.VUE_APP_API_URL + '/events/' + event_slug + '/category/' + category.id, category, { headers: authHeader() })
         .then((response) => response.data);
     }
 

@@ -15,3 +15,9 @@ export default {
     props: ['showDialog'],
 }
 </script>
+<style scoped>
+    .v-card-actions > .v-btn{
+        color: white;
+        background-color: #FF7A00;
+    }
+</style>

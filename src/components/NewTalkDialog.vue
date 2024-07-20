@@ -191,14 +191,13 @@ export default {
                 }
             )
         }
-        console.log(store.state.eventMap);
         eventService.getEventSpeakers(this.$route.params.slug).then(
             (response)=>this.speakersList = response
         );
         eventService.getTypes().then(
             (response)=>this.typeList = response
         );
-        eventService.getCategories().then(
+        eventService.getCategories(this.$route.params.slug).then(
             (response)=>this.categoriesList = response
         );
         eventService.getLocations().then(

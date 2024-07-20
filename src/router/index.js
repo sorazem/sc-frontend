@@ -97,6 +97,11 @@ const routes = [
     path: '/:slug/palestra/:talkid/lista',
     name: 'talkAttendeeList',
     component: () => import('../views/AttendeeListView.vue')
+  },
+  {
+    path: '/:slug/menu-equipe/categorias',
+    name: 'categories',
+    component: () => import('../views/CategoriesTeamView.vue')
   }
 ]
 

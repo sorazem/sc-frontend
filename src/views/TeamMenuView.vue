@@ -3,7 +3,7 @@
         <v-card
             v-for="item in menuItems"
             :key="item.title"
-            class="mb-4 mr-auto"
+            class="mb-4 mr-4"
             variant="tonal"
         >
             <router-link :to="item.path">
@@ -22,6 +22,7 @@ export default {
             menuItems: [
                     { title: 'Palestrantes', path: '/' + this.$route.params.slug + '/menu-equipe/palestrantes', icon: 'mdi-account-voice'},
                     { title: 'Palestras', path: '/' + this.$route.params.slug + '/menu-equipe/palestras', icon: 'mdi-human-male-board'},
+                    { title: 'Categorias', path: '/' + this.$route.params.slug + '/menu-equipe/categorias', icon: 'mdi-tag-outline'},
                     { title: 'Mural de avisos', path: '/' + this.$route.params.slug + '/menu-equipe/avisos', icon: 'mdi-message-outline'},
                     { title: 'Certificados', path: '/' + this.$route.params.slug + '/menu-equipe/certificados', icon: 'mdi-file-certificate-outline' },
                     { title: 'Mercadorias', path: '/' + this.$route.params.slug + '/menu-equipe/mercadorias', icon: 'mdi-package-variant-closed' },
