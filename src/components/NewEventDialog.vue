@@ -1,0 +1,131 @@
+<template>
+    <v-dialog width="auto">
+        <v-card text="Novo evento" >
+            <v-form v-model="form" class="pa-4" @submit.prevent = "submit()">
+                <div class="text-subtitle-1 text-medium-emphasis text-left">Nome</div>
+                <v-text-field
+                    v-model="event.name"
+                    :rules="[required]"
+                    class="mb-2"
+                    clearable
+                    variant="outlined"
+                    density="compact"
+                ></v-text-field>
+
+                <div class="text-subtitle-1 text-medium-emphasis text-left">Slug</div>
+                <p>É a parte que aparece na URL do evento quando o usuário acessa a plataforma. Se deixada em branco, ela por padrão será gerada como uma versão urlficada do nome.</p>
+                <v-text-field
+                    v-model="event.slug"
+                    class="mb-2"
+                    clearable
+                    variant="outlined"
+                    density="compact"
+                ></v-text-field>
+
+                <div class="text-subtitle-1 text-medium-emphasis text-left">Data de início</div>
+                <v-text-field
+                    v-model="event.start_date"
+                    type="datetime-local"
+                    :rules="[required]"
+                    class="mb-2"
+                    variant="outlined"
+                    density="compact"
+                ></v-text-field>
+
+                <div class="text-subtitle-1 text-medium-emphasis text-left">Data de fim</div>
+                <v-text-field
+                    v-model="event.end_date"
+                    type="datetime-local"
+                    :rules="[required]"
+                    class="mb-2"
+                    clearable
+                    variant="outlined"
+                    density="compact"
+                    :min="event.start_date"
+                ></v-text-field>
+
+                <div class="text-subtitle-1 text-medium-emphasis text-left">Data de começo das inscrições</div>
+                <v-text-field
+                    v-model="event.registration_start_date"
+                    type="datetime-local"
+                    :rules="[required]"
+                    class="mb-2"
+                    clearable
+                    variant="outlined"
+                    density="compact"
+                ></v-text-field>
+                <div class="text-subtitle-1 text-medium-emphasis text-left">Imagem de Banner</div>
+                <v-file-input 
+                    v-model="event.banner"
+                    class="mb-2"
+                    clearable
+                    variant="outlined"
+                    density="compact"
+                ></v-file-input>
+
+                <v-btn type="submit" :disabled="!form" color="#00FF1722">Enviar</v-btn>
+            </v-form>
+        </v-card>
+    </v-dialog>
+</template>
+<script>
+import eventService from '@/services/event.service';
+export default {
+    props: ['willCreate', 'selectedEvent'],
+    watch: {
+        selectedEvent: function (newValue) {
+            if (newValue !== null) {
+                this.event = { ...newValue };
+                this.event.start_date = newValue.start_date.substring(0, 19);
+                this.event.end_date = newValue.end_date.substring(0, 19);
+                this.event.registration_start_date = newValue.registration_start_date.substring(0, 19);
+            } else {
+                this.event = {
+                    name: null,
+                    start_date: null,
+                    end_date: null,
+                    registration_start_date: null,
+                    slug: null,
+                    banner: null,
+                }
+            }
+        },
+    },
+    data(){
+        return{
+            form: false,
+            event: {
+                name: null,
+                slug: null,
+                start_date: null,
+                end_date: null,
+                registration_start_date: null,
+            },
+        }
+    },
+    methods:{
+        required (v) {
+            return !!v || 'Este campo é obrigatório'
+        },
+        submit(){
+            if (this.willCreate) {
+                if (this.event.slug == null) { delete this.event.slug; }
+                eventService.createEvent(this.event).then(this.$emit('closeDialog'))
+            } else {
+                eventService.updateEvent(this.event).then(this.$emit('closeDialog'))
+            }
+        }
+    },
+}
+</script>
+<style scoped>
+    .v-card{
+        width: 320px;
+        border-radius: 16px;
+    }
+
+    span{
+        font-weight: 600;
+    }
+</style>
+

@@ -203,6 +203,54 @@ class EventService{
         .post(process.env.VUE_APP_API_URL + '/events/' + event_slug + '/reservations', body, { headers: authHeader()})
         .then((response) => response.data);
     }
+
+    createEvent(event) {
+        return axios
+        .post(process.env.VUE_APP_API_URL + '/events', event, { headers: authHeader()})
+        .then((response) => response.data);
+    }
+
+    updateEvent(event) {
+        return axios
+        .put(process.env.VUE_APP_API_URL + '/events/' + event.id, event, { headers: authHeader()})
+        .then((response) => response.data);
+    }
+
+    deleteEvent(event) {
+        return axios
+        .delete(process.env.VUE_APP_API_URL + '/events/' + event.id, { headers: authHeader()})
+        .then((response) => response.data);
+    }
+
+    createType(type) {
+        return axios
+        .post(process.env.VUE_APP_API_URL + '/type', type, { headers: authHeader()})
+        .then((response) => response.data);
+    }
+
+    updateType(type) {
+        return axios
+        .put(process.env.VUE_APP_API_URL + '/type/' + type.id, type, { headers: authHeader()})
+        .then((response) => response.data);
+    }
+
+    deleteType(type) {
+        return axios
+        .delete(process.env.VUE_APP_API_URL + '/type/' + type.id, { headers: authHeader()})
+        .then((response) => response.data);
+    }
+
+    getTeamByEvent(event_slug) {
+        return axios
+        .get(process.env.VUE_APP_API_URL + "/teams/" + event_slug, {headers: authHeader()})
+        .then((response) => response.data);
+    }
+
+    updateTeam(id, user_ids, slug) {
+        return axios
+        .put(process.env.VUE_APP_API_URL + '/teams/' + id, { user_ids}, { headers: authHeader(), params: { slug }})
+        .then((response) => response.data);
+    }
 }
 
 export default new EventService();

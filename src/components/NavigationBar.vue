@@ -1,12 +1,19 @@
 <template>
     <v-layout>
         <v-toolbar class="pa-2" :color="toolbarColor">
-            <v-app-bar-nav-icon v-if="showEventMenu" @click="toggleMenu" class="d-flex d-sm-none"></v-app-bar-nav-icon>
-            <v-spacer></v-spacer>
-            <v-toolbar-title class="mr-4">
-                <router-link to="/">Venti</router-link>
-            </v-toolbar-title>
-            <!-- <v-spacer></v-spacer> -->
+            <v-row>
+                <v-col cols='3' class="d-flex align-center justify-center">
+                    <v-app-bar-nav-icon v-if="showEventMenu" @click="toggleMenu" class="d-flex d-sm-none"></v-app-bar-nav-icon>
+                </v-col>
+                <v-col cols='6' class="d-flex align-center justify-center">
+                    <v-toolbar-title>
+                        <router-link to="/">Venti</router-link>
+                    </v-toolbar-title>
+                </v-col>
+                <v-col cols='3' class="d-flex align-center justify-center">
+                    <v-btn v-if="loggedIn" variant='flat' @click='logout'>Logout</v-btn>
+                </v-col>
+            </v-row>
         </v-toolbar>
     </v-layout>
 </template>
@@ -28,15 +35,23 @@ export default {
         toolbarColor(){
             if(this.$route.path.includes('menu-equipe')){
                 return '#FF7A0022';
-            } 
-            else{
+            } else if (this.$route.path.includes('admin')) {
+                return '#00FF1722';
+            } else {
                 return '#9C66BD22';
             }
+        },
+        loggedIn() {
+            return localStorage.getItem("user")
         }
     },
     methods: {
         toggleMenu(){
             this.$emit('toggleMenu');
+        },
+        logout() {
+            localStorage.removeItem('user');
+            this.$router.push('/login');
         }
     },
 }
