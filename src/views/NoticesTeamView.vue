@@ -16,7 +16,7 @@
             </v-card-actions>
         </v-card>
         <DeleteItemDialog :showDialog='dialogDelete' @cancel-deletion='dialogDelete = false' @delete-item='deleteNotice(selectedNotice)' />
-        <NewNoticeDialog v-model='dialogNew' @closeDialog='closeDialog' :willCreate='willCreate' :selectedNotice='selectedNotice'/>
+        <NewNoticeDialog v-model='dialogNew' @closeDialog='closeDialog' :willCreate='willCreate' :selectedNotice='selectedNotice' @changeMessage='changeMessage'/>
     </div>
 </template>
 <script>
@@ -76,6 +76,10 @@ export default {
             EventService.getEventNotices(this.$route.params.slug).then(
                 (response)=>this.notices = response
             )
+        },
+        changeMessage(message){
+            this.message = message;
+            this.snackbar = true;
         }
     },
     mounted(){

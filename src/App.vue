@@ -9,11 +9,9 @@
         </v-list-item>
     </v-navigation-drawer>
   </v-layout>
-  <div class="container pa-3 mb-14">
-    <div class="row d-flex justify-center">
-      <div class="col-md-12">
-        <router-view/>
-      </div>
+  <div class="container pa-4 mb-14">
+    <div class="row d-flex flex-column align-center">
+      <router-view/>
     </div>
   <EventMenu v-if="showEventMenu" class="d-none d-sm-flex"/>
   </div>
@@ -93,5 +91,13 @@ a.router-link-exact-active {
   width: 320px;
   border-radius: 16px;
   border-color: lightgray;
+}
+.content{
+  width: 60vw;
+}
+@media screen and (max-width: 700px)  {
+  .content{
+    width: 100vw;
+  }
 }
 </style>

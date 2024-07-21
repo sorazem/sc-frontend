@@ -78,9 +78,33 @@ export default {
             this.merch.event_id = this.event.id;
             this.merch.price = this.merch.price * 100;
             if (this.willCreate) {
-                eventService.createMerch(this.$route.params.slug, this.merch).then(() => { this.$emit('closeDialog')})
+                eventService.createMerch(this.$route.params.slug, this.merch)
+                .then(
+                    () => {
+                        this.$emit('changeMessage', "Criação feita com sucesso.");
+                        this.$emit('closeDialog');
+                    }
+                )
+                .catch(
+                    (error) => {
+                        this.$emit('changeMessage', error.message);
+                        this.$emit('closeDialog');
+                    }
+                )
             } else {
-                eventService.updateMerch(this.$route.params.slug, this.merch).then(() => { this.$emit('closeDialog')})
+                eventService.updateMerch(this.$route.params.slug, this.merch)
+                .then(
+                    () => {
+                        this.$emit('changeMessage', "Alteração feita com sucesso.");
+                        this.$emit('closeDialog');
+                    }
+                )
+                .catch(
+                    (error) => {
+                        this.$emit('changeMessage', error.message);
+                        this.$emit('closeDialog');
+                    }
+                )
             }
         }
     },

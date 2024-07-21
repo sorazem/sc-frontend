@@ -29,6 +29,12 @@ class TalkService{
         .post(process.env.VUE_APP_API_URL + '/validate', {}, { headers: authHeader(), params})
         .then(response => response.data)
     }
+
+    cancelVacancy(vacancy_id, event_slug){
+        return axios
+        .delete(process.env.VUE_APP_API_URL + '/vacancies/' + vacancy_id, { headers: authHeader(), params:{ event_slug } })
+        .then(response => response.data)
+    }
 }
 
 export default new TalkService();

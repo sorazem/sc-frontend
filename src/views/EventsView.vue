@@ -1,8 +1,8 @@
 <template>
-    <h1>Eventos</h1>
-    <div class="d-flex flex-wrap justify-space-between align-center pa-4">
+    <!-- <h1>Eventos</h1> -->
+    <div class="content d-flex flex-wrap justify-space-between align-content-space-between pa-4">
         <v-card 
-            class="pa-4 ma-8" 
+            class="pa-4 mb-8" 
             v-for="event in events" 
             variant="outlined" 
             :key="event.slug"

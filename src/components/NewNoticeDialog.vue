@@ -89,9 +89,33 @@ export default {
                 delete this.notice.event_id
             }
             if (this.willCreate) {
-                eventService.createNotice(this.$route.params.slug, this.notice).then(() => { this.$emit('closeDialog')})
+                eventService.createNotice(this.$route.params.slug, this.notice)
+                .then(
+                    () => {
+                        this.$emit('changeMessage', "Criação feita com sucesso.");
+                        this.$emit('closeDialog');
+                    }
+                )
+                .catch(
+                    (error) => {
+                        this.$emit('changeMessage', error.message);
+                        this.$emit('closeDialog');
+                    }
+                )
             } else {
-                eventService.updateNotice(this.$route.params.slug, this.notice).then(() => { this.$emit('closeDialog')})
+                eventService.updateNotice(this.$route.params.slug, this.notice)
+                .then(
+                    () => {
+                        this.$emit('changeMessage', "Alteração feita com sucesso.");
+                        this.$emit('closeDialog');
+                    }
+                )
+                .catch(
+                    (error) => {
+                        this.$emit('changeMessage', error.message);
+                        this.$emit('closeDialog');
+                    }
+                )
             }
         }
     },

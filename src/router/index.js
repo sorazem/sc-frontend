@@ -123,6 +123,12 @@ const routes = [
     beforeEnter: [loggedInGuard, eventStaffGuard]
   },
   {
+    path: '/:slug/menu-equipe/categorias',
+    name: 'teamCategories',
+    component: () => import('../views/CategoriesTeamView.vue'),
+    beforeEnter: [loggedInGuard, eventStaffGuard]
+  },
+  {
     path: '/:slug/menu-equipe/reservas',
     name: 'teamReservations',
     component: () => import('../views/ReservationsTeamView.vue'),

@@ -53,8 +53,8 @@
                     class="mb-2"
                     variant="outlined"
                     density="compact"
-                    :min="talk.start_date?.substring(0, 16)"
-                    :max="talk.end_date?.substring(0, 16)"
+                    :min="event.start_date?.substring(0, 16)"
+                    :max="event.end_date?.substring(0, 16)"
                 ></v-text-field>
 
                 <div class="text-subtitle-1 text-medium-emphasis text-left">Data de fim</div>
@@ -66,8 +66,8 @@
                     clearable
                     variant="outlined"
                     density="compact"
-                    :min="talk.start_date?.substring(0, 16)"
-                    :max="talk.end_date?.substring(0, 16)"
+                    :min="event.start_date?.substring(0, 16)"
+                    :max="event.end_date?.substring(0, 16)"
                 ></v-text-field>
 
                 <div class="text-subtitle-1 text-medium-emphasis text-left">Local</div>
@@ -128,7 +128,7 @@
 import eventService from '@/services/event.service';
 import store from '@/store';
 export default {
-    props: ['willCreate', 'selectedTalk', "message"],
+    props: ['willCreate', 'selectedTalk'],
     watch: {
         selectedTalk: function (newValue) {
             if (newValue !== null) {

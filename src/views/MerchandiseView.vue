@@ -6,9 +6,9 @@
             <v-card-item class="text-left">
                 <img :src="merchImage(merch)" alt="">
                 <p class="font-weight-bold my-2">{{ merch.name }}</p>
-                <p class="mb-2">R$ {{ merch.price / 100 }}</p>
+                <p class="mb-2">{{ formatPrice(merch.price)}}</p>
                 <p class="mb-2"></p>
-                <v-select v-model="size" placeholder="Escolha o tamanho" variant="outlined" density="compact" :items="['P', 'M', 'G', 'GG']"></v-select>
+                <!-- <v-select v-model="size" placeholder="Escolha o tamanho" variant="outlined" density="compact" :items="['P', 'M', 'G', 'GG']"></v-select> -->
                 <v-btn variant="flat" color="#9C66BD" block @click="saveMerch(merch.id)">Reservar</v-btn>
             </v-card-item>
         </v-card>
@@ -31,6 +31,9 @@ export default {
                 console.log(response);
             })
         },
+        formatPrice(cents) {
+            return `R$ ${(cents / 100).toFixed(2)}`;
+        },
         merchImage(merch) {
             if (merch.image_url) {
                 return `${process.env.VUE_APP_API_URL}${merch.image_url}`;
@@ -40,6 +43,7 @@ export default {
     created(){
         eventService.getEventMerchandise(this.$route.params.slug).then(
             (response) =>{
+                console.log(response)
                 this.merchandise = response;
             }
         )

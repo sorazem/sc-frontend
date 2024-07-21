@@ -17,7 +17,7 @@
         @cancel-deletion='dialogDelete = false'
         @delete-item='deleteCategory(selectedCategory)'
         />
-        <NewCategoryDialog v-model='dialogNew' :willCreate='willCreate' :selectedCategory='selectedCategory' @closeDialog='closeNewDialog'/>
+        <NewCategoryDialog v-model='dialogNew' :willCreate='willCreate' :selectedCategory='selectedCategory' @closeDialog='closeNewDialog' @changeMessage="changeMessage"/>
     </div>
 </template>
 <script>
@@ -72,6 +72,10 @@ export default {
             EventService.getCategories(this.$route.params.slug).then(
                 (response)=>this.categories = response
             )
+        },
+        changeMessage(message){
+            this.message = message;
+            this.snackbar = true;
         }
     },
     mounted(){

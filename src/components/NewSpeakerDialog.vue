@@ -79,9 +79,33 @@ export default {
         submit(){
             this.speaker.event_id = this.event.id;
             if (this.willCreate) {
-                eventService.createSpeaker(this.speaker).then(this.$emit('closeDialog'))
+                eventService.createSpeaker(this.speaker, this.$route.params.slug)
+                .then(
+                    () => {
+                        this.$emit('changeMessage', "Criação feita com sucesso.");
+                        this.$emit('closeDialog');
+                    }
+                )
+                .catch(
+                    (error) => {
+                        this.$emit('changeMessage', error.message);
+                        this.$emit('closeDialog');
+                    }
+                )
             } else {
-                eventService.updateSpeaker(this.speaker).then(this.$emit('closeDialog'))
+                eventService.updateSpeaker(this.speaker, this.$route.params.slug)
+                .then(
+                    () => {
+                        this.$emit('changeMessage', "Alteração feita com sucesso.");
+                        this.$emit('closeDialog');
+                    }
+                )
+                .catch(
+                    (error) => {
+                        this.$emit('changeMessage', error.message);
+                        this.$emit('closeDialog');
+                    }
+                )
             }
         }
     },

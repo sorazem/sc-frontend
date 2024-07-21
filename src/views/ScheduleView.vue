@@ -1,7 +1,7 @@
 <template>
-  <v-select label="Dia" v-model="diaAtual" :items="dias" density="compact" variant="outlined" class="mt-4"></v-select>
-  <div class="d-flex flex-column justify-space-between align-center">
-      <TalkCard v-for="palestra in palestras[diaAtual]" :palestra="palestra" :key="palestra.title" :href="'/' + this.$route.params.slug + '/palestra/' + palestra.id"/>
+  <div class="content d-flex flex-column align-center">
+    <v-select label="Dia" v-model="diaAtual" :items="dias" density="compact" variant="outlined" class="mt-4"></v-select>
+    <TalkCard v-for="palestra in palestras[diaAtual]" :palestra="palestra" :key="palestra.title" :href="'/' + this.$route.params.slug + '/palestra/' + palestra.id"/>
   </div>
   <!-- <EventMenu /> -->
 </template>
@@ -47,5 +47,8 @@ import EventService from '../services/event.service.js';
   }
   p{
     font-size: 0.85rem;
+  }
+  .v-select{
+    width: 320px;
   }
   </style>

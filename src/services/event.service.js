@@ -102,9 +102,9 @@ class EventService{
         .then((response) => response.data);
     }
 
-    deleteEventSpeaker(speaker_id){
+    deleteEventSpeaker(speaker_id, event_slug){
         return axios
-        .delete(process.env.VUE_APP_API_URL + '/speaker/' + speaker_id, { headers: authHeader() })
+        .delete(process.env.VUE_APP_API_URL + '/speaker/' + speaker_id, { headers: authHeader(), params: {event_slug} })
         .then(response => response.data)
     }
 
@@ -138,15 +138,15 @@ class EventService{
         .then(response => response.data)
     }
 
-    createSpeaker(body){
+    createSpeaker(body, event_slug){
         return axios
-        .post(process.env.VUE_APP_API_URL + '/speaker', body, { headers: { ...authHeader(), 'Content-Type': 'multipart/form-data' } })
+        .post(process.env.VUE_APP_API_URL + '/speaker', body, { headers: { ...authHeader(), 'Content-Type': 'multipart/form-data' }, params: { event_slug } })
         .then(response => response.data)
     }
 
-    updateSpeaker(speaker){
+    updateSpeaker(speaker, event_slug){
         return axios
-        .put(process.env.VUE_APP_API_URL + '/speaker/' + speaker.id, speaker, { headers: { ...authHeader(), 'Content-Type': 'multipart/form-data' } })
+        .put(process.env.VUE_APP_API_URL + '/speaker/' + speaker.id, speaker, { headers: { ...authHeader(), 'Content-Type': 'multipart/form-data' }, params: { event_slug } })
         .then(response => response.data)
     }
 

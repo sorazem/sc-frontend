@@ -10,16 +10,25 @@
                 <div class="text-left mt-4">
                     <p><span>Palestrante:</span> {{ palestra.speaker?.name }}</p>
                     <p><span>Local:</span> {{ palestra.location?.name }}</p>
+                    <p><span>Horário:</span> {{ formatDate(palestra.start_date) }} até {{ formatDate(palestra.end_date) }}</p>
                 </div>
+                <v-card-actions v-if="$route.path.includes('agenda')" class="mt-4 d-flex justify-center">
+                    <v-btn color="#9C66BD" size="large" variant="flat" @click.prevent="$emit('cancel', palestra.id)">Cancelar inscrição</v-btn>
+                </v-card-actions>
             </v-card-item>
     </v-card>
 </template>
 <script>
+import { DateTime } from 'luxon';
 export default {
     props: {
         palestra: Object
+    },
+    methods:{
+        formatDate(date){
+            return DateTime.fromISO(date).toFormat('HH:mm');
+        }
     }
-
 }
 </script>
 <style scoped>

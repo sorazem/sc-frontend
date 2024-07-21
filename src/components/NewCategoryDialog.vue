@@ -57,9 +57,33 @@ export default {
         submit(){
             this.category.event_id = this.event.id;
             if (this.willCreate) {
-                eventService.createCategory(this.$route.params.slug, this.category).then(() => { this.$emit('closeDialog')})
+                eventService.createCategory(this.$route.params.slug, this.category)
+                .then(
+                    () => {
+                        this.$emit('changeMessage', "Criação feita com sucesso.");
+                        this.$emit('closeDialog');
+                    }
+                )
+                .catch(
+                    (error) => {
+                        this.$emit('changeMessage', error.message);
+                        this.$emit('closeDialog');
+                    }
+                )
             } else {
-                eventService.updateCategory(this.$route.params.slug, this.category).then(() => { this.$emit('closeDialog')})
+                eventService.updateCategory(this.$route.params.slug, this.category)
+                .then(
+                    () => {
+                        this.$emit('changeMessage', "Alteração feita com sucesso.");
+                        this.$emit('closeDialog');
+                    }
+                )
+                .catch(
+                    (error) => {
+                        this.$emit('changeMessage', error.message);
+                        this.$emit('closeDialog');
+                    }
+                )
             }
         }
     },

@@ -29,7 +29,7 @@
                     <v-btn
                         class="mx-auto"
                         text="Sim"
-                        @click="deleteItem()"
+                        @click="deleteItem(selectedTalk)"
                     ></v-btn>
                 </template>
             </v-card>
@@ -70,10 +70,13 @@ export default {
             this.willCreate = false;
             this.dialogNew = true;
         },
-        deleteItem(){
-            eventService.deleteEventTalk(this.selectedTalk.id)
+        deleteItem(talk){
+            eventService.deleteEventTalk(talk.id)
             .then(
-                (response)=>this.message = response.message
+                (response)=>{
+                    this.talks.splice(this.talks.indexOf(talk),1);
+                    this.message = response.message
+                }
             )
             .catch(
                 (error)=>{
@@ -94,7 +97,6 @@ export default {
             this.selectedTalk = null;
         },
         changeMessage(message){
-            console.log(message)
             this.message = message;
             this.snackbar = true;
         }

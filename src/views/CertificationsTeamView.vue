@@ -79,7 +79,6 @@ export default {
     },
     mounted() {
         EventService.getEventUsers(this.$route.params.slug).then((response) => {
-            console.log(response);
             this.usersList = response;
         })
     },

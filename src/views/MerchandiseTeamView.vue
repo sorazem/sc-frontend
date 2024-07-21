@@ -18,7 +18,7 @@
         @cancel-deletion='dialogDelete = false'
         @delete-item='deleteMerch(selectedMerch)'
         />
-        <NewMerchandiseDialog v-model='dialogNew' :willCreate='willCreate' :selectedMerch='selectedMerch' @closeDialog='closeNewDialog'/>
+        <NewMerchandiseDialog v-model='dialogNew' :willCreate='willCreate' :selectedMerch='selectedMerch' @closeDialog='closeNewDialog' @changeMessage='changeMessage'/>
     </div>
 </template>
 <script>
@@ -83,6 +83,10 @@ export default {
             EventService.getEventMerchandise(this.$route.params.slug).then(
                 (response)=>this.merches = response
             )
+        },
+        changeMessage(message){
+            this.message = message;
+            this.snackbar = true;
         }
     },
     mounted() {

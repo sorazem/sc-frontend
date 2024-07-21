@@ -1,5 +1,6 @@
 <template>
     <div>
+        <v-snackbar v-model="snackbar" :timeout="2000">{{ message }}</v-snackbar>
         <v-btn color="#FF7A00" size="large" variant="flat" @click="openNewDialog">
             Adicionar palestrante
         </v-btn>
@@ -13,7 +14,7 @@
             <v-card-subtitle class="mb-4 text-wrap text-subtitle-2">{{ speaker.bio }}</v-card-subtitle>
             <v-card-actions class="d-flex justify-space-evenly">
                 <v-btn text="Editar" variant="flat" @click="openUpdateDialog(speaker)"></v-btn>
-                <v-btn text="Excluir" variant="text" @click="openDeleteDialog(speaker.id)"></v-btn>
+                <v-btn text="Excluir" variant="text" @click="openDeleteDialog(speaker)"></v-btn>
             </v-card-actions>
         </v-card>
         <v-dialog
@@ -33,12 +34,12 @@
                     <v-btn
                         class="mx-auto"
                         text="Sim"
-                        @click="deleteItem()"
+                        @click="deleteItem(selectedSpeaker)"
                     ></v-btn>
                 </template>
             </v-card>
         </v-dialog>
-        <NewSpeakerDialog v-model="dialogNew" :willCreate='willCreate' :selectedSpeaker='selectedSpeaker' @closeDialog="closeDialog" />
+        <NewSpeakerDialog v-model="dialogNew" :willCreate='willCreate' :selectedSpeaker='selectedSpeaker' @closeDialog="closeDialog" @changeMessage="changeMessage" />
     </div>
 </template>
 <script>
@@ -57,9 +58,9 @@ export default {
         }
     },
     methods:{
-        openDeleteDialog(id){
+        openDeleteDialog(speaker){
             this.dialogDelete = true;
-            this.selectedSpeaker = id;
+            this.selectedSpeaker = speaker;
         },
         openNewDialog() {
             this.selectedSpeaker = null;
@@ -71,18 +72,29 @@ export default {
             this.willCreate = false;
             this.dialogNew = true;
         },
-        deleteItem(){
-            eventService.deleteEventSpeaker(this.selectedSpeaker).then(
-                (response)=>this.message = response.message,
-                (error)=>{
-                    this.message = error.message;
+        deleteItem(speaker){
+            eventService.deleteEventSpeaker(speaker.id, this.$route.params.slug)
+            .then(
+                (response)=>{
+                    this.speakers.splice(this.speakers.indexOf(speaker),1);
+                    this.message = response.message
                 }
+            )
+            .catch(
+                (error)=>{this.message = error.message}
             );
             this.snackbar = true;
             this.dialogDelete = false;
         },
+        changeMessage(message){
+            this.message = message;
+            this.snackbar = true;
+        },
         closeDialog(){
             this.dialogNew = false;
+            eventService.getEventSpeakers(this.$route.params.slug).then(
+            (response)=>this.speakers = response
+        )
         },
         speakerImage(speaker){
             if (speaker?.image_url) 
