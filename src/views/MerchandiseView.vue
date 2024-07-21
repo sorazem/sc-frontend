@@ -8,8 +8,27 @@
                 <p class="font-weight-bold my-2">{{ merch.name }}</p>
                 <p class="mb-2">{{ formatPrice(merch.price)}}</p>
                 <p class="mb-2"></p>
-                <!-- <v-select v-model="size" placeholder="Escolha o tamanho" variant="outlined" density="compact" :items="['P', 'M', 'G', 'GG']"></v-select> -->
-                <v-btn variant="flat" color="#9C66BD" block @click="saveMerch(merch.id)">Reservar</v-btn>
+                <v-row>
+                    <v-col cols='6'>
+                        <v-text-field
+                            v-model="merch.quantity"
+                            type='number'
+                            label='Quantidade'
+                            variant="outlined" 
+                            density="compact" 
+                        ></v-text-field>
+                    </v-col>
+                    <v-col cols='6'>
+                        <v-select 
+                            v-model="merch.cfOption" 
+                            :placeholder="merch.cfName" 
+                            variant="outlined" 
+                            density="compact" 
+                            :items="merch.cfValues"
+                        ></v-select>
+                    </v-col>
+                </v-row>
+                <v-btn variant="flat" color="#9C66BD" block @click="saveMerch(merch)">Reservar</v-btn>
             </v-card-item>
         </v-card>
     </div>
@@ -20,13 +39,16 @@ export default {
     data(){
         return{
             merchandise: [],
-            size: null
+            size: null,
+            optField: null,
         }
     },
     methods:{
-        saveMerch(merch_id){
+        saveMerch(merch){
             let user = JSON.parse(localStorage.getItem('user')).user;
-            let payload = { merch_id, user_id: user.id }
+            let options = {}
+            options[merch.cfName] = merch.cfOption;
+            let payload = { merch_id: merch.id, user_id: user.id, amount: merch.quantity, options }
             eventService.createReservation(this.$route.params.slug, payload).then((response) => {
                 console.log(response);
             })
@@ -43,8 +65,12 @@ export default {
     created(){
         eventService.getEventMerchandise(this.$route.params.slug).then(
             (response) =>{
-                console.log(response)
-                this.merchandise = response;
+                this.merchandise = response.map((merch) => {
+                    merch.cfName = Object.keys(merch.custom_fields)[0];
+                    merch.cfValues = Object.values(merch.custom_fields[merch.cfName])
+                    merch.cfOption = null;
+                    return merch;
+                });
             }
         )
     }

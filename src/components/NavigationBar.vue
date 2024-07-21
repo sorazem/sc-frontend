@@ -32,6 +32,7 @@ export default {
         showEventMenu(){
             return this.$route.params.slug;
         },
+<<<<<<< HEAD
         // toolbarColor(){
         //     if(this.$route.path.includes('menu-equipe')){
         //         return '#FF7A0022';
@@ -43,6 +44,19 @@ export default {
         // },
         loggedIn() {
             return localStorage.getItem("user")
+=======
+        toolbarColor(){
+            if(this.$route.path.includes('menu-equipe')){
+                return '#FF7A0022';
+            } else if (this.$route.path.includes('admin')) {
+                return '#00FF1722';
+            } else {
+                return '#9C66BD22';
+            }
+        },
+        currentUser() {
+            return JSON.parse(localStorage.getItem("user"))?.user;
+>>>>>>> dev-dan
         }
     },
     methods: {

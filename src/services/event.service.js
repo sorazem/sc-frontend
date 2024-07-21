@@ -251,6 +251,12 @@ class EventService{
         .put(process.env.VUE_APP_API_URL + '/teams/' + id, { user_ids}, { headers: authHeader(), params: { slug }})
         .then((response) => response.data);
     }
+
+    updateMember(member, event_slug) {
+        return axios
+        .put(process.env.VUE_APP_API_URL + '/user/' + member.id, member, { headers: authHeader(), params: { event_slug } })
+        .then((response) => response.data);
+    }
 }
 
 export default new EventService();

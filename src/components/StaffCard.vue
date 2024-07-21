@@ -33,7 +33,7 @@ export default {
     props: ["staff", "mode", "hasEditingPermissions"],
     computed: {
         role() {
-            if (this.staff.permissions & 16) { return 'Líder de Equipe'; }
+            if (this.staff.permissions & 16) { return 'Admin'; }
             if (this.staff.permissions & 8) { return 'Líder de Equipe'; }
             if (this.staff.permissions & 4) { return 'Membro de Equipe'; }
             if (this.staff.permissions & 2) { return 'Palestrante'; }
