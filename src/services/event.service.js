@@ -240,9 +240,9 @@ class EventService{
         .then((response) => response.data);
     }
 
-    updateTeam(id, user_ids) {
+    updateTeam(id, user_ids, slug) {
         return axios
-        .put(process.env.VUE_APP_API_URL + '/teams/' + id, { user_ids}, { headers: authHeader()})
+        .put(process.env.VUE_APP_API_URL + '/teams/' + id, { user_ids}, { headers: authHeader(), params: { slug }})
         .then((response) => response.data);
     }
 }

@@ -2,9 +2,9 @@ import axios from 'axios';
 import authHeader from './auth-header';
 
 class UserService{
-    listUsers() {
+    listUsers(event_slug) {
         return axios
-        .get(process.env.VUE_APP_API_URL + '/user', { headers: authHeader() })
+        .get(process.env.VUE_APP_API_URL + '/user', { headers: authHeader(), params: { event_slug } })
         .then((response) => response.data)
     }
 

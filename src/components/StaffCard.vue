@@ -16,17 +16,30 @@
                 </tr>
             </table>
         </v-card-text>
+        <v-btn @click="$emit('edit-member', staff)">Editar</v-btn>
+        <v-btn @click="$emit('remove-from-team', staff)">Remover</v-btn>
     </v-card>
 </template>
 <script>
 export default {
-    props: ["staff", "variant", "color"],
+    props: ["staff", "mode"],
     computed: {
         role() {
-            if (this.staff.permissions & 4) { return 'Membro de Equipe'; }
+            if (this.staff.permissions & 16) { return 'Líder de Equipe'; }
             if (this.staff.permissions & 8) { return 'Líder de Equipe'; }
+            if (this.staff.permissions & 4) { return 'Membro de Equipe'; }
+            if (this.staff.permissions & 2) { return 'Palestrante'; }
+            if (this.staff.permissions & 1) { return 'Participante'; }
             return "";
-        }
+        },
+        color() {
+            const colorMap = { current: "default", add: "green", remove: "red" }
+            return colorMap[this.mode];
+        },
+        variant() {
+            const variantMap = { current: "elevated", add: "tonal", remove: "tonal" }
+            return variantMap[this.mode];
+        },
     }
 }
 </script>
