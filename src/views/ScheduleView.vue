@@ -1,5 +1,6 @@
 <template>
-  <v-row>
+  <div id='card-row' class="d-flex flex-column justify-space-between align-center">
+  <v-row class='w-100'>
     <v-col cols='6'>
       <v-select label="Dia" v-model="diaAtual" :items="dias" density="compact" variant="outlined" class="mt-4"></v-select>
     </v-col>
@@ -7,7 +8,6 @@
       <v-select label="Localização" v-model="currentLocation" :items="locations" density="compact" variant="outlined" class="mt-4"></v-select>
     </v-col>
   </v-row>
-  <div class="d-flex flex-column justify-space-between align-center">
     <TalkCard v-for="palestra in filteredTalks" :palestra="palestra" :key="palestra.title" :href="'/' + this.$route.params.slug + '/palestra/' + palestra.id"/>
   </div>
 </template>
@@ -62,10 +62,10 @@
 .v-card{
   border-radius: 16px;
 }
-  p{
-    font-size: 0.85rem;
-  }
-  .v-select{
-    width: 320px;
-  }
+p {
+  font-size: 0.85rem;
+}
+#card-row {
+  width: 320px;
+}
 </style>
