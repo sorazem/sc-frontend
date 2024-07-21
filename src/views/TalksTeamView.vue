@@ -9,7 +9,7 @@
             <v-card-subtitle class="mb-4  text-subtitle-2">Palestrante: {{ talk.speaker.name }}</v-card-subtitle>
             <v-card-actions class="d-flex justify-space-evenly">
                 <v-btn text="Editar" variant="flat" @click="openUpdateDialog(talk)"></v-btn>
-                <v-btn text="Excluir" variant="text" @click="openDeleteDialog(talk.id)"></v-btn>
+                <v-btn text="Excluir" variant="text" @click="openDeleteDialog(talk)"></v-btn>
             </v-card-actions>
         </v-card>
         <v-dialog
@@ -24,7 +24,7 @@
                     <v-btn
                         class="mx-auto"
                         text="Não"
-                        @click="dialogDelete = false"
+                        @click="closeDeleteDialog"
                     ></v-btn>
                     <v-btn
                         class="mx-auto"
@@ -34,7 +34,7 @@
                 </template>
             </v-card>
         </v-dialog>
-        <NewTalkDialog v-model="dialogNew" :willCreate='willCreate' :selectedTalk='selectedTalk' @closeDialog="closeDialog" />
+        <NewTalkDialog v-model="dialogNew" :willCreate='willCreate' :selectedTalk='selectedTalk' @closeDialog="closeDialog" @changeMessage="changeMessage" />
     </div>
 </template>
 <script>
@@ -56,9 +56,9 @@ export default {
         NewTalkDialog
     },
     methods:{
-        openDeleteDialog(id){
+        openDeleteDialog(talk){
             this.dialogDelete = true;
-            this.selectedTalk = id;
+            this.selectedTalk = talk;
         },
         openNewDialog() {
             this.selectedTalk = null;
@@ -71,12 +71,15 @@ export default {
             this.dialogNew = true;
         },
         deleteItem(){
-            eventService.deleteEventTalk(this.selectedTalk).then(
-                (response)=>this.message = response.message,
+            eventService.deleteEventTalk(this.selectedTalk.id)
+            .then(
+                (response)=>this.message = response.message
+            )
+            .catch(
                 (error)=>{
                     this.message = error.message;
                 }
-            );
+            )
             this.snackbar = true;
             this.dialogDelete = false;
         },
@@ -85,6 +88,15 @@ export default {
             eventService.getEventTalks(this.$route.params.slug).then(
                 (response)=>this.talks = response
             )
+        },
+        closeDeleteDialog() {
+            this.dialogDelete = false;
+            this.selectedTalk = null;
+        },
+        changeMessage(message){
+            console.log(message)
+            this.message = message;
+            this.snackbar = true;
         }
     },
     mounted(){

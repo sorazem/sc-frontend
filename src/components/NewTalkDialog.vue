@@ -53,8 +53,8 @@
                     class="mb-2"
                     variant="outlined"
                     density="compact"
-                    :min="event.start_date.substring(0, 16)"
-                    :max="event.end_date.substring(0, 16)"
+                    :min="talk.start_date?.substring(0, 16)"
+                    :max="talk.end_date?.substring(0, 16)"
                 ></v-text-field>
 
                 <div class="text-subtitle-1 text-medium-emphasis text-left">Data de fim</div>
@@ -66,8 +66,8 @@
                     clearable
                     variant="outlined"
                     density="compact"
-                    :min="event.start_date.substring(0, 16)"
-                    :max="event.end_date.substring(0, 16)"
+                    :min="talk.start_date?.substring(0, 16)"
+                    :max="talk.end_date?.substring(0, 16)"
                 ></v-text-field>
 
                 <div class="text-subtitle-1 text-medium-emphasis text-left">Local</div>
@@ -128,7 +128,7 @@
 import eventService from '@/services/event.service';
 import store from '@/store';
 export default {
-    props: ['willCreate', 'selectedTalk'],
+    props: ['willCreate', 'selectedTalk', "message"],
     watch: {
         selectedTalk: function (newValue) {
             if (newValue !== null) {
@@ -173,9 +173,33 @@ export default {
         submit(){
             this.talk.event_id = this.event.id;
             if (this.willCreate) {
-                eventService.createTalk(this.talk).then(this.$emit('closeDialog'))
+                eventService.createTalk(this.talk)
+                .then(
+                    () => {
+                        this.$emit('changeMessage', "Criação feita com sucesso.");
+                        this.$emit('closeDialog');
+                    }
+                )
+                .catch(
+                    (error) => {
+                        this.$emit('changeMessage', error.message);
+                        this.$emit('closeDialog');
+                    }
+                )
             } else {
-                eventService.updateTalk(this.talk).then(this.$emit('closeDialog'))
+                eventService.updateTalk(this.talk)
+                .then(
+                    () => {
+                        this.$emit('changeMessage', "Alteração feita com sucesso.");
+                        this.$emit('closeDialog');
+                    }
+                )
+                .catch(
+                    (error) => {
+                        this.$emit('changeMessage', error.message);
+                        this.$emit('closeDialog');
+                    }
+                )
             }
         }
     },
