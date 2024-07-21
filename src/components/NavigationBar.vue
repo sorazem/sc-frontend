@@ -11,7 +11,10 @@
                     </v-toolbar-title>
                 </v-col>
                 <v-col cols='3' class="d-flex align-center justify-center">
-                    <v-btn v-if="loggedIn" variant='flat' @click='logout'>Logout</v-btn>
+                    <div v-if="currentUser">
+                        <!-- <p> Logado como  <b>{{ currentUser.name }}</b></p> -->
+                        <v-btn variant='flat' @click='logout'>Logout</v-btn>
+                    </div>
                 </v-col>
             </v-row>
         </v-toolbar>
@@ -41,8 +44,8 @@ export default {
                 return '#9C66BD22';
             }
         },
-        loggedIn() {
-            return localStorage.getItem("user")
+        currentUser() {
+            return JSON.parse(localStorage.getItem("user")).user;
         }
     },
     methods: {
