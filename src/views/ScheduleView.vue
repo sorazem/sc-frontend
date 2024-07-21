@@ -42,9 +42,6 @@
       currentUser() {
         return this.$store.state.auth.user;
       },
-      userName(){
-        return JSON.parse(this.currentUser.user).name;
-      },
       filteredTalks() {
         return this.palestras[this.diaAtual]?.filter((palestra) => !this.currentLocation || palestra.location.name === this.currentLocation)
       }

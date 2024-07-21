@@ -37,7 +37,31 @@
                     variant="outlined"
                     density="compact"
                 ></v-file-input>
-                <v-btn type="submit" :disabled="!form" color="#FF7A00">Enviar</v-btn>
+                <div class="text-subtitle-1 text-medium-emphasis text-left">Campo Customizado: Nome</div>
+                <v-text-field
+                    v-model="custom_fields_name"
+                    :rules="[required]"
+                    class="mb-2"
+                    clearable
+                    variant="outlined"
+                    density="compact"
+                ></v-text-field>
+                <div class="text-subtitle-1 text-medium-emphasis text-left">Campo Customizado: Valores</div>
+                <v-text-field
+                    v-model="cfValue"
+                    @keyup.enter="addOption()"
+                    :rules="[empty]"
+                    class="mb-2"
+                    clearable
+                    variant="outlined"
+                    density="compact"
+                ></v-text-field>
+                <v-row>
+                    <v-chip v-for="value in custom_fields_values" :key="value" closable @click:close="removeOption(value)">{{value}}</v-chip>
+                </v-row>
+                <v-row>
+                    <v-btn type="submit" :disabled="!form" color="#FF7A00">Enviar</v-btn>
+                </v-row>
             </v-form>
         </v-card>
     </v-dialog>
@@ -52,8 +76,13 @@ export default {
             if (newValue !== null) {
                 this.merch = {...newValue};
                 this.merch.price = (newValue.price / 100).toFixed(2);
+                if (newValue.custom_fields) {
+                    this.merch.custom_fields = JSON.parse(newValue.custom_fields)
+                } else {
+                    this.merch.custom_fields = {}
+                }
             } else {
-                this.merch = { name: null, stock: null, price: null, image: null }
+                this.merch = { name: null, stock: null, price: null, image: null, custom_fields: {} }
             }
         },
     },
@@ -66,7 +95,11 @@ export default {
                 stock: null,
                 event_id: null,
                 image: null,
+                custom_fields: {},
             },
+            custom_fields_name: null,
+            custom_fields_values: [],
+            cfValue: '',
             event: null,
         }
     },
@@ -74,14 +107,26 @@ export default {
         required (v) {
             return !!v || 'Este campo é obrigatório'
         },
+        empty(v) {
+            return !v || 'Termine de preencher esse campo!'
+        },
         submit(){
             this.merch.event_id = this.event.id;
             this.merch.price = this.merch.price * 100;
+            this.merch.custom_fields[this.custom_fields_name] = this.custom_fields_values;
             if (this.willCreate) {
                 eventService.createMerch(this.$route.params.slug, this.merch).then(() => { this.$emit('closeDialog')})
             } else {
                 eventService.updateMerch(this.$route.params.slug, this.merch).then(() => { this.$emit('closeDialog')})
             }
+        },
+        addOption(){
+            this.custom_fields_values.push(this.cfValue);
+            this.cfValue = "";
+        },
+        removeOption(value) {
+            console.log(value)
+            this.custom_fields_values.splice(this.custom_fields_values.indexOf(value), 1);
         }
     },
     mounted() {

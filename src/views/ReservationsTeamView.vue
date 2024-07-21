@@ -11,7 +11,12 @@
             ></v-text-field>
         <v-card v-for='reservation in filteredReservations' :key='reservation.id' variant="outlined" class="my-8 pa-2 text-left">
             <v-card-title>{{ reservation.user.name }}</v-card-title>
-            <v-card-subtitle class="mb-4">Reservou {{ reservation.merch.name }} ({{formatPrice(reservation.merch.price)}})</v-card-subtitle>
+            <v-card-subtitle class="mb-4">Reservou {{ reservation.amount }} {{ reservation.merch.name }} ({{formatPrice(reservation.merch.price)}})</v-card-subtitle>
+            <v-card-text>
+                <ul>
+                    <li v-for="option in displayOptions(reservation.options)" :key='option'>{{ option }}</li>
+                </ul>
+            </v-card-text>
             <v-card-actions>
                 <v-btn :text="reservation.delivered ? 'Entregue' : 'Marcar como entregue'" variant="text" :readonly='reservation.delivered' @click='deliverReservation(reservation)' block></v-btn>
             </v-card-actions>
@@ -37,6 +42,9 @@ export default {
             EventService.deliverReservation(this.$route.params.slug, reservation.id).then(() => {
                 reservation.delivered = true;
             })
+        },
+        displayOptions(options) {
+            return Object.keys(options).map((key) => `${key}: ${options[key]}`)
         }
     },
 

@@ -45,7 +45,7 @@ export default {
             }
         },
         currentUser() {
-            return JSON.parse(localStorage.getItem("user")).user;
+            return JSON.parse(localStorage.getItem("user"))?.user;
         }
     },
     methods: {
