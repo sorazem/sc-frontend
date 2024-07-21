@@ -18,6 +18,7 @@
           :key="member.id"
           :staff="member"
           :mode="member.mode"
+          :hasEditingPermissions="isAdminOrStaffLeader"
           @edit-member="editMember"
           @remove-from-team="removeFromTeam"/>
         <v-btn v-if="isAdminOrStaffLeader" :disabled="!hasChangesToConfirm" @click="updateTeam()">Confirmar Mudanças</v-btn>

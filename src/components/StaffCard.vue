@@ -1,28 +1,36 @@
 <template>
     <v-card :color="color" :variant="variant">
-        <v-card-item>
-            <v-card-title>{{ staff.name }}</v-card-title>
-            <v-card-subtitle>DRE: {{ staff.dre }}</v-card-subtitle>
-        </v-card-item>
-        <v-card-text>
-            <table>
-                <tr>
-                    <th> Role </th>
-                    <th> Email </th>
-                </tr>
-                <tr>
-                    <td>{{role}}</td>
-                    <td>{{staff.email}}</td>
-                </tr>
-            </table>
-        </v-card-text>
-        <v-btn @click="$emit('edit-member', staff)">Editar</v-btn>
-        <v-btn @click="$emit('remove-from-team', staff)">Remover</v-btn>
+        <v-row>
+            <v-col cols='7'>
+                <v-card-item>
+                    <v-card-title>{{ staff.name }}</v-card-title>
+                    <v-card-subtitle>DRE: {{ staff.dre }}</v-card-subtitle>
+                </v-card-item>
+            </v-col>
+            <v-col cols='5'>
+                <v-card-text>
+                    <ul>
+                        <li>
+                            {{role}}
+                        </li>
+                        <li>
+                            {{staff.email}}
+                        </li>
+                    </ul>
+                </v-card-text>
+            </v-col>
+            <v-col cols='6'>
+                <v-btn v-if="hasEditingPermissions" @click="$emit('edit-member', staff)">Editar</v-btn>
+            </v-col>
+            <v-col cols='6'>
+                <v-btn v-if="hasEditingPermissions" @click="$emit('remove-from-team', staff)">Remover</v-btn>
+            </v-col>
+        </v-row>
     </v-card>
 </template>
 <script>
 export default {
-    props: ["staff", "mode"],
+    props: ["staff", "mode", "hasEditingPermissions"],
     computed: {
         role() {
             if (this.staff.permissions & 16) { return 'Líder de Equipe'; }
