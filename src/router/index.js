@@ -6,9 +6,16 @@ import UserService from '../services/user.service';
 
 const loggedInGuard = (to, from, next) => {
   const user = JSON.parse(localStorage.getItem('user'))
-  if (!user || DateTime.now() >= DateTime.fromISO(user.exp) && to.name !== 'login') {
-    next('/login');
-  } else { next(); }
+  if (!user) { next('/login'); }
+  else {
+    if (DateTime.now() >= DateTime.fromISO(user.exp)) {
+      localStorage.removeItem('user');
+    }
+
+    if (['login', 'signup'].includes(to.name)) {
+      next('/login');
+    } else { next(); }
+  }
 }
 
 const eventStaffGuard = async (to, from, next) => {
