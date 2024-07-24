@@ -3,7 +3,7 @@
         <v-toolbar class="pa-2" color="white">
             <v-row>
                 <v-col cols='3' class="d-flex align-center justify-center">
-                    <v-app-bar-nav-icon v-if="showEventMenu" @click="toggleMenu" class="d-flex d-sm-none"></v-app-bar-nav-icon>
+                    <v-app-bar-nav-icon @click="toggleMenu" class="hidden-md-and-up"></v-app-bar-nav-icon>
                 </v-col>
                 <v-col cols='6' class="d-flex align-center justify-center">
                     <v-toolbar-title>
@@ -11,7 +11,8 @@
                     </v-toolbar-title>
                 </v-col>
                 <v-col cols='3' class="d-flex align-center justify-end">
-                    <v-btn v-if="loggedIn" variant='outlined' color="#9C66BD" @click='logout'>Logout</v-btn>
+                    <v-btn class="hidden-sm-and-down" v-if="currentUser" variant='text' color="#9C66BD"><router-link to="/perfil">Perfil</router-link></v-btn>
+                    <v-btn v-if="currentUser" variant='text' color="#9C66BD" @click='logout'>Logout</v-btn>
                 </v-col>
             </v-row>
         </v-toolbar>

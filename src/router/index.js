@@ -170,6 +170,12 @@ const routes = [
     component: () => import('../views/AdminTypeView.vue'),
     beforeEnter: [loggedInGuard, adminGuard]
   },
+  {
+    path: '/perfil',
+    name: 'profile',
+    component: () => import('../views/ProfileView.vue'),
+    beforeEnter: [loggedInGuard]
+  }
 ]
 
 const router = createRouter({

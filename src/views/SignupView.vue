@@ -163,7 +163,7 @@ export default {
             ocupacao: null,
             instituicao: null,
             dre: null,
-            ocupacaoItems: ['Estudante de ensino superior', 'Estudante de ensino médio', 'Professor'],
+            ocupacaoItems: ['Estudante de ensino superior', 'Estudante de ensino médio', 'Professor', 'Outro'],
             instituicaoSuperiorItems: ['UFRJ', 'UFF', 'UERJ', 'UFRRJ', 'PUC', 'UNIRIO', 'UVA', 'Estácio de Sá', 'CEFET', 'FAETEC', 'Pedro II', 'Outros'],
             instituicaoMedioItems: ['Pedro II', 'CEFET', 'CAp UFRJ', 'Outros']
         }
