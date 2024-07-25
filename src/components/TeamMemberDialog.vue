@@ -1,15 +1,15 @@
 <template>
     <v-dialog width='auto'>
-        <v-card :text='member?.name'>
-            <v-form v-model="form" class="pa-4" @submit.prevent = "submit()">
+        <v-card class="pa-4">
+            <p class="mb-8">Editando {{ member?.name }}</p>
+            <v-form v-model="form" @submit.prevent = "submit()">
                 <v-select
                     v-model="selectedPermission"
                     :items="permissions"
                     hint="Escolha o nível de permissão deste membro da equipe!"
-                    label="Escolha"
                     persistent-hint
                   ></v-select>
-                <v-btn type='submit' :disabled="!form">Atualizar</v-btn>
+                <v-btn class="mt-8" variant="flat" type='submit' :disabled="!form">Atualizar</v-btn>
             </v-form>
         </v-card>
     </v-dialog>
@@ -61,3 +61,9 @@ export default {
     },
 }
 </script>
+<style scoped>
+.v-btn{
+    color: white;
+    background-color: #FF7A00;
+}
+</style>

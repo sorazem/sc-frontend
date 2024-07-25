@@ -1,31 +1,23 @@
 <template>
-    <v-card :color="color" :variant="variant">
-        <v-row>
-            <v-col cols='7'>
-                <v-card-item>
-                    <v-card-title>{{ staff.name }}</v-card-title>
-                    <v-card-subtitle>DRE: {{ staff.dre }}</v-card-subtitle>
-                </v-card-item>
-            </v-col>
-            <v-col cols='5'>
-                <v-card-text>
-                    <ul>
-                        <li>
-                            {{role}}
-                        </li>
-                        <li>
-                            {{staff.email}}
-                        </li>
-                    </ul>
-                </v-card-text>
-            </v-col>
-            <v-col cols='6'>
+    <v-card :color="color" :variant="variant" class="pa-4">
+        <v-card-item>
+            <v-card-title>{{ staff.name }}</v-card-title>
+            <v-card-subtitle>DRE: {{ staff.dre }}</v-card-subtitle>
+            <v-card-text class="d-flex justify-center">
+                <ul>
+                    <li>
+                        {{role}}
+                    </li>
+                    <li>
+                        {{staff.email}}
+                    </li>
+                </ul>
+            </v-card-text>
+            <v-card-actions class="d-flex justify-space-around">
                 <v-btn v-if="hasEditingPermissions" @click="$emit('edit-member', staff)">Editar</v-btn>
-            </v-col>
-            <v-col cols='6'>
                 <v-btn v-if="hasEditingPermissions" @click="$emit('remove-from-team', staff)">Remover</v-btn>
-            </v-col>
-        </v-row>
+            </v-card-actions>
+        </v-card-item>
     </v-card>
 </template>
 <script>
@@ -45,9 +37,15 @@ export default {
             return colorMap[this.mode];
         },
         variant() {
-            const variantMap = { current: "elevated", add: "tonal", remove: "tonal" }
+            const variantMap = { current: "outlined", add: "tonal", remove: "tonal" }
             return variantMap[this.mode];
         },
     }
 }
 </script>
+<style scoped>
+.v-card-actions > .v-btn{
+    color: white;
+    background-color: #FF7A00;
+}
+</style>

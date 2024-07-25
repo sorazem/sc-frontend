@@ -1,6 +1,6 @@
 <template>
     <div v-if="!submitted">
-        <h1>Inscrição</h1>
+        <h1 class="mt-4">Inscrição</h1>
         <p class="mb-8">{{ talksToEnroll.length }} palestra<span v-if="talksToEnroll.length!=1">s</span> selecionada<span v-if="talksToEnroll.length!=1">s</span></p>
         <div v-for="palestra in Object.values(palestras).flat()" :key="palestra.title" class="d-flex align-center justify-center">
             <v-checkbox

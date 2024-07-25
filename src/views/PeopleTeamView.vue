@@ -1,13 +1,14 @@
 <template>
     <div>
-        <h1>Equipe</h1>
+        <h1 class="mt-4 mb-8">Equipe</h1>
         <p v-if="!currentMembers.length"> Não existem membros alocados para a equipe desse evento</p>
         <v-select
+            class="mb-4"
+            variant="outlined"
             v-if="isAdminOrStaffLeader"
             v-model="currentMembers"
             :items="usersNotInTeam"
             hint="Escolha usuários para fazerem parte da equipe!"
-            label="Escolha"
             item-title="name"
             multiple
             persistent-hint
@@ -21,7 +22,7 @@
           :hasEditingPermissions="isAdminOrStaffLeader"
           @edit-member="editMember"
           @remove-from-team="removeFromTeam"/>
-        <v-btn v-if="isAdminOrStaffLeader" :disabled="!hasChangesToConfirm" @click="updateTeam()">Confirmar Mudanças</v-btn>
+        <v-btn class="mt-8" variant="flat" v-if="isAdminOrStaffLeader" :disabled="!hasChangesToConfirm" @click="updateTeam()">Confirmar Mudanças</v-btn>
         <TeamMemberDialog v-model="dialogUpdate" :member="selectedMember" @closeDialog="closeUpdateDialog"/>
     </div>
 </template>
@@ -108,3 +109,9 @@ export default {
     }
 }
 </script>
+<style scoped>
+.v-btn{
+    color: white;
+    background-color: #FF7A00;
+}
+</style>
