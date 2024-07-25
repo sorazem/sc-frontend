@@ -1,7 +1,7 @@
 <template>
     <div class="pa-4 content text-left">
         <v-form v-model="form">
-            <v-img class="hidden-sm-and-down" src="../../src/assets/profile.png" :width="300" />
+            <v-img class="hidden-sm-and-down" src="../../src/assets/profile2.png" :width="280" />
             <h3>Nome</h3>
             <v-text-field 
                 v-model="user.name" 
@@ -148,7 +148,7 @@ p{
 }
 .v-img{
     position: absolute;
-    right: 12%;
+    right: 15%;
     top: 30%;
 }
 </style>

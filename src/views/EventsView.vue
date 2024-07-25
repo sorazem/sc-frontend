@@ -9,7 +9,8 @@
             :href="'/' + event.slug + '/programacao'"
             >
                 <div class="overflow-auto d-flex flex-column flex-wrap">
-                    <v-img src="../assets/cosq.png" width="300"></v-img>
+                    <v-img v-if="event?.banner_url !== ''" :src="eventPhoto(event)" width="300"></v-img>
+                    <v-img v-else src="@/assets/event_placeholder.jpg" width="300"></v-img>
                     <h2 class="mt-4">{{ event.name }}</h2>
                     <v-card-item>
                         <p>{{ formatDate(event.start_date) }} até {{ formatDate(event.end_date) }}</p>

@@ -23,18 +23,18 @@
             <v-btn color="#FF7A00" size="large" variant="flat">Lista de participantes</v-btn>
         </router-link>
     </v-row>
-    <v-row class="pa-4 text-left flex-column">
+    <v-row class="pa-8 text-left flex-column">
         <p class="purple">Descrição</p>
         <p>{{ palestra.description }}</p>
     </v-row>
-    <v-row class="pa-4 text-left flex-column">
+    <v-row class="pa-8 text-left flex-column">
         <p class="purple">Palestrante</p>
-        <v-row class="py-4 align-center">
-            <v-avatar v-if="speakerImage != ''">
-                <v-img :src="speakerImage"></v-img>
+        <v-row class="pt-8 pb-4 align-center">
+            <v-avatar >
+                <v-img v-if="speakerImage != ''" :src="speakerImage"></v-img>
+                <v-img v-else src="@/assets/speaker_placeholder.png"></v-img>
             </v-avatar>
-            <v-avatar v-else icon="mdi-account"></v-avatar>
-            <div class="ml-4">
+            <div class="ml-8">
                 <p class="font-weight-bold">{{ palestra.speaker?.name }}</p>
                 <p>{{ palestra.speaker?.bio }}</p>
             </div>

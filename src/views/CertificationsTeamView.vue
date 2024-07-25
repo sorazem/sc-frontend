@@ -7,7 +7,7 @@
         class="text-left"
   ></v-alert>
     <div class="d-flex flex-column">
-        <v-img class="mb-6" src="../assets/certificate.png" :width="300"></v-img>
+        <v-img class="mb-6" src="../assets/certificate3.png" :width="300"></v-img>
         <v-btn :loading="loading" class="mb-4" color="#FF7A00" size="large" variant="flat" @click="emit">
             Emitir certificados
         </v-btn>

@@ -24,7 +24,7 @@ export default {
     },
     methods:{
         formatDate(date){
-            return DateTime.fromISO(date).toFormat('dd/MM/yy hh:mm');
+            return DateTime.fromISO(date).toFormat('dd/MM/yy HH:mm');
         }
     },
     mounted(){

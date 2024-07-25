@@ -13,6 +13,8 @@
                         <v-text-field
                             v-model="merch.quantity"
                             type='number'
+                            min="1"
+                            max="20"
                             label='Quantidade'
                             variant="outlined" 
                             density="compact" 
@@ -20,6 +22,7 @@
                     </v-col>
                     <v-col cols='6'>
                         <v-select 
+                            v-if="merch.cfName"
                             v-model="merch.cfOption" 
                             :placeholder="merch.cfName" 
                             variant="outlined" 
@@ -28,7 +31,7 @@
                         ></v-select>
                     </v-col>
                 </v-row>
-                <v-btn variant="flat" color="#9C66BD" block @click="saveMerch(merch)">Reservar</v-btn>
+                <v-btn variant="flat" color="#9C66BD" block @click="saveMerch(merch)" :disabled="disabled(merch)">Reservar</v-btn>
             </v-card-item>
         </v-card>
     </div>
@@ -60,15 +63,21 @@ export default {
             if (merch.image_url) {
                 return `${process.env.VUE_APP_API_URL}${merch.image_url}`;
             } else return '';
+        },
+        disabled(merch){
+            return merch.quantity <=0 || merch.quantity > 20
         }
     },
     created(){
         eventService.getEventMerchandise(this.$route.params.slug).then(
             (response) =>{
+                console.log(response);
                 this.merchandise = response.map((merch) => {
-                    merch.cfName = Object.keys(merch.custom_fields)[0];
-                    merch.cfValues = Object.values(merch.custom_fields[merch.cfName])
-                    merch.cfOption = null;
+                    if(merch.custom_fields !== null){
+                        merch.cfName = Object.keys(merch.custom_fields)[0];
+                        merch.cfValues = Object.values(merch.custom_fields[merch.cfName])
+                        merch.cfOption = null;
+                    }
                     return merch;
                 });
             }
