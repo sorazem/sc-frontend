@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-snackbar v-model="snackbar" :timeout="2000">{{ message }}</v-snackbar>
-        <v-btn color="#00FF1722" size="large" variant="flat" @click="openNewDialog">
+        <v-btn color="#0085ff" size="large" variant="flat" @click="openNewDialog">
             Criar evento
         </v-btn>
         <v-card variant="outlined" class="my-8 pa-2 text-left" v-for="event in events" :key="event.id">

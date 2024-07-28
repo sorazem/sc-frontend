@@ -1,15 +1,15 @@
 <template>
     <div>
         <v-snackbar v-model="snackbar" :timeout="2000">{{ message }}</v-snackbar>
-        <v-btn color="#00FF1722" size="large" variant="flat" @click="openNewDialog">
+        <v-btn color="#0085ff" size="large" variant="flat" @click="openNewDialog">
             Criar tipo de palestra
         </v-btn>
         <v-card variant="outlined" class="my-8 pa-2 text-left" v-for="type in types" :key="type.id">
-            <v-card-title class="text-wrap">{{ type.name }}</v-card-title>
-            <v-card-subtitle class="mb-4  text-subtitle-2">Cor: {{ type.color }}</v-card-subtitle>
+            <v-card-title class="text-wrap"><v-chip size="large" :color="type.color">{{ type.name }}</v-chip></v-card-title>
+            <v-card-subtitle class="mb-4 ml-2  text-subtitle-2">Cor: {{ type.color }}</v-card-subtitle>
             <v-card-actions class="d-flex justify-space-evenly">
-                <v-btn text="Editar" variant="flat" :color="type.color" @click="openUpdateDialog(type)"></v-btn>
-                <v-btn text="Excluir" variant="text" :color="type.color" @click="openDeleteDialog(type)"></v-btn>
+                <v-btn text="Editar" variant="flat" @click="openUpdateDialog(type)"></v-btn>
+                <v-btn text="Excluir" variant="text" @click="openDeleteDialog(type)"></v-btn>
             </v-card-actions>
         </v-card>
         <DeleteItemDialog :showDialog='dialogDelete' @cancel-deletion='dialogDelete = false' @delete-item='deleteType(selectedType)'/>

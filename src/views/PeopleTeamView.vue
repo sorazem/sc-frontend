@@ -114,4 +114,7 @@ export default {
     color: white;
     background-color: #FF7A00;
 }
+.v-select {
+    width: 320px;
+}
 </style>

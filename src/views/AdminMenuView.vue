@@ -1,5 +1,5 @@
 <template>
-    <div id="menu" class="pa-4 d-flex align-content-space-between flex-wrap">
+    <div class="content pa-4 d-flex align-content-space-between justify-space-between flex-wrap">
         <v-card v-for="item in menuItems" :key="item.title" class="mb-4 mr-auto" variant="tonal">
             <router-link :to="item.path">
                 <v-card-item>
@@ -23,9 +23,6 @@
     }
 </script>
 <style scoped>
-#menu {
-    width: 600px;
-}
 .v-card, a {
     width: 156px;
     height: 120px;

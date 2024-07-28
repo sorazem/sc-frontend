@@ -7,10 +7,11 @@
                 </v-col>
                 <v-col cols='6' class="d-flex align-center justify-center">
                     <v-toolbar-title>
-                        <router-link to="/"><span>V</span>enti</router-link>
+                        <router-link to="/"><span class="purple">V</span>enti</router-link>
                     </v-toolbar-title>
                 </v-col>
                 <v-col cols='3' class="d-flex align-center justify-end">
+                    <v-btn class="hidden-sm-and-down" v-if="isAdmin" variant='text' color="#9C66BD"><router-link to="/admin">Admin</router-link></v-btn>
                     <v-btn class="hidden-sm-and-down" v-if="currentUser" variant='text' color="#9C66BD"><router-link to="/perfil">Perfil</router-link></v-btn>
                     <v-btn v-if="currentUser" variant='text' color="#9C66BD" @click='logout'>Logout</v-btn>
                 </v-col>
@@ -35,6 +36,9 @@ export default {
         },
         currentUser() {
             return JSON.parse(localStorage.getItem("user"))?.user;
+        },
+        isAdmin(){
+            return this.currentUser.permissions & 16;
         }
     },
     methods: {
@@ -58,9 +62,6 @@ export default {
 
 .v-toolbar-items{
     align-items: center;
-}
-span{
-    color: #9C66BD;
 }
 a.router-link-exact-active {
   color: black;

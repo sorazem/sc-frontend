@@ -18,7 +18,7 @@
                     variant="outlined"
                     density="compact"
                     ></v-text-field>
-                <v-btn type="submit" :disabled="!form" color="#00FF1722">Enviar</v-btn>
+                <v-btn type="submit" :disabled="!form" color="#0085ff">Enviar</v-btn>
             </v-form>
         </v-card>
     </v-dialog>

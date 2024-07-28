@@ -13,7 +13,7 @@
                 ></v-text-field>
 
                 <div class="text-subtitle-1 text-medium-emphasis text-left">Slug</div>
-                <p>É a parte que aparece na URL do evento quando o usuário acessa a plataforma. Se deixada em branco, ela por padrão será gerada como uma versão urlficada do nome.</p>
+                <p class="text-caption text-medium-emphasis">É a parte que aparece na URL do evento. Se deixada em branco, ela por padrão será gerada como uma versão urlficada do nome.</p>
                 <v-text-field
                     v-model="event.slug"
                     class="mb-2"
@@ -55,6 +55,7 @@
                     density="compact"
                 ></v-text-field>
                 <div class="text-subtitle-1 text-medium-emphasis text-left">Imagem de Banner</div>
+                <p class="text-caption text-medium-emphasis">Recomendamos o formato 16:9.</p>
                 <v-file-input 
                     v-model="event.banner"
                     class="mb-2"
@@ -63,7 +64,7 @@
                     density="compact"
                 ></v-file-input>
 
-                <v-btn type="submit" :disabled="!form" color="#00FF1722">Enviar</v-btn>
+                <v-btn type="submit" :disabled="!form" color="#0085ff">Enviar</v-btn>
             </v-form>
         </v-card>
     </v-dialog>
