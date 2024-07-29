@@ -206,13 +206,13 @@ class EventService{
 
     createEvent(event) {
         return axios
-        .post(process.env.VUE_APP_API_URL + '/events', event, { headers: authHeader()})
+        .post(process.env.VUE_APP_API_URL + '/events', event, { headers: { ...authHeader(), 'Content-Type': 'multipart/form-data'}})
         .then((response) => response.data);
     }
 
     updateEvent(event) {
         return axios
-        .put(process.env.VUE_APP_API_URL + '/events/' + event.id, event, { headers: authHeader()})
+        .put(process.env.VUE_APP_API_URL + '/events/' + event.id, event, { headers:{ ...authHeader(), 'Content-Type': 'multipart/form-data'}})
         .then((response) => response.data);
     }
 

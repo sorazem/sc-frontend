@@ -63,6 +63,15 @@
                     variant="outlined"
                     density="compact"
                 ></v-file-input>
+                <div class="text-subtitle-1 text-medium-emphasis text-left">Imagem de Fundo dos Certificados</div>
+                <p class="text-caption text-medium-emphasis">Recomendamos o formato 16:9.</p>
+                <v-file-input 
+                    v-model="event.cert_background"
+                    class="mb-2"
+                    clearable
+                    variant="outlined"
+                    density="compact"
+                ></v-file-input>
 
                 <v-btn type="submit" :disabled="!form" color="#0085ff">Enviar</v-btn>
             </v-form>
@@ -88,6 +97,7 @@ export default {
                     registration_start_date: null,
                     slug: null,
                     banner: null,
+                    cert_background: null,
                 }
             }
         },
@@ -101,6 +111,8 @@ export default {
                 start_date: null,
                 end_date: null,
                 registration_start_date: null,
+                banner: null,
+                cert_background: null,
             },
         }
     },

@@ -58,6 +58,7 @@
 import { DateTime } from 'luxon';
 import TalkService from '@/services/talk.service.js';
 import EventService from '@/services/event.service.js';
+import UserService from '@/services/user.service.js';
 export default {
     data(){
         return{
@@ -112,6 +113,10 @@ export default {
             .then((response)=>{
                 if (response) {
                     this.isStaff = true;
+                } else {
+                    UserService.isAdmin().then((response) => {
+                        this.isStaff = response
+                    })
                 }
             }).catch((err) => {
                 if (err.response.status !== 401) {
