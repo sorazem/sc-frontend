@@ -3,6 +3,9 @@ module.exports = defineConfig({
   transpileDependencies: true,
 
   pwa: {
-    name: 'Venti'
+    name: 'Venti',
+    iconPaths: {
+      favicon32: 'public/icon.png',
+   }
   }
 })
