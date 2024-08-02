@@ -6,7 +6,7 @@
         </v-btn>
         <v-card variant="outlined" class="my-8 pa-2 text-left" v-for="talk in talks" :key="talk.id">
             <v-card-title class="text-wrap">{{ talk.title }}</v-card-title>
-            <v-card-subtitle class="mb-4  text-subtitle-2">Palestrante: {{ talk.speakers[0].name }}</v-card-subtitle>
+            <v-card-subtitle class="mb-4  text-subtitle-2 text-wrap">Palestrante: {{ listSpeakers(talk.speakers) }}</v-card-subtitle>
             <v-card-actions class="d-flex justify-space-evenly">
                 <v-btn text="Editar" variant="flat" @click="openUpdateDialog(talk)"></v-btn>
                 <v-btn text="Excluir" variant="text" @click="openDeleteDialog(talk)"></v-btn>
@@ -99,6 +99,9 @@ export default {
         changeMessage(message){
             this.message = message;
             this.snackbar = true;
+        },
+        listSpeakers(speakers){
+            return speakers.map(s=>s.name).join(', ');
         }
     },
     mounted(){

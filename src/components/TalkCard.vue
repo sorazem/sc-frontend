@@ -8,7 +8,7 @@
                 <v-chip density="compact" variant="tonal" v-for="category in palestra.categories" :key="category.id" :color="category.color">{{ category.name }}</v-chip>
                 <h2 class="mt-2">{{ palestra.title }}</h2>
                 <div class="text-left mt-4">
-                    <p><span>Palestrante:</span> {{ palestra.speakers[0]?.name }}</p>
+                    <p><span>Palestrante:</span> {{ listSpeakers(palestra.speakers) }}</p>
                     <p><span>Local:</span> {{ palestra.location?.name }}</p>
                     <p><span>Horário:</span> {{ formatDate(palestra.start_date) }} até {{ formatDate(palestra.end_date) }}</p>
                 </div>
@@ -27,6 +27,9 @@ export default {
     methods:{
         formatDate(date){
             return DateTime.fromISO(date).toFormat('HH:mm');
+        },
+        listSpeakers(speakers){
+            return speakers.map(s=>s.name).join(', ');
         }
     }
 }

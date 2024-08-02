@@ -1,8 +1,8 @@
 <template>
     <!-- <h1>Eventos</h1> -->
-    <div class="content d-flex flex-wrap justify-space-between align-content-space-between pa-4">
+    <div class="content d-flex flex-wrap align-content-space-between pa-4">
         <v-card 
-            class="pa-4 mb-8" 
+            class="pa-4 mb-8 mx-4" 
             v-for="event in events" 
             variant="outlined" 
             :key="event.slug"
@@ -51,5 +51,13 @@ export default {
     }
     .v-card-title{
         white-space: normal;
+    }
+    .content{
+        justify-content: flex-start;
+    }
+    @media screen and (max-width: 700px)  {
+        .content{
+            justify-content: center;
+        }
     }
 </style>
