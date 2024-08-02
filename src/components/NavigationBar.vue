@@ -38,7 +38,7 @@ export default {
             return JSON.parse(localStorage.getItem("user"))?.user;
         },
         isAdmin(){
-            return this.currentUser.permissions & 16;
+            return this.currentUser?.permissions & 16;
         }
     },
     methods: {

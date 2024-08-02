@@ -35,8 +35,8 @@
                 <v-img v-else src="@/assets/speaker_placeholder.png"></v-img>
             </v-avatar>
             <div class="ml-8">
-                <p class="font-weight-bold">{{ palestra.speaker?.name }}</p>
-                <p>{{ palestra.speaker?.bio }}</p>
+                <p class="font-weight-bold">{{ firstSpeaker?.name }}</p>
+                <p>{{ firstSpeaker?.bio }}</p>
             </div>
         </v-row>
     </v-row>
@@ -77,13 +77,19 @@ export default {
             return DateTime.fromISO(this.palestra.start_date) < DateTime.now();
         },
         speakerImage(){
-            if (this.palestra.speaker?.image_url) 
-                return `${process.env.VUE_APP_API_URL}${this.palestra.speaker?.image_url}`;
+            if (this.palestra.speakers && this.firstSpeaker?.image_url) 
+                return `${process.env.VUE_APP_API_URL}${this.firstSpeaker?.image_url}`;
             else return '';
         },
         freeVacancies() {
             if (this.palestra.vacancy_limit) { return `${this.palestra.vacancy_limit - this.palestra.participants} / ${this.palestra.vacancy_limit}` }
             return '';
+        },
+        firstSpeaker() {
+            if (this.palestra.speakers) {
+                return this.palestra.speakers[0];
+            }
+            return null;
         }
     },
     methods:{

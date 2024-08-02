@@ -24,9 +24,9 @@
                     density="compact"
                 ></v-text-field>
 
-                <div class="text-subtitle-1 text-medium-emphasis text-left">Palestrante</div>
+                <div class="text-subtitle-1 text-medium-emphasis text-left">Palestrantes</div>
                 <v-select
-                    v-model="talk.speaker_id"
+                    v-model="talk.speaker_ids"
                     :rules="[required]"
                     class="mb-2"
                     variant="outlined"
@@ -34,6 +34,7 @@
                     :items="speakersList"
                     item-title="name"
                     item-value="id"
+                    multiple
                 ></v-select>
 
                 <div class="text-subtitle-1 text-medium-emphasis text-left">Vagas</div>
@@ -135,13 +136,13 @@ export default {
                 this.talk = { id: newValue.id, title: newValue.title, description: newValue.description };
                 this.talk.start_date = newValue.start_date.substring(0, 19);
                 this.talk.end_date = newValue.end_date.substring(0, 19);
-                this.talk.speaker_id = newValue.speaker.id;
+                this.talk.speaker_ids = newValue.speakers.map((speaker) => speaker.id);
                 this.talk.type_id = newValue.type.id;
                 this.talk.location_id = newValue.location.id;
                 this.talk.category_ids = newValue.categories.map((category) => category.id);
                 this.talk.vacancy_limit = newValue.vacancy_limit;
             } else {
-                this.talk = { title: null, description: null, start_date: null, end_date: null, speaker_id: null, category_ids: null, type_id: null, location_id: null, vacancy_limit: null }
+                this.talk = { title: null, description: null, start_date: null, end_date: null, speaker_ids: null, category_ids: null, type_id: null, location_id: null, vacancy_limit: null }
             }
         },
     },
@@ -153,7 +154,7 @@ export default {
                 description: null,
                 start_date: null,
                 end_date: null,
-                speaker_id: null,
+                speaker_ids: null,
                 category_ids: null,
                 location_id: null,
                 type_id: null,
