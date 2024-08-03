@@ -31,8 +31,7 @@
         <p class="purple">Palestrante</p>
         <v-row class="pt-8 pb-4 align-center">
             <v-avatar >
-                <v-img v-if="speakerImage != ''" :src="speakerImage"></v-img>
-                <v-img v-else src="@/assets/speaker_placeholder.png"></v-img>
+                <v-img :src="speakerImage"></v-img>
             </v-avatar>
             <div class="ml-8">
                 <p class="font-weight-bold">{{ firstSpeaker?.name }}</p>
@@ -79,7 +78,7 @@ export default {
         speakerImage(){
             if (this.palestra.speakers && this.firstSpeaker?.image_url) 
                 return `${process.env.VUE_APP_API_URL}${this.firstSpeaker?.image_url}`;
-            else return '';
+            else return require('@/assets/speaker_placeholder.png');
         },
         freeVacancies() {
             if (this.palestra.vacancy_limit) { return `${this.palestra.vacancy_limit - this.palestra.participants} / ${this.palestra.vacancy_limit}` }
