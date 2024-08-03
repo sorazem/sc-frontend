@@ -94,7 +94,7 @@ export default {
     },
     computed:{
         currentUser(){
-            return JSON.parse(localStorage.getItem("user"))?.user;
+            return this.$store.state.auth.user;
         }
     },
     methods:{
@@ -128,7 +128,7 @@ export default {
         }
     },
     created(){
-        this.user = JSON.parse(localStorage.getItem("user"))?.user;
+        this.user = { ...this.$store.state.auth.user };
     }
 }
 </script>

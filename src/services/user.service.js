@@ -21,6 +21,12 @@ class UserService{
         .then((response) => response.data)
     }
 
+    getCurrentUser() {
+        return axios
+        .get(process.env.VUE_APP_API_URL + '/me', { headers: authHeader() })
+        .then((response) => response.data)
+    }
+
     deleteAccount(user_id){
         return axios
         .delete(process.env.VUE_APP_API_URL + '/user/' + user_id, { headers: authHeader() })

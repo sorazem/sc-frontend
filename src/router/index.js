@@ -3,9 +3,10 @@ import EventsView from '../views/EventsView.vue'
 import { DateTime } from 'luxon'
 import EventService from '../services/event.service';
 import UserService from '../services/user.service';
+import store from '@/store';
 
 const loggedInGuard = (to, from, next) => {
-  const user = JSON.parse(localStorage.getItem('user'))
+  const user = store.state.auth.user;
   if (!user) { next('/login'); }
   else {
     if (DateTime.now() >= DateTime.fromISO(user.exp)) {

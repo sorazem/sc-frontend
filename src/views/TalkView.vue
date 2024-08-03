@@ -99,14 +99,13 @@ export default {
         }
     },
     created(){
-        const loggedIn = JSON.parse(localStorage.getItem('user'))?.token;
-        const exp = JSON.parse(localStorage.getItem('user'))?.exp;
+        const exp = localStorage.getItem('exp');
 
         TalkService.getTalk(this.$route.params.talkid).then(
             (response) => this.palestra = response
         );
 
-        if(loggedIn && DateTime.now() < DateTime.fromISO(exp)){
+        if(this.$store.state.auth.status.loggedIn && DateTime.now() < DateTime.fromISO(exp)){
             TalkService.checkUserVacancy(this.$route.params.talkid).then(
                 (response) => {
                     this.participated = response.data.participated

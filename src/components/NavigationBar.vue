@@ -12,8 +12,9 @@
                 </v-col>
                 <v-col cols='3' class="d-flex align-center justify-end">
                     <v-btn class="hidden-sm-and-down" v-if="isAdmin" variant='text' color="#9C66BD"><router-link to="/admin">Admin</router-link></v-btn>
-                    <v-btn class="hidden-sm-and-down" v-if="currentUser" variant='text' color="#9C66BD"><router-link to="/perfil">Perfil</router-link></v-btn>
-                    <v-btn v-if="currentUser" variant='text' color="#9C66BD" @click='logout'>Logout</v-btn>
+                    <v-btn class="hidden-sm-and-down" v-if="loggedIn" variant='text' color="#9C66BD"><router-link to="/perfil">Perfil</router-link></v-btn>
+                    <v-btn v-if="loggedIn" variant='text' color="#9C66BD" @click='logout'>Logout</v-btn>
+                    <v-btn v-else variant='text' color="#9C66BD" @click='login'>Login</v-btn>
                 </v-col>
             </v-row>
         </v-toolbar>
@@ -22,7 +23,7 @@
 <script>
 export default {
     data(){
-        return{}
+        return {}
     },
     emits: ['toggleMenu'],
     computed:{
@@ -34,21 +35,27 @@ export default {
         showEventMenu(){
             return this.$route.params.slug;
         },
-        currentUser() {
-            return JSON.parse(localStorage.getItem("user"))?.user;
-        },
         isAdmin(){
-            return this.currentUser?.permissions & 16;
-        }
+            return this.$store.state.auth.user?.permissions & 16;
+        },
+        loggedIn() {
+            return this.$store.state.auth.status.loggedIn;
+        },
+        currentUser() {
+            return this.$store.state.auth.user;
+        },
     },
     methods: {
         toggleMenu(){
             this.$emit('toggleMenu');
         },
         logout() {
-            localStorage.removeItem('user');
+            this.$store.commit('auth/logout')
             this.$router.push('/login');
-        }
+        },
+        login(){
+            this.$router.push('/login');
+        },
     },
 }
 </script>

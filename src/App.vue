@@ -76,13 +76,14 @@ export default {
       return this.getMenuItems();
     },
     currentUser() {
-      return JSON.parse(localStorage.getItem("user"))?.user;
+      return this.$store.state.auth.user;
     },
     isAdmin(){
       return this.currentUser?.permissions & 16;
     }
   },
   mounted(){
+    this.$store.dispatch('auth/start');
     if(this.isAdmin){
       this.menu.push({ title: 'Admin', path:'/admin', icon: 'mdi-home'});
     }

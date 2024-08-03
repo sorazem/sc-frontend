@@ -32,7 +32,6 @@ export default {
         UserService.getUserCertifications().then(
             (response)=>{
                 this.certifications = response.filter((item) => item.type != 'talk_participation')
-                console.log(this.certifications)
             }
         )
     }

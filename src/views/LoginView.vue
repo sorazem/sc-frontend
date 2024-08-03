@@ -72,9 +72,8 @@ export default {
         }
     },
     created() {
-      const loggedIn = JSON.parse(localStorage.getItem('user'))?.token;
-      const exp = JSON.parse(localStorage.getItem('user'))?.exp;
-      if (loggedIn && DateTime.now() < DateTime.fromISO(exp)) {
+      const exp = localStorage.getItem('exp');
+      if (this.$store.state.auth.status.loggedIn && DateTime.now() < DateTime.fromISO(exp)) {
         this.$router.push("/");
       }
     },
