@@ -55,6 +55,7 @@
                     density="compact"
                 ></v-text-field>
                 <div class="text-subtitle-1 text-medium-emphasis text-left">Imagem de Banner</div>
+                <img v-if="event.banner_url !== ''" :src="imageUrl(event.banner_url)" alt="Imagem de Banner Atual"/>
                 <p class="text-caption text-medium-emphasis">Recomendamos o formato 16:9.</p>
                 <v-file-input 
                     v-model="event.banner"
@@ -64,6 +65,7 @@
                     density="compact"
                 ></v-file-input>
                 <div class="text-subtitle-1 text-medium-emphasis text-left">Imagem de Fundo dos Certificados</div>
+                <img v-if="event.cert_background_url !== ''" :src="imageUrl(event.cert_background_url)" alt="Imagem de cert_background Atual"/>
                 <p class="text-caption text-medium-emphasis">Recomendamos o formato 16:9.</p>
                 <v-file-input 
                     v-model="event.cert_background"
@@ -127,6 +129,9 @@ export default {
             } else {
                 eventService.updateEvent(this.event).then(this.$emit('closeDialog'))
             }
+        },
+        imageUrl(blob) {
+            return `${process.env.VUE_APP_API_URL}/${blob}`
         }
     },
 }
@@ -139,6 +144,10 @@ export default {
 
     span{
         font-weight: 600;
+    }
+    img {
+        width: 100%;
+        object-fit: contain;
     }
 </style>
 
