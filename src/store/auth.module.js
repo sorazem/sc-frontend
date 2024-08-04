@@ -57,6 +57,8 @@ export const auth = {
       state.user = null;
     },
     logout(state) {
+      localStorage.removeItem('token')
+      localStorage.removeItem('exp')
       state.status.loggedIn = false;
       state.user = null;
     },

@@ -18,6 +18,11 @@
             <p>{{ freeVacancies }}</p>
         </v-col>
     </v-row>
+    <v-row v-if='loggedIn' justify='center' class='my-4'>
+        <router-link :to="`/${this.$route.params.slug}/inscricao?talk_id=${palestra.id}`">
+            <v-btn color='#9c66bd' size='large' variant='flat'>Inscrever</v-btn>
+        </router-link>
+    </v-row>
     <v-row v-if="isStaff" justify="center" class="my-4">
         <router-link :to="this.$route.path + '/lista'">
             <v-btn color="#FF7A00" size="large" variant="flat">Lista de participantes</v-btn>
@@ -89,6 +94,9 @@ export default {
                 return this.palestra.speakers[0];
             }
             return null;
+        },
+        loggedIn() {
+            return this.$store.state.auth.status.loggedIn;
         }
     },
     methods:{

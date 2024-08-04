@@ -21,9 +21,7 @@
             <div class="text-subtitle-1 text-medium-emphasis text-left">CPF</div>
             <v-text-field
                 v-model="cpf"
-                type="number"
                 hide-spin-buttons
-                hint="Apenas números"
                 persistent-hint
                 :readonly="loading"
                 :rules="[required]"
@@ -33,6 +31,7 @@
                 variant="outlined"
                 density="compact"
                 prepend-inner-icon="mdi-card-account-details-outline"
+                v-maska="'###.###.###-##'"
             ></v-text-field>
 
             <div class="text-subtitle-1 text-medium-emphasis text-left">Ocupação</div>
@@ -149,7 +148,9 @@
   </template>
 <script>
 import { DateTime } from 'luxon';
+import { vMaska } from 'maska/vue';
 export default {
+    directives: { maska: vMaska },
     data() {
         return {
             form: false,

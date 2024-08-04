@@ -16,6 +16,7 @@
                 variant="outlined"
                 density="compact"
                 prepend-inner-icon="mdi-card-account-details-outline"
+                v-maska="'###.###.###-##'"
             ></v-text-field>
 
             <div class="text-subtitle-1 text-medium-emphasis text-left">Senha</div>
@@ -60,7 +61,9 @@
   </template>
 <script>
 import { DateTime } from 'luxon';
+import { vMaska } from 'maska/vue';
 export default {
+    directives: { maska: vMaska },
     data() {
         return {
             password: null,
