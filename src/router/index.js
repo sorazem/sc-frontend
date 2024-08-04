@@ -142,12 +142,18 @@ const routes = [
   },
   {
     path: '/:slug/menu-equipe/equipe',
-    name: 'teamAudit',
+    name: 'teamEdit',
     component: () => import('../views/PeopleTeamView.vue'),
     beforeEnter: [loggedInGuard, eventStaffGuard]
   },
   {
-    path: '/:slug/palestra/:talkid/lista',
+    path: '/:slug/menu-equipe/presencas',
+    name: 'teamPresence',
+    component: () => import('../views/PresenceTeamView.vue'),
+    beforeEnter: [loggedInGuard, eventStaffGuard]
+  },
+  {
+    path: '/:slug/menu-equipe/presencas/:talkid',
     name: 'talkAttendeeList',
     component: () => import('../views/AttendeeListView.vue'),
     beforeEnter: [loggedInGuard, eventStaffGuard]

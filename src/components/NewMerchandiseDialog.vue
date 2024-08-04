@@ -37,31 +37,40 @@
                     variant="outlined"
                     density="compact"
                 ></v-file-input>
-                <div class="text-subtitle-1 text-medium-emphasis text-left">Campo Customizado: Nome</div>
+                <p>Gostaria de adicionar um campo customizado?</p>
+                <v-switch
+                    v-model="showCustomField"
+                    :label="showCustomField? 'Sim' : 'Não'"
+                    color="#FF7A00"
+                ></v-switch>
+                <div class="text-subtitle-1 text-medium-emphasis text-left" v-if="showCustomField">Nome do campo</div>
                 <v-text-field
                     v-model="custom_fields_name"
-                    :rules="[required]"
                     class="mb-2"
                     clearable
                     variant="outlined"
                     density="compact"
+                    placeholder="Ex: Tamanho"
+                    v-if="showCustomField"
                 ></v-text-field>
-                <div class="text-subtitle-1 text-medium-emphasis text-left">Campo Customizado: Valores</div>
+                <div class="text-subtitle-1 text-medium-emphasis text-left" v-if="showCustomField">
+                    <p>Valores do campo</p>
+                    <p class="text-caption">Separe os valores por ponto e vírgula</p>
+                </div>
                 <v-text-field
                     v-model="cfValue"
-                    @keyup.enter="addOption()"
-                    :rules="[empty]"
                     class="mb-2"
                     clearable
                     variant="outlined"
                     density="compact"
+                    placeholder="Ex: P;M;G;GG"
+                    hide-details
+                    v-if="showCustomField"
                 ></v-text-field>
-                <v-row>
-                    <v-chip v-for="value in custom_fields_values" :key="value" closable @click:close="removeOption(value)">{{value}}</v-chip>
-                </v-row>
-                <v-row>
-                    <v-btn type="submit" :disabled="!form" color="#FF7A00">Enviar</v-btn>
-                </v-row>
+                <div v-if="showCustomField">
+                    <v-chip v-for="value in custom_fields_values" :key="value" color="#FF7A00">{{value}}</v-chip>
+                </div>
+                    <v-btn class="d-block mt-8" type="submit" :disabled="!form" color="#FF7A00">Enviar</v-btn>
             </v-form>
         </v-card>
     </v-dialog>
@@ -72,12 +81,17 @@ import store from '@/store';
 export default {
     props: ['willCreate', 'selectedMerch'],
     watch: {
+        cfValue: function(){
+            this.custom_fields_values = this.cfValue.split(";");
+        },
         selectedMerch: function (newValue) {
             if (newValue !== null) {
                 this.merch = {...newValue};
                 this.merch.price = (newValue.price / 100).toFixed(2);
                 if (newValue.custom_fields) {
-                    this.merch.custom_fields = JSON.parse(newValue.custom_fields)
+                    this.showCustomField = true;
+                    this.custom_fields_name = Object.keys(newValue.custom_fields)[0];
+                    this.cfValue = Object.values(Object.values(newValue.custom_fields)[0]).join(';')
                 } else {
                     this.merch.custom_fields = {}
                 }
@@ -89,6 +103,7 @@ export default {
     data() {
         return {
             form: false,
+            showCustomField: false,
             merch: {
                 name: null,
                 price: null,
@@ -108,7 +123,7 @@ export default {
             return !!v || 'Este campo é obrigatório'
         },
         empty(v) {
-            return !v || 'Termine de preencher esse campo!'
+            return !!v || 'Termine de preencher esse campo!'
         },
         submit(){
             this.merch.event_id = this.event.id;

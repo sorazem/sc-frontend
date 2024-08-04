@@ -38,7 +38,7 @@ class EventService{
         .then(response => response.data)
     }
 
-    getEventNotices(event_slug){
+    getEventNoticesForUser(event_slug){
         return axios
         .get(process.env.VUE_APP_API_URL + '/events/' + event_slug + '/notifications', { headers: authHeader() })
         .then(response => response.data)

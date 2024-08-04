@@ -1,7 +1,8 @@
 <template>
     <v-dialog width='auto'>
-        <v-card :text="'Novo anúncio'">
-            <v-form v-model='form' class='pa-4' @submit.prevent='submit()'>
+        <v-card class="pa-4">
+            <p class="ml-6 mt-4 mb-8">Novo anúncio</p>
+            <v-form v-model='form' @submit.prevent='submit()'>
                 <div class="text-subtitle-1 text-medium-emphasis text-left">Título</div>
                 <v-text-field
                     v-model="notice.title"
@@ -20,21 +21,25 @@
                     variant="outlined"
                     density="compact"
                 ></v-text-field>
-                <v-switch 
-                    v-model='isFromEvent' 
-                    :label='isFromEvent ? "Notificar Evento" : "Notificar Palestra"' 
-                    class='mb-2'
-                ></v-switch>
-                <div v-if='!isFromEvent'>
-                    <div class="text-subtitle-1 text-medium-emphasis text-left">Palestra</div>
+                <div class="text-subtitle-1 text-medium-emphasis text-left">Enviar aviso para todos do evento ou para participantes de uma palestra específica?</div>
+                <v-select 
+                    v-model="notificationType" 
+                    :items="['Evento', 'Palestra']"
+                    class="mb-4"
+                    variant="outlined"
+                    density="compact"
+                ></v-select>
+                <div v-if="notificationType === 'Palestra'">
+                    <div class="text-subtitle-1 text-medium-emphasis text-left">Escolha a palestra</div>
                     <v-select
                         v-model="notice.talk_id"
-                        class="mb-2"
+                        class="mb-4"
                         variant="outlined"
                         density="compact"
                         :items="talksList"
                         item-title="title"
                         item-value="id"
+                        :rules="[required]"
                     ></v-select>
                     </div>
                 <v-btn type="submit" :disabled="!form" color="#FF7A00">Enviar</v-btn>
@@ -65,6 +70,7 @@ export default {
     },
     data() {
         return {
+            notificationType: 'Evento',
             form: false,
             event: null,
             isFromEvent: true,
@@ -82,6 +88,11 @@ export default {
             return !!v || 'Este campo é obrigatório'
         },
         submit(){
+            if(this.notificationType === 'Evento'){
+                this.isFromEvent = true;
+            } else{
+                this.isFromEvent = false;
+            }
             if (this.isFromEvent) {
                 this.notice.event_id = this.event.id;
                 delete this.notice.talk_id;
@@ -140,6 +151,7 @@ export default {
 <style scoped>
 .v-card{
     width: 320px;
+    height: 100vh;
     border-radius: 16px;
 }
 

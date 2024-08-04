@@ -1,6 +1,6 @@
 <template>
-    <div class="content pa-4 d-flex align-content-space-between justify-space-between flex-wrap">
-        <v-card v-for="item in menuItems" :key="item.title" class="mb-4 mr-auto" variant="tonal">
+    <div class="content pa-4 d-flex flex-wrap grid-item">
+        <v-card v-for="item in menuItems" :key="item.title" class="mb-4 mx-auto" variant="tonal">
             <router-link :to="item.path">
                 <v-card-item>
                     <v-icon size="x-large" :icon="item.icon" class="mb-2"></v-icon>
@@ -30,7 +30,11 @@
 a {
     display: grid;
 }
-
+.grid-item{
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+    }
 @media screen and (max-width: 600px) {
     .v-row{
         width: 40vw;

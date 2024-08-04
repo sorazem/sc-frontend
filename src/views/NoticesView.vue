@@ -28,7 +28,7 @@ export default {
         }
     },
     mounted(){
-        EventService.getEventNotices(this.$route.params.slug).then(
+        EventService.getEventNoticesForUser(this.$route.params.slug).then(
             (response)=>this.notices = response
         )
     }

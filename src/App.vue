@@ -116,9 +116,9 @@ a.router-link-exact-active {
   border-color: lightgray;
 }
 .content{
-  width: 60vw;
+  width: 70vw;
 }
-@media screen and (max-width: 700px)  {
+@media screen and (max-width: 800px)  {
   .content{
     width: 100vw;
   }

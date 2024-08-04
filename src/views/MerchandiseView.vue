@@ -1,5 +1,6 @@
 <template>
     <div>
+        <v-snackbar v-model="snackbar" :timeout="2000">{{ message }}</v-snackbar>
         <h1 class="mt-4">Mercadorias do evento</h1>
         <p class="mb-8 font-weight-light">Faça aqui a reserva, retire e pague presencialmente</p>
         <v-card class="mb-4" variant="outlined" v-for="merch in merchandise" :key="merch.id">
@@ -44,6 +45,8 @@ export default {
             merchandise: [],
             size: null,
             optField: null,
+            snackbar: false,
+            message: ''
         }
     },
     methods:{
@@ -52,9 +55,17 @@ export default {
             let options = {}
             options[merch.cfName] = merch.cfOption;
             let payload = { merch_id: merch.id, user_id: user.id, amount: merch.quantity, options }
-            eventService.createReservation(this.$route.params.slug, payload).then((response) => {
-                console.log(response);
+            eventService.createReservation(this.$route.params.slug, payload)
+            .then(() => {
+                this.message = "Reserva criada!";
+                this.snackbar = true;
             })
+            .catch(
+                (error)=>{
+                    this.message = error.message;
+                    this.snackbar = true;
+                }
+            )
         },
         formatPrice(cents) {
             return `R$ ${(cents / 100).toFixed(2)}`;
