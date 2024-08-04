@@ -6,7 +6,7 @@
             v-for="event in events" 
             variant="outlined" 
             :key="event.slug"
-            :href="'/' + event.slug + '/programacao'"
+            :to="'/' + event.slug + '/programacao'"
             >
                 <div class="overflow-auto d-flex flex-column flex-wrap">
                     <v-img :src="eventPhoto(event)" width="300"></v-img>

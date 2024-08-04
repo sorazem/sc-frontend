@@ -23,11 +23,6 @@
             <v-btn color='#9c66bd' size='large' variant='flat'>Inscrever</v-btn>
         </router-link>
     </v-row>
-    <v-row v-if="isStaff" justify="center" class="my-4">
-        <router-link :to="this.$route.path + '/lista'">
-            <v-btn color="#FF7A00" size="large" variant="flat">Lista de participantes</v-btn>
-        </router-link>
-    </v-row>
     <v-row class="pa-8 text-left flex-column">
         <p class="purple">Descrição</p>
         <p>{{ palestra.description }}</p>

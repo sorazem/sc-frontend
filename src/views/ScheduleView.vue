@@ -8,7 +8,7 @@
       <v-select label="Localização" v-model="currentLocation" :items="locations" density="compact" variant="outlined" class="mt-4"></v-select>
     </v-col>
   </v-row>
-    <TalkCard v-for="palestra in filteredTalks" :palestra="palestra" :key="palestra.title" :href="'/' + this.$route.params.slug + '/palestra/' + palestra.id"/>
+    <TalkCard v-for="palestra in filteredTalks" :palestra="palestra" :key="palestra.title" :to="'/' + this.$route.params.slug + '/palestra/' + palestra.id"/>
   </div>
 </template>
 

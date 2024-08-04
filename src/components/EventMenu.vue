@@ -7,7 +7,6 @@
                 :to="item.path"
             >
                 <v-btn :color="colorBtn">
-                    <!-- <v-icon>{{ item.icon }}</v-icon> -->
                     <span>{{ item.title }}</span>
                 </v-btn>
             </router-link>
@@ -15,19 +14,8 @@
     </v-layout>
 </template>
 <script>
-import EventService from '@/services/event.service';
 export default {
-    data(){
-        return{
-            menuItems: [
-                { title: 'Programação', path: '/' + this.$route.params.slug + '/programacao', icon: 'mdi-home'},
-                { title: 'Minha agenda', path: '/' + this.$route.params.slug + '/agenda', icon: 'home'},
-                { title: 'Inscrição', path: '/' + this.$route.params.slug + '/inscricao', icon: 'home'},
-                { title: 'Loja', path: '/' + this.$route.params.slug + '/mercadorias', icon: 'home' },
-                { title: 'Avisos', path: '/' + this.$route.params.slug + '/avisos', icon: 'home' }
-            ]
-        }
-    },
+    props: ['menuItems'],
     computed:{
         colorBtn(){
             if(this.$route.path.includes('menu-equipe')){
@@ -37,18 +25,6 @@ export default {
             }
         }
     },
-    created(){
-        EventService.isEventStaff(this.$route.params.slug)
-            .then((response)=>{
-                if (response) {
-                    this.menuItems.push({title: 'Equipe', path: '/' + this.$route.params.slug + '/menu-equipe'})
-                }
-            }).catch((err) => {
-                if (err.response.status !== 401) {
-                    throw err;
-                }
-            });
-    }
 }
 </script>
 <style scoped>
