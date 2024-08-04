@@ -34,7 +34,10 @@
         <v-card v-if="denied.length" variant="tonal" color="error">
             <v-card-title>Infelizmente você não conseguiu vaga nas seguintes palestras</v-card-title>
             <v-card-item>
-                <p v-for="palestra in denied" :key="palestra.id">{{ palestra.talk.title }}</p>
+                <div v-for="palestra in denied" :key="palestra.talk.id" class="mb-4">
+                    <p class="font-weight-bold">{{ palestra.talk.title }}</p>
+                    <p>Motivo: {{ palestra.errors.user_id[0] }}</p>
+                </div>
             </v-card-item>
         </v-card>
         <v-btn
