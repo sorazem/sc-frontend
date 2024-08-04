@@ -55,7 +55,7 @@ export default {
         { title: 'Loja', path: '/' + this.$route.params.slug + '/mercadorias', icon: 'home' },
         { title: 'Avisos', path: '/' + this.$route.params.slug + '/avisos', icon: 'home' }
       ];
-      if (this.isStaffFromEvent) {
+      if (this.isStaffFromEvent || this.isAdmin) {
         eventMenu.push({title: 'Equipe', path: '/' + this.$route.params.slug + '/menu-equipe'});
       }
       return eventMenu;
