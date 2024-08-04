@@ -4,8 +4,8 @@
       <v-col cols='12'>
         <v-select clearable label="Localização" v-model="currentLocation" :items="locations" density="compact" variant="outlined" class="mt-4"></v-select>
       </v-col>
-      <v-tabs v-for="dia in dias" :key="dia" v-model='diaAtual' show-arrows>
-        <v-tab :value="dia">{{dia}}</v-tab>
+      <v-tabs v-model='diaAtual' show-arrows>
+        <v-tab v-for="dia in dias" :key="dia" :value="dia">{{dia}}</v-tab>
       </v-tabs>
       <v-tabs-window v-model='diaAtual'>
         <v-tabs-window-item v-for="dia in dias" :key='dia' :value='dia'>
@@ -55,7 +55,7 @@
         return this.palestras[this.diaAtual]?.filter((palestra) => !this.currentLocation || palestra.location.name === this.currentLocation)
       }
     },
-    created(){
+    mounted(){
       EventService.getEventSchedule(this.$route.params.slug).then(
         (response) =>{
           this.palestras = response.talks;
