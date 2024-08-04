@@ -2,13 +2,22 @@
     <div v-if="!submitted">
         <h1 class="mt-4">Inscrição</h1>
         <p class="mb-8">{{ talksToEnroll.length }} palestra<span v-if="talksToEnroll.length!=1">s</span> selecionada<span v-if="talksToEnroll.length!=1">s</span></p>
-        <div v-for="palestra in Object.values(palestras).flat()" :key="palestra.title" class="d-flex align-center justify-center">
-            <v-checkbox
-                v-model="talksToEnroll"
-                label=""
-                :value="palestra.id"
-            ></v-checkbox>
-            <TalkCard :palestra="palestra" :key="palestra.title"/>
+        <div class="content d-flex flex-column align-center justify-center">
+            <v-tabs v-model='diaAtual' show-arrows>
+                <v-tab v-for='dia in dias' :key='dia' :value='dia'>{{dia}}</v-tab>
+            </v-tabs>
+            <v-tabs-window v-model='diaAtual' >
+                <v-tabs-window-item v-for='dia in dias' :key='dia' :value='dia'>
+                    <div v-for="palestra in palestras[dia]" :key="palestra.title" class='d-flex flex-row align-center justify-center'>
+                        <v-checkbox
+                            v-model="talksToEnroll"
+                            label=""
+                            :value="palestra.id"
+                        ></v-checkbox>
+                        <TalkCard :palestra="palestra" :key="palestra.title"/>
+                    </div>
+                </v-tabs-window-item>
+            </v-tabs-window>
         </div>
         <v-btn
             @click="enroll"
@@ -18,9 +27,7 @@
             type="submit"
             variant="flat"
             class="mt-4"
-        >
-            Confirmar
-        </v-btn>
+        >Confirmar</v-btn>
     </div>
     <div v-if="submitted" class="submitted d-flex flex-column align-center">
         <h1>Confirmação do pedido</h1>
@@ -61,6 +68,8 @@ export default {
             talksToEnroll: [],
             loading: false,
             palestras: [],
+            dias: [],
+            diaAtual: null,
             submitted: false,
             confirmed: [],
             denied: []
@@ -90,6 +99,8 @@ export default {
         EventService.getEventSchedule(this.$store.state.eventSlug).then(
           (response) =>{
               this.palestras = response.talks;
+              this.dias = Object.keys(response.talks);
+              this.diaAtual = this.dias[0];
           }
       );
     }
