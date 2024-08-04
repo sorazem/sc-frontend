@@ -3,9 +3,9 @@
         <v-form v-model="form">
             <v-img class="hidden-sm-and-down" src="../../src/assets/profile2.png" :width="280" />
             <h3>Nome</h3>
-            <v-text-field 
+            <v-text-field
                 v-model="user.name" 
-                :readonly="!editMode" 
+                :disabled="!editMode" 
                 variant="outlined" 
                 density="compact"
                 :rules="[required]"
@@ -13,7 +13,7 @@
             <h3>Email</h3>
             <v-text-field 
                 v-model="user.email" 
-                :readonly="!editMode" 
+                :disabled="!editMode" 
                 variant="outlined" 
                 density="compact"
                 :rules="[required]"
@@ -21,7 +21,7 @@
             <h3>Ocupação</h3>
             <v-text-field 
                 v-if="!editMode" 
-                :readonly="!editMode" 
+                :disabled="!editMode" 
                 variant="outlined" 
                 density="compact"
             >
@@ -39,7 +39,7 @@
             <h3>Instituição</h3>
             <v-text-field 
                 v-if="!editMode" 
-                :readonly="!editMode" 
+                :disabled="!editMode" 
                 variant="outlined" 
                 density="compact"
             >
@@ -58,7 +58,7 @@
             <v-text-field 
                 v-if="user?.dre || user.institution == 'UFRJ'" 
                 v-model="user.dre" 
-                :readonly="!editMode" 
+                :disabled="!editMode" 
                 variant="outlined" 
                 density="compact"
                 :rules="[required]">
@@ -150,5 +150,8 @@ p{
     position: absolute;
     right: 15%;
     top: 30%;
+}
+.v-theme--light{
+    --v-disabled-opacity: 1 !important;
 }
 </style>
