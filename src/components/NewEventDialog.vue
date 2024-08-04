@@ -125,9 +125,33 @@ export default {
         submit(){
             if (this.willCreate) {
                 if (this.event.slug == null) { delete this.event.slug; }
-                eventService.createEvent(this.event).then(this.$emit('closeDialog'))
+                eventService.createEvent(this.event)
+                .then(
+                    () => {
+                        this.$emit('changeMessage', "Evento criado com sucesso.");
+                        this.$emit('closeDialog');
+                    }
+                )
+                .catch(
+                    (error) => {
+                        this.$emit('changeMessage', error.message);
+                        this.$emit('closeDialog');
+                    }
+                )
             } else {
-                eventService.updateEvent(this.event).then(this.$emit('closeDialog'))
+                eventService.updateEvent(this.event)
+                .then(
+                    () => {
+                        this.$emit('changeMessage', "Evento editado com sucesso.");
+                        this.$emit('closeDialog');
+                    }
+                )
+                .catch(
+                    (error) => {
+                        this.$emit('changeMessage', error.message);
+                        this.$emit('closeDialog');
+                    }
+                )
             }
         },
         imageUrl(blob) {

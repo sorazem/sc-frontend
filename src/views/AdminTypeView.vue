@@ -13,7 +13,7 @@
             </v-card-actions>
         </v-card>
         <DeleteItemDialog :showDialog='dialogDelete' @cancel-deletion='dialogDelete = false' @delete-item='deleteType(selectedType)'/>
-        <NewTypeDialog v-model='dialogNew' :willCreate='willCreate' :selectedType='selectedType' @closeDialog='closeNewDialog'/>
+        <NewTypeDialog v-model='dialogNew' :willCreate='willCreate' :selectedType='selectedType' @closeDialog='closeNewDialog' @changeMessage='changeMessage'/>
     </div>
 </template>
 <script>
@@ -65,6 +65,10 @@ export default {
         closeNewDialog() {
             this.dialogNew = false;
             EventService.getTypes().then((types) => this.types = types)
+        },
+        changeMessage(message){
+            this.message = message;
+            this.snackbar = true;
         }
     },
     mounted() {

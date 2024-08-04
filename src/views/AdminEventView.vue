@@ -17,7 +17,7 @@
             </v-card-actions>
         </v-card>
         <DeleteItemDialog :showDialog='dialogDelete' @cancel-deletion='dialogDelete = false' @delete-item='deleteEvent(selectedEvent)'/>
-        <NewEventDialog v-model='dialogNew' :willCreate='willCreate' :selectedEvent='selectedEvent' @closeDialog='closeNewDialog'/>
+        <NewEventDialog v-model='dialogNew' :willCreate='willCreate' :selectedEvent='selectedEvent' @closeDialog='closeNewDialog' @changeMessage='changeMessage'/>
     </div>
 </template>
 <script>
@@ -78,6 +78,10 @@ export default {
         closeNewDialog() {
             this.dialogNew = false;
             this.updateEvents();
+        },
+        changeMessage(message){
+            this.message = message;
+            this.snackbar = true;
         }
     },
     mounted() {
