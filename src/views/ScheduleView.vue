@@ -1,14 +1,23 @@
 <template>
   <div id='card-row' class="d-flex flex-column justify-space-between align-center">
-  <v-row class='w-100'>
-    <v-col cols='6'>
-      <v-select label="Dia" v-model="diaAtual" :items="dias" density="compact" variant="outlined" class="mt-4"></v-select>
+    <v-row class='w-100'>
+    <v-col cols='12'>
+      <v-select clearable label="Localização" v-model="currentLocation" :items="locations" density="compact" variant="outlined" class="mt-4"></v-select>
     </v-col>
-    <v-col cols='6'>
-      <v-select label="Localização" v-model="currentLocation" :items="locations" density="compact" variant="outlined" class="mt-4"></v-select>
-    </v-col>
-  </v-row>
-    <TalkCard v-for="palestra in filteredTalks" :palestra="palestra" :key="palestra.title" :to="'/' + this.$route.params.slug + '/palestra/' + palestra.id"/>
+      <v-tabs v-for="dia in dias" :key="dia" v-model='diaAtual' show-arrows>
+        <v-tab :value="dia">{{dia}}</v-tab>
+      </v-tabs>
+      <v-tabs-window v-model='diaAtual'>
+        <v-tabs-window-item v-for="dia in dias" :key='dia' :value='dia'>
+          <TalkCard 
+          v-for="palestra in filteredTalks" 
+          :palestra="palestra" 
+          :key="palestra.title" 
+          :to="'/' + this.$route.params.slug + '/palestra/' + palestra.id
+          "/>
+        </v-tabs-window-item>
+      </v-tabs-window>
+    </v-row>
   </div>
 </template>
 
