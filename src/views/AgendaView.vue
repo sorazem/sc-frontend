@@ -1,9 +1,21 @@
 <template>
     <v-snackbar v-model="snackbar" :timeout="2000">{{ message }}</v-snackbar>
     <p v-if="dias.length==0" class="mt-8">Você ainda não se inscreveu em nenhuma palestra.</p>
-    <v-select v-if="dias.length" label="Dia" v-model="diaAtual" :items="dias" density="compact" variant="outlined" class="mt-4"></v-select>
-    <div class="d-flex flex-column justify-space-between align-center">
-        <TalkCard v-for="palestra in palestras[diaAtual]" :palestra="palestra.talk" :key="palestra.talk.title" :href="'/' + this.$route.params.slug + '/palestra/' + palestra.talk.id" @cancel="cancel"/>
+    <div class="content d-flex flex-column align-center">
+      <v-tabs v-for="dia in dias" :key="dia" v-model='diaAtual' show-arrows>
+        <v-tab :value="dia">{{dia}}</v-tab>
+      </v-tabs>
+      <v-tabs-window v-model='diaAtual'>
+        <v-tabs-window-item v-for="dia in dias" :key='dia' :value='dia'>
+          <TalkCard 
+            v-for="palestra in palestras[diaAtual]" 
+            :palestra="palestra.talk" 
+            :key="palestra.talk.title" 
+            :to="'/' + this.$route.params.slug + '/palestra/' + palestra.talk.id" 
+            @cancel="cancel"
+          />
+        </v-tabs-window-item>
+      </v-tabs-window>
     </div>
 </template>
 <script>

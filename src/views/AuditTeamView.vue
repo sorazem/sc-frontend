@@ -17,7 +17,6 @@ export default {
         }
     },
     mounted() {
-        console.log(DateTime.now())
         const date = DateTime.now().toFormat('dd-MM-yyyy');
         eventService.getAuditLogsFromDay(this.$route.params.slug, date).then((response) => {
             this.currentLog = response;

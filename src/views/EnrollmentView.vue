@@ -81,6 +81,9 @@ export default {
     },
     created(){
         this.$store.commit('changeCurrentEventSlug', this.$route.params.slug);
+        if (this.$route.query.talk_id) {
+            this.talksToEnroll = [parseInt(this.$route.query.talk_id)]
+        }
         EventService.getEventSchedule(this.$store.state.eventSlug).then(
           (response) =>{
               this.palestras = response.talks;

@@ -51,7 +51,7 @@ export default {
     },
     methods:{
         saveMerch(merch){
-            let user = JSON.parse(localStorage.getItem('user')).user;
+            let user = this.$store.state.auth.user;
             let options = {}
             options[merch.cfName] = merch.cfOption;
             let payload = { merch_id: merch.id, user_id: user.id, amount: merch.quantity, options }
@@ -82,7 +82,6 @@ export default {
     created(){
         eventService.getEventMerchandise(this.$route.params.slug).then(
             (response) =>{
-                console.log(response);
                 this.merchandise = response.map((merch) => {
                     if(merch.custom_fields !== null){
                         merch.cfName = Object.keys(merch.custom_fields)[0];

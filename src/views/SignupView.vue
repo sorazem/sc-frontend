@@ -21,9 +21,7 @@
             <div class="text-subtitle-1 text-medium-emphasis text-left">CPF</div>
             <v-text-field
                 v-model="cpf"
-                type="number"
                 hide-spin-buttons
-                hint="Apenas números"
                 persistent-hint
                 :readonly="loading"
                 :rules="[required]"
@@ -33,6 +31,7 @@
                 variant="outlined"
                 density="compact"
                 prepend-inner-icon="mdi-card-account-details-outline"
+                v-maska="'###.###.###-##'"
             ></v-text-field>
 
             <div class="text-subtitle-1 text-medium-emphasis text-left">Ocupação</div>
@@ -149,7 +148,9 @@
   </template>
 <script>
 import { DateTime } from 'luxon';
+import { vMaska } from 'maska/vue';
 export default {
+    directives: { maska: vMaska },
     data() {
         return {
             form: false,
@@ -169,9 +170,8 @@ export default {
         }
     },
     mounted() {
-        const loggedIn = JSON.parse(localStorage.getItem('user'))?.token;
-        const exp = JSON.parse(localStorage.getItem('user'))?.exp;
-        if (loggedIn && DateTime.now() < DateTime.fromISO(exp)) {
+        const exp = localStorage.getItem('exp');
+        if (this.$store.state.auth.status.loggedIn && DateTime.now() < DateTime.fromISO(exp)) {
             this.$router.push("/");
         }
     },

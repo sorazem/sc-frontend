@@ -44,6 +44,12 @@ class EventService{
         .then(response => response.data)
     }
 
+    getEventStaffNotices(event_slug){
+        return axios
+        .get(process.env.VUE_APP_API_URL + '/events/' + event_slug + '/notifications/staff', { headers: authHeader() })
+        .then(response => response.data)
+    }
+
     isEventStaff(event_slug){
         return axios
         .get(process.env.VUE_APP_API_URL + '/events/' + event_slug + '/staff', { headers: authHeader() })

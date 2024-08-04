@@ -16,6 +16,7 @@
                 variant="outlined"
                 density="compact"
                 prepend-inner-icon="mdi-card-account-details-outline"
+                v-maska="'###.###.###-##'"
             ></v-text-field>
 
             <div class="text-subtitle-1 text-medium-emphasis text-left">Senha</div>
@@ -60,7 +61,9 @@
   </template>
 <script>
 import { DateTime } from 'luxon';
+import { vMaska } from 'maska/vue';
 export default {
+    directives: { maska: vMaska },
     data() {
         return {
             password: null,
@@ -72,9 +75,8 @@ export default {
         }
     },
     created() {
-      const loggedIn = JSON.parse(localStorage.getItem('user'))?.token;
-      const exp = JSON.parse(localStorage.getItem('user'))?.exp;
-      if (loggedIn && DateTime.now() < DateTime.fromISO(exp)) {
+      const exp = localStorage.getItem('exp');
+      if (this.$store.state.auth.status.loggedIn && DateTime.now() < DateTime.fromISO(exp)) {
         this.$router.push("/");
       }
     },

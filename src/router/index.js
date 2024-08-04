@@ -5,11 +5,13 @@ import EventService from '../services/event.service';
 import UserService from '../services/user.service';
 
 const loggedInGuard = (to, from, next) => {
-  const user = JSON.parse(localStorage.getItem('user'))
-  if (!user) { next('/login'); }
+  const token = localStorage.getItem('token');
+  const exp = localStorage.getItem('exp');
+  if (!token) { next('/login'); }
   else {
-    if (DateTime.now() >= DateTime.fromISO(user.exp)) {
-      localStorage.removeItem('user');
+    if (DateTime.now() >= DateTime.fromISO(exp)) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('exp');
     }
 
     if (['login', 'signup'].includes(to.name)) {

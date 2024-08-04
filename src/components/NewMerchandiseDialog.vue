@@ -164,7 +164,6 @@ export default {
             this.cfValue = "";
         },
         removeOption(value) {
-            console.log(value)
             this.custom_fields_values.splice(this.custom_fields_values.indexOf(value), 1);
         }
     },

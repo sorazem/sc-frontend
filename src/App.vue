@@ -1,31 +1,17 @@
 <template id="app">
   <NavigationBar @toggleMenu="toggleMenu" />
   <v-layout>
-    <v-navigation-drawer v-model="drawer" temporary class="pt-4">
-          <v-list-item link class="mb-8">
-            <router-link class="venti" to="/"><span class="purple">V</span>enti</router-link>
-          </v-list-item>
-          <v-list-item link v-for="item in menu" :key="item.title">
-              <router-link :to="item.path">{{ item.title }}</router-link>
-          </v-list-item>
-        <div v-if="showEventMenu">
-          <v-divider class="my-4"></v-divider>
-          <v-list-item class="font-weight-bold" title="Menu do evento" :subtitle="this.$route.params.slug"></v-list-item>
-          <v-list-item link v-for="item in menuItems" :key="item.title">
-              <router-link :to="item.path">{{ item.title }}</router-link>
-          </v-list-item>
-        </div>
-    </v-navigation-drawer>
+    <HamburguerMenu v-model='drawer' :showEventMenu='showEventMenu' :menu='menu' :eventMenuItems='menuItems' />
   </v-layout>
   <div class="container pa-4 mb-14">
     <div class="row d-flex flex-column align-center">
       <router-view/>
     </div>
-  <EventMenu v-if="showEventMenu" class="d-none d-sm-flex"/>
+    <EventMenu v-if="showEventMenu" :menuItems='menuItems' class="d-none d-sm-flex"/>
   </div>
-
 </template>
 <script>
+import HamburguerMenu from '@/components/HamburguerMenu.vue';
 import EventService from './services/event.service';
 import EventMenu from '@/components/EventMenu.vue';
 import NavigationBar from './components/NavigationBar.vue';
@@ -33,37 +19,44 @@ export default {
   data(){
     return{
       drawer: false,
+      isStaffFromEvent: false,
       menu: [
         { title: 'Perfil', path: '/perfil', icon: 'mdi-home'},
         { title: 'Certificados', path: '/certificados', icon: 'mdi-home'}
       ]
     }
   },
+  watch: {
+    '$route.params': function(newValue, oldValue) {
+      if (newValue.slug && newValue.slug !== oldValue.slug) {
+        EventService.isEventStaff(newValue.slug)
+        .then((response)=>{
+          this.isStaffFromEvent = response
+        }).catch((err) => {
+          if (err.response.status !== 401) throw err;
+        });
+      }
+    }
+  },
   components: {
     NavigationBar,
-    EventMenu
+    EventMenu,
+    HamburguerMenu,
   },
   methods: {
     toggleMenu(){
       this.drawer = !this.drawer;
     },
     getMenuItems(){
-      let eventMenu = [
-                { title: 'Programação', path: '/' + this.$route.params.slug + '/programacao', icon: 'mdi-home'},
-                { title: 'Minha agenda', path: '/' + this.$route.params.slug + '/agenda', icon: 'home'},
-                { title: 'Inscrição', path: '/' + this.$route.params.slug + '/inscricao', icon: 'home'},
-                { title: 'Loja', path: '/' + this.$route.params.slug + '/mercadorias', icon: 'home' },
-                { title: 'Avisos', path: '/' + this.$route.params.slug + '/avisos', icon: 'home' }
+      const eventMenu = [
+        { title: 'Programação', path: '/' + this.$route.params.slug + '/programacao', icon: 'mdi-home'},
+        { title: 'Minha agenda', path: '/' + this.$route.params.slug + '/agenda', icon: 'home'},
+        { title: 'Inscrição', path: '/' + this.$route.params.slug + '/inscricao', icon: 'home'},
+        { title: 'Loja', path: '/' + this.$route.params.slug + '/mercadorias', icon: 'home' },
+        { title: 'Avisos', path: '/' + this.$route.params.slug + '/avisos', icon: 'home' }
       ];
-      if(this.$route.params.slug){
-        EventService.isEventStaff(this.$route.params.slug).then(
-            (response)=>{
-                if(response){
-                  eventMenu.push({title: 'Equipe', path: '/' + this.$route.params.slug + '/menu-equipe'})
-                }
-            },
-            (error)=>{console.log(error)}
-        );
+      if (this.isStaffFromEvent || this.isAdmin) {
+        eventMenu.push({title: 'Equipe', path: '/' + this.$route.params.slug + '/menu-equipe'});
       }
       return eventMenu;
     }
@@ -76,13 +69,14 @@ export default {
       return this.getMenuItems();
     },
     currentUser() {
-      return JSON.parse(localStorage.getItem("user"))?.user;
+      return this.$store.state.auth.user;
     },
     isAdmin(){
       return this.currentUser?.permissions & 16;
     }
   },
   mounted(){
+    this.$store.dispatch('auth/start');
     if(this.isAdmin){
       this.menu.push({ title: 'Admin', path:'/admin', icon: 'mdi-home'});
     }

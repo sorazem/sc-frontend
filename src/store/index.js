@@ -1,7 +1,7 @@
 import { createStore } from 'vuex'
 import { auth } from "./auth.module"
 
-export default createStore({
+const store = createStore({
   state: {
       eventSlug: null,
       eventMap: []
@@ -22,3 +22,5 @@ export default createStore({
     auth
   }
 })
+
+export default store;

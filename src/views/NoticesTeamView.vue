@@ -73,7 +73,7 @@ export default {
 
         closeDialog() {
             this.dialogNew = false;
-            EventService.getEventNotices(this.$route.params.slug).then(
+            EventService.getEventStaffNotices(this.$route.params.slug).then(
                 (response)=>this.notices = response
             )
         },
@@ -83,7 +83,7 @@ export default {
         }
     },
     mounted(){
-        EventService.getEventNotices(this.$route.params.slug).then(
+        EventService.getEventStaffNotices(this.$route.params.slug).then(
             (response)=>this.notices = response
         )
     }

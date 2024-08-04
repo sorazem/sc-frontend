@@ -18,9 +18,9 @@
             <p>{{ freeVacancies }}</p>
         </v-col>
     </v-row>
-    <v-row v-if="isStaff" justify="center" class="my-4">
-        <router-link :to="this.$route.path + '/lista'">
-            <v-btn color="#FF7A00" size="large" variant="flat">Lista de participantes</v-btn>
+    <v-row v-if='loggedIn' justify='center' class='my-4'>
+        <router-link :to="`/${this.$route.params.slug}/inscricao?talk_id=${palestra.id}`">
+            <v-btn color='#9c66bd' size='large' variant='flat'>Inscrever</v-btn>
         </router-link>
     </v-row>
     <v-row class="pa-8 text-left flex-column">
@@ -31,8 +31,7 @@
         <p class="purple">Palestrante</p>
         <v-row class="pt-8 pb-4 align-center">
             <v-avatar >
-                <v-img v-if="speakerImage != ''" :src="speakerImage"></v-img>
-                <v-img v-else src="@/assets/speaker_placeholder.png"></v-img>
+                <v-img :src="speakerImage"></v-img>
             </v-avatar>
             <div class="ml-8">
                 <p class="font-weight-bold">{{ firstSpeaker?.name }}</p>
@@ -79,7 +78,7 @@ export default {
         speakerImage(){
             if (this.palestra.speakers && this.firstSpeaker?.image_url) 
                 return `${process.env.VUE_APP_API_URL}${this.firstSpeaker?.image_url}`;
-            else return '';
+            else return require('@/assets/speaker_placeholder.png');
         },
         freeVacancies() {
             if (this.palestra.vacancy_limit) { return `${this.palestra.vacancy_limit - this.palestra.participants} / ${this.palestra.vacancy_limit}` }
@@ -90,6 +89,9 @@ export default {
                 return this.palestra.speakers[0];
             }
             return null;
+        },
+        loggedIn() {
+            return this.$store.state.auth.status.loggedIn;
         }
     },
     methods:{
@@ -100,14 +102,13 @@ export default {
         }
     },
     created(){
-        const loggedIn = JSON.parse(localStorage.getItem('user'))?.token;
-        const exp = JSON.parse(localStorage.getItem('user'))?.exp;
+        const exp = localStorage.getItem('exp');
 
         TalkService.getTalk(this.$route.params.talkid).then(
             (response) => this.palestra = response
         );
 
-        if(loggedIn && DateTime.now() < DateTime.fromISO(exp)){
+        if(this.$store.state.auth.status.loggedIn && DateTime.now() < DateTime.fromISO(exp)){
             TalkService.checkUserVacancy(this.$route.params.talkid).then(
                 (response) => {
                     this.participated = response.data.participated

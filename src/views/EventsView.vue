@@ -4,7 +4,7 @@
             <v-card 
                 class="pa-4 mb-8 mx-4" 
                 variant="outlined" 
-                :href="'/' + event.slug + '/programacao'"
+                :to="'/' + event.slug + '/programacao'"
                 >
                     <div class="overflow-auto d-flex flex-column flex-wrap">
                         <v-img v-if="event?.banner_url !== ''" :src="eventPhoto(event)" width="300"></v-img>
@@ -28,11 +28,15 @@ export default {
         }
     },
     methods:{
+        eventPhoto(event) {
+            return event?.banner_url ? `${process.env.VUE_APP_API_URL}/${event.banner_url}` : require('@/assets/event_placeholder.jpg')
+        },
+
         formatDate(date){
             return DateTime.fromISO(date).toFormat('dd/MM/yy');
         }
     },
-    mounted(){
+    beforeCreate(){
         EventService.listEvents().then(
             (response) =>{
                 this.events = response;
