@@ -11,8 +11,12 @@
                     </v-toolbar-title>
                 </v-col>
                 <v-col cols='3' class="d-flex align-center justify-end">
-                    <v-btn class="hidden-sm-and-down" v-if="isAdmin" variant='text' color="#9C66BD"><router-link to="/admin">Admin</router-link></v-btn>
-                    <v-btn class="hidden-sm-and-down" v-if="loggedIn" variant='text' color="#9C66BD"><router-link to="/perfil">Perfil</router-link></v-btn>
+                    <v-btn class="hidden-sm-and-down" v-if="isAdmin" variant='text' color="#9C66BD">
+                        <router-link to="/admin">Admin</router-link>
+                    </v-btn>
+                    <v-btn class="hidden-sm-and-down" v-if="loggedIn" variant='text' color="#9C66BD">
+                        <router-link to="/perfil">Perfil</router-link>
+                    </v-btn>
                     <v-btn v-if="loggedIn" variant='text' color="#9C66BD" @click='logout'>Logout</v-btn>
                     <v-btn v-else variant='text' color="#9C66BD" @click='login'>Login</v-btn>
                 </v-col>
@@ -36,7 +40,7 @@ export default {
             return this.$route.params.slug;
         },
         isAdmin(){
-            return this.$store.state.auth.user?.permissions & 16;
+            return this.currentUser?.permissions & 16;
         },
         loggedIn() {
             return this.$store.state.auth.status.loggedIn;

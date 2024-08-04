@@ -9,8 +9,8 @@ export const auth = {
   actions: {
     login({ commit }, user) {
       return AuthService.login(user).then(
-        user => {
-          commit('loginSuccess', user);
+        (response) => {
+          commit('loginSuccess', response.user);
           return Promise.resolve(user);
         },
         error => {

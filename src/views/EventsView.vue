@@ -1,5 +1,4 @@
 <template>
-    <!-- <h1>Eventos</h1> -->
     <div class="content d-flex flex-wrap align-content-space-between pa-4">
         <v-card 
             class="pa-4 mb-8 mx-4" 
@@ -36,7 +35,7 @@ export default {
             return DateTime.fromISO(date).toFormat('dd/MM/yy');
         }
     },
-    mounted(){
+    beforeCreate(){
         EventService.listEvents().then(
             (response) =>{
                 this.events = response;

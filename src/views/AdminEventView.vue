@@ -4,7 +4,7 @@
         <v-btn color="#0085ff" size="large" variant="flat" @click="openNewDialog">
             Criar evento
         </v-btn>
-        <v-card variant="outlined" class="my-8 pa-2 text-left" v-for="event in events" :key="event.id">
+        <v-card variant="outlined" class="my-8 pa-2 text-left" v-for="event in events" :key="event">
             <v-card-title class="text-wrap">
                 <router-link :to="`/${event.slug}/menu-equipe`">
                     {{ event.name }}
