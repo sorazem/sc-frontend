@@ -52,13 +52,14 @@ export default {
             EventService.emitEventCertifications(this.$route.params.slug).then(
                 (response)=>{
                     this.message = response.data.message;
+                    this.loading = false;
                 },
                 (error)=>{
                     this.alertType = "error";
                     this.message = error.message;
+                    this.loading = false;
                 }
             )
-            this.loading = false;
         },
         openDialog(){
             this.showDialog = true;
@@ -68,13 +69,14 @@ export default {
             EventService.emitUserEventCertifications(this.$route.params.slug, this.user_id).then(
                 (response)=>{
                     this.message = response.data.message;
+                    this.loading = false;
                 },
                 (error)=>{
                     this.alertType = "error";
                     this.message = error.message;
+                    this.loading = false;
                 }
             )
-            this.loading = false;
         },
     },
     mounted() {
