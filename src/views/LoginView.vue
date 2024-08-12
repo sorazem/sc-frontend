@@ -55,6 +55,10 @@
               Não possui uma conta? 
               <router-link class="mt-8" to="/signup">Cadastre-se!</router-link>
             </span>
+            <span class="mt-8">
+              Esqueceu sua senha?
+              <router-link class="mt-8" to="/esqueci-minha-senha">Redefinir</router-link>
+            </span>
         </v-form>
       </v-card>
     </v-sheet>

@@ -50,6 +50,16 @@ const routes = [
     component: () => import('../views/SignupView.vue')
   },
   {
+    path: '/esqueci-minha-senha',
+    name: 'forgot',
+    component: () => import('../views/ForgotPassword.vue')
+  },
+  {
+    path: '/redefinir-senha',
+    name: 'redefine',
+    component: () => import('../views/ResetPassword.vue')
+  },
+  {
     path: '/:slug/programacao',
     name: 'schedule',
     component: () => import('../views/ScheduleView.vue')

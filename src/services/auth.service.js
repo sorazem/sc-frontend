@@ -32,6 +32,18 @@ class AuthService {
       institution: user.institution
     });
   }
+
+  forget(email) {
+    return axios
+      .post(process.env.VUE_APP_API_URL + '/forget', { email })
+      .then((response) => response.data);
+  }
+
+  reset(data) {
+    return axios
+      .post(process.env.VUE_APP_API_URL + '/reset', data)
+      .then((response) => response.data);
+  }
 }
 
 export default new AuthService();
