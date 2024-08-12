@@ -6,7 +6,7 @@
                 <p class="font-weight-medium">{{ notice.title }}</p>
                 <p>{{ notice.description }}</p>
                 <div class="mt-4 d-flex justify-space-between align-center font-weight-light">
-                    <p v-if="notice.talk"><router-link :to="'palestra/' + notice.talk.id">{{ notice.talk?.title }}</router-link></p>
+                    <p v-if="notice.talk"><router-link :to="'atividade/' + notice.talk.id">{{ notice.talk?.title }}</router-link></p>
                     <p class="ml-auto">{{ formatDate(notice.created_at) }}</p>
                 </div>
             </v-card-item>

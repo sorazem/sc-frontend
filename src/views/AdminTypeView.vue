@@ -2,7 +2,7 @@
     <div>
         <v-snackbar v-model="snackbar" :timeout="2000">{{ message }}</v-snackbar>
         <v-btn color="#0085ff" size="large" variant="flat" @click="openNewDialog">
-            Criar tipo de palestra
+            Criar tipo de atividade
         </v-btn>
         <v-card variant="outlined" class="my-8 pa-2 text-left" v-for="type in types" :key="type.id">
             <v-card-title class="text-wrap"><v-chip size="large" :color="type.color">{{ type.name }}</v-chip></v-card-title>

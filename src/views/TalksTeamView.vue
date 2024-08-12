@@ -2,7 +2,7 @@
     <div>
         <v-snackbar v-model="snackbar" :timeout="2000">{{ message }}</v-snackbar>
         <v-btn color="#FF7A00" size="large" variant="flat" @click="openNewDialog">
-            Adicionar palestra
+            Adicionar atividade
         </v-btn>
         <v-card variant="outlined" class="my-8 pa-2 text-left" v-for="talk in talks" :key="talk.id">
             <v-card-title class="text-wrap">{{ talk.title }}</v-card-title>

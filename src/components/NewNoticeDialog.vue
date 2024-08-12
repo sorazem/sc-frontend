@@ -21,16 +21,16 @@
                     variant="outlined"
                     density="compact"
                 ></v-text-field>
-                <div class="text-subtitle-1 text-medium-emphasis text-left">Enviar aviso para todos do evento ou para participantes de uma palestra específica?</div>
+                <div class="text-subtitle-1 text-medium-emphasis text-left">Enviar aviso para todos do evento ou para participantes de uma atividade específica?</div>
                 <v-select 
                     v-model="notificationType" 
-                    :items="['Evento', 'Palestra']"
+                    :items="['Evento', 'Atividade']"
                     class="mb-4"
                     variant="outlined"
                     density="compact"
                 ></v-select>
-                <div v-if="notificationType === 'Palestra'">
-                    <div class="text-subtitle-1 text-medium-emphasis text-left">Escolha a palestra</div>
+                <div v-if="notificationType === 'Atividade'">
+                    <div class="text-subtitle-1 text-medium-emphasis text-left">Escolha a atividade</div>
                     <v-select
                         v-model="notice.talk_id"
                         class="mb-4"

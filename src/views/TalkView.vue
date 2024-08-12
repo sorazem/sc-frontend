@@ -40,7 +40,7 @@
         </v-row>
     </v-row>
     <v-row v-if="rateAvailable && participated" class="pa-4 text-left flex-column mb-8">
-        <p class="purple mb-4">Avalie a palestra</p>
+        <p class="purple mb-4">Avalie a atividade</p>
         <p>{{ message }}</p>
         <v-rating
             v-model="score"

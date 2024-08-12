@@ -13,7 +13,7 @@
           v-for="palestra in filteredTalks" 
           :palestra="palestra" 
           :key="palestra.title" 
-          :to="'/' + this.$route.params.slug + '/palestra/' + palestra.id
+          :to="'/' + this.$route.params.slug + '/atividade/' + palestra.id
           "/>
         </v-tabs-window-item>
       </v-tabs-window>

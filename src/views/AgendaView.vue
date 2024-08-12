@@ -1,6 +1,6 @@
 <template>
     <v-snackbar v-model="snackbar" :timeout="2000">{{ message }}</v-snackbar>
-    <p v-if="dias.length==0" class="mt-8">Você ainda não se inscreveu em nenhuma palestra.</p>
+    <p v-if="dias.length==0" class="mt-8">Você ainda não se inscreveu em nenhuma atividade.</p>
     <div class="content d-flex flex-column align-center">
       <v-tabs v-model='diaAtual' show-arrows>
         <v-tab v-for="dia in dias" :key="dia" :value="dia">{{dia}}</v-tab>
@@ -11,7 +11,7 @@
             v-for="palestra in palestras[diaAtual]" 
             :palestra="palestra.talk" 
             :key="palestra.talk.title" 
-            :to="'/' + this.$route.params.slug + '/palestra/' + palestra.talk.id" 
+            :to="'/' + this.$route.params.slug + '/atividade/' + palestra.talk.id" 
             @cancel="cancel"
           />
         </v-tabs-window-item>

@@ -1,7 +1,7 @@
 <template>
     <div v-if="!submitted">
         <h1 class="mt-4">Inscrição</h1>
-        <p class="mb-8">{{ talksToEnroll.length }} palestra<span v-if="talksToEnroll.length!=1">s</span> selecionada<span v-if="talksToEnroll.length!=1">s</span></p>
+        <p class="mb-8">{{ talksToEnroll.length }} atividade<span v-if="talksToEnroll.length!=1">s</span> selecionada<span v-if="talksToEnroll.length!=1">s</span></p>
         <div class="content d-flex flex-column align-center justify-center">
             <v-tabs v-model='diaAtual' show-arrows>
                 <v-tab v-for='dia in dias' :key='dia' :value='dia'>{{dia}}</v-tab>
@@ -33,13 +33,13 @@
         <h1>Confirmação do pedido</h1>
         <v-img src="../assets/Calendar.png" :width="300"></v-img>
         <v-card v-if="confirmed.length" variant="tonal" color="success">
-            <v-card-title>Inscrição confirmada nas seguintes palestras</v-card-title>
+            <v-card-title>Inscrição confirmada nas seguintes atividades</v-card-title>
             <v-card-item>
                 <p v-for="palestra in confirmed" :key="palestra.id">{{ palestra.talk.title }}</p>
             </v-card-item>
         </v-card>
         <v-card v-if="denied.length" variant="tonal" color="error">
-            <v-card-title>Infelizmente você não conseguiu vaga nas seguintes palestras</v-card-title>
+            <v-card-title>Infelizmente você não conseguiu vaga nas seguintes atividades</v-card-title>
             <v-card-item>
                 <div v-for="palestra in denied" :key="palestra.talk.id" class="mb-4">
                     <p class="font-weight-bold">{{ palestra.talk.title }}</p>

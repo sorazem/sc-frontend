@@ -21,7 +21,7 @@ export default {
         return{
             menuItems: [
                     { title: 'Palestrantes', path: '/' + this.$route.params.slug + '/menu-equipe/palestrantes', icon: 'mdi-account-voice'},
-                    { title: 'Palestras', path: '/' + this.$route.params.slug + '/menu-equipe/palestras', icon: 'mdi-human-male-board'},
+                    { title: 'Atividades', path: '/' + this.$route.params.slug + '/menu-equipe/atividades', icon: 'mdi-human-male-board'},
                     { title: 'Categorias', path: '/' + this.$route.params.slug + '/menu-equipe/categorias', icon: 'mdi-tag-outline'},
                     { title: 'Presenças', path: '/' + this.$route.params.slug + '/menu-equipe/presencas', icon: 'mdi-draw-pen'},
                     { title: 'Mural de avisos', path: '/' + this.$route.params.slug + '/menu-equipe/avisos', icon: 'mdi-message-outline'},

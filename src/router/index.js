@@ -65,7 +65,7 @@ const routes = [
     component: () => import('../views/ScheduleView.vue')
   },
   {
-    path: '/:slug/palestra/:talkid',
+    path: '/:slug/atividade/:talkid',
     name: 'talkDetails',
     component: () => import('../views/TalkView.vue')
   },
@@ -117,7 +117,7 @@ const routes = [
     beforeEnter: [loggedInGuard, eventStaffGuard]
   },
   {
-    path: '/:slug/menu-equipe/palestras',
+    path: '/:slug/menu-equipe/atividades',
     name: 'talks',
     component: () => import('../views/TalksTeamView.vue'),
     beforeEnter: [loggedInGuard, eventStaffGuard]

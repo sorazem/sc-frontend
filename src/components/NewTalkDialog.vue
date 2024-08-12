@@ -1,7 +1,7 @@
 <template>
     <v-dialog width="auto">
         <v-card
-            :text="'Nova palestra'"
+            :text="'Nova atividade'"
         >
             <v-form v-model="form" class="pa-4" @submit.prevent = "submit()">
                 <div class="text-subtitle-1 text-medium-emphasis text-left">Título</div>
