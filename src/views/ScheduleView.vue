@@ -2,7 +2,7 @@
   <div id='card-row' class="d-flex flex-column justify-space-between align-center">
     <v-row class='w-100'>
       <v-col cols='12'>
-        <v-select clearable label="Localização" v-model="currentLocation" :items="locations" density="compact" variant="outlined" class="mt-4"></v-select>
+        <v-select clearable label="Localização" v-model="currentLocation" :items="locations" :list-props="{maxWidth:'300px'}" density="compact" variant="outlined" class="mt-4"></v-select>
       </v-col>
       <v-tabs v-model='diaAtual' show-arrows>
         <v-tab v-for="dia in dias" :key="dia" :value="dia">{{dia}}</v-tab>
