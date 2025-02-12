@@ -4,7 +4,7 @@ import authHeader from './auth-header';
 class EventService{
     listEvents(){
         return axios
-        .get(process.env.VUE_APP_API_URL + '/events', {})
+        .get(process.env.VUE_APP_API_URL + '/events', { headers: authHeader() })
         .then(response => response.data
         );
     }
@@ -222,6 +222,12 @@ class EventService{
         .then((response) => response.data);
     }
 
+    updateEventBySlug(event_slug, event) {
+        return axios
+        .put(process.env.VUE_APP_API_URL + '/events/' + event_slug, event, { headers:{ ...authHeader(), 'Content-Type': 'multipart/form-data'}})
+        .then((response) => response.data);
+    }
+
     deleteEvent(event) {
         return axios
         .delete(process.env.VUE_APP_API_URL + '/events/' + event.id, { headers: authHeader()})
@@ -261,6 +267,12 @@ class EventService{
     updateMember(member, event_slug) {
         return axios
         .put(process.env.VUE_APP_API_URL + '/user/' + member.id, member, { headers: authHeader(), params: { event_slug } })
+        .then((response) => response.data);
+    }
+
+    publishEvent(event_slug) {
+        return axios
+        .put(process.env.VUE_APP_API_URL + '/events/' + event_slug + '/publish', {}, { headers: authHeader() })
         .then((response) => response.data);
     }
 }

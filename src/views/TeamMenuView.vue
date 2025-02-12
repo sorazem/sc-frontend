@@ -1,4 +1,6 @@
 <template>
+    <p class='mb-4'><strong>Status do evento</strong>: {{this.evento.published ? 'Publicado' : 'Rascunho'}}</p>
+    <v-btn class='mb-8' color="#FF7A00" variant='flat' @click='togglePublished'>{{this.evento.published ? 'Cancelar publicação' : 'Publicar'}}</v-btn>
     <div class="content pa-4 d-flex flex-wrap">
         <div class="grid-item" v-for="item in menuItems" :key="item.title">
             <v-card
@@ -16,9 +18,29 @@
     </div>
 </template>
 <script>
+import EventService from '@/services/event.service';
 export default {
+    created(){
+        EventService.getEventSchedule(this.$route.params.slug).then(
+            (response) =>{
+                this.evento = response;
+            }
+      );
+    },
+    methods:{
+        togglePublished() {
+            EventService.publishEvent(this.$route.params.slug).then(
+                (response) =>{
+                    this.evento = response;
+                }
+            )
+        }
+    },
     data(){
         return{
+            evento: {
+                published: false,
+            },
             menuItems: [
                     { title: 'Palestrantes', path: '/' + this.$route.params.slug + '/menu-equipe/palestrantes', icon: 'mdi-account-voice'},
                     { title: 'Atividades', path: '/' + this.$route.params.slug + '/menu-equipe/atividades', icon: 'mdi-human-male-board'},
