@@ -40,6 +40,11 @@ const routes = [
     component: EventsView
   },
   {
+    path: '/reservas',
+    name: 'reservas',
+    component: () => import('../views/ReservationsView.vue')
+  },
+  {
     path: '/login',
     name: 'login',
     component: () => import('../views/LoginView.vue')

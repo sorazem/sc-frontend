@@ -4,8 +4,8 @@
         <h1 class="mt-4">Mercadorias do evento</h1>
         <p class="mb-8 font-weight-light">Faça aqui a reserva, retire e pague presencialmente</p>
         <v-card class="mb-4" variant="outlined" v-for="merch in merchandise" :key="merch.id">
+            <v-img :src="merchImage(merch)" max-height="300" cover></v-img>
             <v-card-item class="text-left">
-                <img :src="merchImage(merch)" alt="">
                 <p class="font-weight-bold my-2">{{ merch.name }}</p>
                 <p class="mb-2">{{ formatPrice(merch.price)}}</p>
                 <p class="mb-2"></p>

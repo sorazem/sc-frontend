@@ -38,6 +38,18 @@ class UserService{
         .put(process.env.VUE_APP_API_URL + '/user/' + user.id, user, { headers: authHeader() })
         .then((response) => response.data)
     }
+
+    listReservations() {
+        return axios
+        .get(process.env.VUE_APP_API_URL + '/reservations', { headers: authHeader() })
+        .then((response) => response.data);
+    }
+
+    deleteReservation(reservation_id) {
+        return axios
+        .delete(process.env.VUE_APP_API_URL + '/reservations/' + reservation_id, { headers: authHeader() })
+        .then((response) => response.data);
+    }
 }
 
 export default new UserService();

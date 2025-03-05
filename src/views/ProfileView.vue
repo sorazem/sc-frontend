@@ -1,5 +1,8 @@
 <template>
     <div class="pa-4 content text-left">
+        <h2>Minhas reservas</h2>
+            <v-btn variant='flat' color="#9C66BD" class='mb-8' @click="this.$router.push('/reservas')">Ver todas as reservas</v-btn>
+        <h2>Meus dados</h2>
         <v-form v-model="form">
             <v-img class="hidden-sm-and-down" src="../../src/assets/profile2.png" :width="280" />
             <h3>Nome</h3>
