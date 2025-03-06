@@ -46,7 +46,6 @@ export default {
         if (!this.form) return
         this.loading = true
         AuthService.forget(this.email).then((response) => {
-            console.log(response);
             this.message = response.message;
             this.snackbar = true;
             this.loading = false;

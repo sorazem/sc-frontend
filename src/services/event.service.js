@@ -20,6 +20,12 @@ class EventService{
         .post(process.env.VUE_APP_API_URL + '/participate' , {talk_ids, event_slug}, { headers: authHeader() })
     }
 
+    enrollAsStaff(talk_id, user_ids, event_slug) {
+        return axios
+        .post(process.env.VUE_APP_API_URL + '/enroll', { talk_id, user_ids, event_slug }, { headers: authHeader() })
+        .then((response) => response.data);
+    }
+
     getUserAgenda(event_slug){
         return axios
         .get(process.env.VUE_APP_API_URL + '/vacancies/me', { headers: authHeader(), params: {event_slug} })
@@ -129,6 +135,12 @@ class EventService{
     deliverReservation(event_slug, reservation_id) {
         return axios
         .put(process.env.VUE_APP_API_URL + '/events/' + event_slug + '/reservations/' + reservation_id, { delivered: true }, { headers: authHeader() })
+        .then(response => response.data)
+    }
+
+    deleteReservation(event_slug, reservation_id) {
+        return axios
+        .delete(process.env.VUE_APP_API_URL + '/events/' + event_slug + '/reservations/' + reservation_id, { headers: authHeader() })
         .then(response => response.data)
     }
 
@@ -273,6 +285,12 @@ class EventService{
     publishEvent(event_slug) {
         return axios
         .put(process.env.VUE_APP_API_URL + '/events/' + event_slug + '/publish', {}, { headers: authHeader() })
+        .then((response) => response.data);
+    }
+
+    deleteVacancy(vacancy_id) {
+        return axios
+        .delete(process.env.VUE_APP_API_URL + '/vacancies/' + vacancy_id, { headers: authHeader() })
         .then((response) => response.data);
     }
 }

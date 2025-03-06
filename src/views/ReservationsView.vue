@@ -5,10 +5,11 @@
         <v-img v-if="reservation.merch.image_url" :src="generateMerchImageURL(reservation.merch.image_url)" max-height='300' cover></v-img>
         <div class="pa-4">
             <v-card-title class='text-wrap'>{{reservation.merch.name}}</v-card-title>
-            <v-card-subtitle>Quantidade: {{reservation.amount}}</v-card-subtitle>
-            <v-card-actions>
+            <v-card-subtitle class='mb-4'>Quantidade: {{reservation.amount}}</v-card-subtitle>
+            <v-card-actions v-if='!reservation.delivered'>
                 <v-btn color='red' @click='chooseReservation(reservation)'>Deletar</v-btn>
             </v-card-actions>
+            <p v-else>Entregue</p>
         </div>
     </v-card>
 

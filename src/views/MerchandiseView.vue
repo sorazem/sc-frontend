@@ -15,7 +15,7 @@
                             v-model="merch.quantity"
                             type='number'
                             min="1"
-                            max="20"
+                            :max="merch.limit || 20"
                             label='Quantidade'
                             variant="outlined" 
                             density="compact" 
@@ -62,7 +62,7 @@ export default {
             })
             .catch(
                 (error)=>{
-                    this.message = error.message;
+                    this.message = Object.values(error.response.data).join(', ');
                     this.snackbar = true;
                 }
             )

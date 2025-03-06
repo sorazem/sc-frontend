@@ -74,7 +74,6 @@ export default {
             this.snackbar = true;
             this.loading = false;
         }).catch((err) => {
-            console.log(err)
             this.message = err.message;
             this.snackbar = true;
         })

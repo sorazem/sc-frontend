@@ -17,10 +17,18 @@
                     <li v-for="option in displayOptions(reservation.options)" :key='option'>{{ option }}</li>
                 </ul>
             </v-card-text>
-            <v-card-actions>
-                <v-btn :text="reservation.delivered ? 'Entregue' : 'Marcar como entregue'" variant="text" :readonly='reservation.delivered' @click='deliverReservation(reservation)' block></v-btn>
-            </v-card-actions>
+            <v-btn class='mb-4' :text="reservation.delivered ? 'Entregue' : 'Marcar como entregue'" variant="text" :readonly='reservation.delivered' @click='deliverReservation(reservation)' block></v-btn>
+            <v-btn v-if="!reservation.delivered" variant='text' @click='chooseReservation(reservation)' block>Cancelar reserva</v-btn>
         </v-card>
+
+        <v-dialog :modelValue="showDialog" width="auto">
+            <v-card max-width="400" text="Quer mesmo cancelar essa reserva?" >
+                <template v-slot:actions>
+                    <v-btn class="mx-auto" text="Não" @click="closeDialog()"></v-btn>
+                    <v-btn class="mx-auto" text="Sim" @click="deleteReservation(selectedReservation)"></v-btn>
+                </template>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 <script>
@@ -30,6 +38,8 @@ export default {
         return{
             nome: '',
             reservations: [],
+            selectedReservation: null,
+            showDialog: false,
         }
     },
 
@@ -45,7 +55,23 @@ export default {
         },
         displayOptions(options) {
             return Object.keys(options).map((key) => `${key}: ${options[key]}`)
-        }
+        },
+        deleteReservation(reservation) {
+            EventService.deleteReservation(this.$route.params.slug, reservation.id).then(
+                () => {
+                    this.reservations.splice(this.reservations.indexOf(reservation), 1);
+                    this.closeDialog();
+                }
+            )
+        },
+        chooseReservation(reservation) {
+            this.selectedReservation = reservation;
+            this.showDialog = true;
+        },
+        closeDialog() {
+            this.selectedReservation = null;
+            this.showDialog = false;
+        },
     },
 
     computed: {
@@ -65,7 +91,7 @@ export default {
 }
 </script>
 <style scoped>
-.v-card-actions > .v-btn{
+.v-btn{
     color: white;
     background-color: #FF7A00;
 }

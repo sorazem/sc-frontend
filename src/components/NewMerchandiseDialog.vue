@@ -29,6 +29,15 @@
                     variant="outlined"
                     density="compact"
                 ></v-text-field>
+                <div class="text-subtitle-1 text-medium-emphasis text-left">Limite de reserva por pessoa</div>
+                <v-text-field
+                    v-model="merch.limit"
+                    :rules="[required]"
+                    class="mb-2"
+                    clearable
+                    variant="outlined"
+                    density="compact"
+                ></v-text-field>
                 <div class="text-subtitle-1 text-medium-emphasis text-left">Imagem</div>
                 <v-file-input 
                     v-model="merch.image"
@@ -96,7 +105,7 @@ export default {
                     this.merch.custom_fields = {}
                 }
             } else {
-                this.merch = { name: null, stock: null, price: null, image: null, custom_fields: {} }
+                this.merch = { name: null, stock: null, price: null, image: null, limit: null, custom_fields: {} }
             }
         },
     },
@@ -110,6 +119,7 @@ export default {
                 stock: null,
                 event_id: null,
                 image: null,
+                limit: null,
                 custom_fields: {},
             },
             custom_fields_name: null,

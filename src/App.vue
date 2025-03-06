@@ -56,7 +56,7 @@ export default {
         { title: 'Avisos', path: '/' + this.$route.params.slug + '/avisos', icon: 'home' }
       ];
       if (this.isStaffFromEvent || this.isAdmin) {
-        eventMenu.push({title: 'Editar equipe', path: '/' + this.$route.params.slug + '/menu-equipe'});
+        eventMenu.push({title: 'Editar evento', path: '/' + this.$route.params.slug + '/menu-equipe'});
       }
       return eventMenu;
     }
