@@ -23,7 +23,6 @@
         <v-card>
             <v-text-field v-model='searchValue' label='Pesquisar pessoa'></v-text-field>
             <v-checkbox v-for='user in filteredUsers' v-model='usersToAdd' :key='user.name' :label='user.name' :value='user.id' hide-details></v-checkbox>
-            <p>{{this.usersToAdd}}</p>
             <v-card-actions>
                 <v-btn @click='this.enrollPopup = false'>Cancelar</v-btn>
                 <v-btn @click='enrollUsers'>Confirmar</v-btn>
@@ -40,6 +39,12 @@
             </v-card-actions>
         </v-card>
     </v-dialog>
+
+    <v-snackbar
+        title='Erro'
+        timeout=3000
+        v-model='alertError'
+    >{{message}}</v-snackbar>
 </template>
 <script>
 import { DateTime } from 'luxon';
@@ -53,6 +58,7 @@ export default {
             palestra: {},
 
             message: '',
+            alertError: false,
 
             attendeeList: [],
             confirmed: [],
@@ -71,13 +77,14 @@ export default {
         confirmPresence(){
             let main = this.attendeeList.map((item)=>item.id); // array de ids do attendeeList
             let absence = main.filter((item)=> !this.confirmed.includes(item)); // ids não inclusos em confirmed
-            TalkService.validatePresence(
-                {
-                    talk_id: this.$route.params.talkid, 
-                    presence: this.confirmed, 
-                    absence
-                }
-            )
+            TalkService.validatePresence({
+                talk_id: this.$route.params.talkid, 
+                presence: this.confirmed, 
+                absence
+            }).catch((err) => {
+                this.message = err.response.data.message;
+                this.alertError = true;
+            })
         },
 
         openEnrollPopup() { this.enrollPopup = true; },

@@ -20,7 +20,7 @@
                     variant="outlined"
                     density="compact"
                 ></v-text-field>
-                <div class="text-subtitle-1 text-medium-emphasis text-left">Quantidade em Estoque</div>
+                <div class="text-subtitle-1 text-medium-emphasis text-left">Estoque Total</div>
                 <v-text-field
                     v-model="merch.stock"
                     :rules="[required]"

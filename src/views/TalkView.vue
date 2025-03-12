@@ -29,13 +29,13 @@
     </v-row>
     <v-row class="pa-8 text-left flex-column">
         <p class="purple">Palestrante</p>
-        <v-row class="pt-8 pb-4 align-center">
-            <v-avatar >
-                <v-img :src="speakerImage"></v-img>
+        <v-row v-for='palestrante in palestra.speakers' :key='palestrante' class="pt-8 align-center flex-nowrap">
+            <v-avatar class="mr-8 mb-4">
+                <v-img :src="imageSpeaker(palestrante)"></v-img>
             </v-avatar>
-            <div class="ml-8">
-                <p class="font-weight-bold">{{ firstSpeaker?.name }}</p>
-                <p>{{ firstSpeaker?.bio }}</p>
+            <div>
+                <p class="font-weight-bold">{{ palestrante.name }}</p>
+                <p>{{ palestrante.bio }}</p>
             </div>
         </v-row>
     </v-row>
@@ -92,13 +92,18 @@ export default {
         },
         loggedIn() {
             return this.$store.state.auth.status.loggedIn;
-        }
+        },
     },
     methods:{
         sendRating(){
             TalkService.sendRating(this.score, this.$route.params.talkid).then(
                 (response) => this.message = response.data.message
             )
+        },
+        imageSpeaker(speaker) {
+            if (speaker.image_url) {
+                return `${process.env.VUE_APP_API_URL}${speaker.image_url}`;
+            } else  return require('@/assets/speaker_placeholder.png');
         }
     },
     created(){

@@ -7,7 +7,12 @@
         <v-card v-for="merch in merches" :key='merch.id' variant="outlined" class="my-8 pa-2 text-left">
             <img :src="merchImage(merch)" alt="">
             <v-card-title>{{merch.name}}</v-card-title>
-            <v-card-subtitle class="mb-4">{{ formatPrice(merch.price)}}</v-card-subtitle>
+            <v-card-text>
+                <p>{{ formatPrice(merch.price) }}</p>
+                <p>{{ merch.reservations }} reservas</p>
+                <p>{{ merch.stock - merch.reservations }} em estoque</p>
+                <p>{{ merch.stock }} estoque total</p>
+            </v-card-text>
             <v-card-actions class="d-flex justify-space-evenly">
                 <v-btn text="Editar" variant="flat" @click='openUpdateDialog(merch)'></v-btn>
                 <v-btn text="Excluir" variant="text" @click='openDeleteDialog(merch)'></v-btn>

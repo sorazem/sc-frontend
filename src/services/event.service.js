@@ -34,7 +34,7 @@ class EventService{
 
     getEventMerchandise(event_slug){
         return axios
-        .get(process.env.VUE_APP_API_URL + '/events/' + event_slug + '/merches')
+        .get(process.env.VUE_APP_API_URL + '/events/' + event_slug + '/merches', { headers: authHeader() })
         .then(response => response.data)
     }
 

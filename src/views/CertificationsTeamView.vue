@@ -1,11 +1,10 @@
 <template>
     <v-alert
-        :title="message"
         :type="alertType"
         v-if="message"
         closable
         class="text-left"
-  ></v-alert>
+    >{{message}}</v-alert>
     <div class="d-flex flex-column">
         <v-img class="mb-6" src="../assets/certificate3.png" :width="300"></v-img>
         <v-btn :loading="loading" class="mb-4" color="#FF7A00" size="large" variant="flat" @click="emit">
