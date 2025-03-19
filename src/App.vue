@@ -75,7 +75,7 @@ export default {
       return this.currentUser?.permissions & 16;
     }
   },
-  mounted(){
+  created (){
     this.$store.dispatch('auth/start');
     if(this.isAdmin){
       this.menu.push({ title: 'Admin', path:'/admin', icon: 'mdi-home'});

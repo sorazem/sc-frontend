@@ -25,5 +25,7 @@ export default {
 }
 </script>
 <style scoped>
-    
+pre {
+    text-wrap: initial;
+}
 </style>
